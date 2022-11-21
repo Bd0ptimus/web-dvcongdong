@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
+use App\Services\AuthService;
 
 class RegisterController extends Controller
 {
@@ -30,15 +33,17 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    protected $authService;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AuthService $authService)
     {
-        $this->middleware('guest');
+        // $this->middleware('guest');
+        $this->authService = $authService;
     }
 
     /**
@@ -69,5 +74,30 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function index(Request $request){
+        if($request->isMethod('POST')){
+            $validator = $this->authService->registerValidate($request->all());
+            if ($validator->fails()) {
+                //dd($validator);
+                return redirect()->back()->withErrors($validator)->withInput($request->all());
+            } else {
+                $user = User::where('username', '=', $request->username)->first();
+                if(isset($user)){
+                    return redirect()->back()->withErrors($validator->errors()->add('password', 'Username đã tồn tại, hãy chọn username khác'))->withInput($request->all());
+                }
+
+                $user = User::where('email', '=', $request->email)->first();
+                if(isset($user)){
+                    return redirect()->back()->withErrors($validator->errors()->add('email', 'Email đã tồn tại, hãy chọn username khác'))->withInput($request->all());
+                }
+                $this->authService->createAccount($request);
+                return view('auth.registerConfirm');
+                // return redirect()->back()->withErrors($validator->errors()->add('username', 'username không tồn tại'))->withInput($request->all());
+
+            }
+        }
+        return view('auth.register');
     }
 }

@@ -21,6 +21,8 @@ use App\Http\Controllers\Notification\SMSNotificationController;
 require_once 'components/post/post.php';
 require_once 'components/home/home.php';
 require_once 'components/search/search.php';
+require_once 'components/auth/auth.php';
+
 
 
 
@@ -38,10 +40,10 @@ Route::get('/header', function () {
 });
 
 Route::get('/test', function () {
-    return view('search.index');
+    return view('auth.registerConfirm');
 });
 
-Route::get('/test-sms',[SMSNotificationController::class, 'sendSmsNotification']);
+// Route::get('/test-sms',[SMSNotificationController::class, 'sendSmsNotification']);
 
 Auth::routes();
 

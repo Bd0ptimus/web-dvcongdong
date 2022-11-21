@@ -12,6 +12,7 @@ class InteractionController extends Controller
 
     protected $postService;
     public function __construct(PostService $postService){
+        $this->middleware('user.auth')->only(['postLiked']);
         $this->postService = $postService;
     }
 

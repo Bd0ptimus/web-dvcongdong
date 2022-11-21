@@ -10,7 +10,7 @@
 @php
     use App\Admin;
 @endphp
-<div id="full-sidebar" style="display:none; z-index:10000; overflow-y: hidden;"
+<div id="full-sidebar" style="display:none; z-index:10000; overflow-y: scroll;"
     class=" flex-column flex-shrink-0 p-3 bg-light sidebar-container" onmouseleave="miniSidebar()">
     {{-- <div class="d-flex justify-content-between mb-3 mb-md-0 me-md-auto link text-decoration-none" style="width: 100%;">
         <span class="fs-4">Nguoiviettainga</span>

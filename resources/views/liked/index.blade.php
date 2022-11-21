@@ -10,8 +10,8 @@
 <link href="{{ asset('css/post/postLiked.css?v=') . time() }}" rel="stylesheet">
 
 <body style="position:relative;">
-    <div class="project-content-section" style="width: 100%;">
-        <div class="row d-block justify-content-center">
+    <div class="project-content-section" >
+        <div class="row d-block justify-content-center" style="width:100%;">
             <div class="row d-flex justify-content-center" style="margin : 30px auto;">
                 <h3 class="d-flex justify-content-center">
                     Những bài viết đã thích
@@ -20,6 +20,13 @@
 
 
             <div class="row my-5 newfeed-sec" style="padding:0px;">
+                @if(sizeof($posts) == 0)
+                    <div class="row d-flex justify-content-center" style="margin : 30px auto;">
+                        <h6 class="d-flex justify-content-center">
+                            Không có bài viết nào!
+                        </h6>
+                    </div>
+                @endif
                 @foreach ($posts as $post)
                     <div class="row newfeed-container d-flex justify-content-center" id="postLiked-{{$post->id}}">
                         <div class="row newfeed-content-sec">
