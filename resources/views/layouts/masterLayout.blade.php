@@ -35,8 +35,28 @@
         }
     }
 
-    function likePost(userId,postId){
-        console.log('userId : ', userId);
+    function unlikePost(userId,postId, newFeedPostId){
+        var url = "{{ route('post.postInteract.unlike') }}";
+        $.ajax({
+            method: 'post',
+            url: url,
+            data: {
+                userId: userId,
+                postId : postId,
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(data) {
+                console.log('data response : ', JSON.stringify(data));
+                if(data.error == 0){
+                    $(`#${newFeedPostId}`).empty();
+                    $(`#${newFeedPostId}`).append(`<i class="fa-regular fa-heart"  onclick="likePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`);
+                }
+            }
+
+        });
+    }
+
+    function likePost(userId,postId, newFeedPostId){
         var url = "{{ route('post.postInteract.like') }}";
         $.ajax({
             method: 'post',
@@ -48,6 +68,11 @@
             },
             success: function(data) {
                 console.log('data response : ', JSON.stringify(data));
+                if(data.error == 0){
+                    $(`#${newFeedPostId}`).empty();
+                    $(`#${newFeedPostId}`).append(`<i style="color:red;" class="fa-solid fa-heart"  onclick="unlikePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`);
+
+                }
             }
 
         });

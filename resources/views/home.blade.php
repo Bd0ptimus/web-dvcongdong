@@ -41,7 +41,7 @@
                 <div class="box-search-wrapper" id="main-search-section">
                     <div class="container" style="display:block; justify-content: center;">
                         <div class="row main-filter">
-                            <form id="frm-search-job" action="{{route('search.homeSearch')}}" method="POST">@csrf
+                            <form id="frm-search-job" action="{{ route('search.homeSearch') }}" method="POST">@csrf
                                 <div class="row">
                                     <div
                                         class="form-group col-sm-3 input-data vertical-container d-flex justify-content-center">
@@ -160,8 +160,17 @@
 
                         <div class="newfeed-info-sec d-block justify-content-center">
                             <div class="row newFeed-interact-sec d-flex justify-content-end">
-                                @if(Admin::user()!==null&&Admin::user()->isRole(ROLE_USER))
-                                    <span class="newFeed-icon-sec"><i class="fa-regular fa-heart" onclick="likePost(<?=Admin::user()->id?>,<?=$post->id?> )"></i><i style="color:red;" class="fa-solid fa-heart"></i></span>
+                                @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
+                                    <span class="newFeed-icon-sec" id="newFeed-post-{{ $post->id }}">
+                                        @if ($post->checkPostLiked(Admin::user()->id, $post->id))
+                                            <i style="color:red;" class="fa-solid fa-heart"
+                                                onclick="unlikePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
+                                        @else
+                                            <i class="fa-regular fa-heart"
+                                                onclick="likePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
+                                        @endif
+                                        {{-- <i style="color:red;" class="fa-solid fa-heart"></i> --}}
+                                    </span>
                                 @endif
                             </div>
                             <div class="row newFeed-info-title-sec vertical-container">
@@ -236,10 +245,10 @@
     var numberLoadingStep = 1;
     var allowLoad = true;
     window.onscroll = function(ev) {
-        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight-50) {
             // you're at the bottom of the page
-            if(allowLoad){
-                allowLoad=false;
+            if (allowLoad) {
+                allowLoad = false;
                 newFeedLoadMoreData();
             }
             console.log("Bottom of page");
@@ -251,17 +260,28 @@
             method: 'post',
             url: '{{ route('home.homeNewFeedLoading') }}',
             data: {
-                cityChoosing : <?=$cityChoosen??0?>,
+                cityChoosing: <?= $cityChoosen ?? 0 ?>,
                 numberStep: numberLoadingStep,
+                userId: {{ Admin::user() !== null ? Admin::user()->id : 0 }},
                 _token: '{{ csrf_token() }}',
             },
             success: function(data) {
                 console.log('data response : ', JSON.stringify(data));
-                console.log('step: ',numberLoadingStep);
+                console.log('step: ', numberLoadingStep);
 
                 if (data['error'] == 0) {
-                    console.log('Data length : ',data.data.length);
-                    data.data.forEach(function(e){
+                    console.log('Data length : ', data.data.length);
+                    data.data.forEach(function(e) {
+                        var likeIcon = '';
+                        if (e.isUser) {
+                            var userId = {{ Admin::user() !== null ? Admin::user()->id : 0 }};
+                            if (!e.liked) {
+                                likeIcon =
+                                    `<i class="fa-regular fa-heart" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                            } else {
+                                likeIcon = `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                            }
+                        }
                         $('#home-newFeed-sec').append(`<div class="row newfeed-container d-flex justify-content-center">
                                                             <div class="row newfeed-content-sec">
                                                                 <div class="newfeed-image-sec  newFeed-image-sec">
@@ -271,7 +291,9 @@
 
                                                                 <div class="newfeed-info-sec d-block justify-content-center">
                                                                     <div class="row newFeed-interact-sec d-flex justify-content-end">
-                                                                        <span class="newFeed-icon-sec"><i class="fa-regular fa-heart"></i><i style="color:red;" class="fa-solid fa-heart"></i></span>
+                                                                        <span class="newFeed-icon-sec" id="newFeed-post-${e.id}">
+                                                                            ${likeIcon}
+                                                                        </span>
                                                                     </div>
                                                                     <div class="row newFeed-info-title-sec vertical-container">
                                                                         <p class="newFeed-info-title vertical-element-middle-align">${e.title}</p>
@@ -299,11 +321,11 @@
                                                             </div>
                                                         </div>`);
                     })
-                    if(data.data.length> 0){
+                    if (data.data.length > 0) {
                         numberLoadingStep++;
                     }
                 }
-                allowLoad=true;
+                allowLoad = true;
             }
 
         });
@@ -358,4 +380,3 @@
 </script>
 
 </html>
-

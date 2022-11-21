@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 //Models
 use App\Models\User;
@@ -53,6 +54,18 @@ class post extends Model
 
     public function post_interactions(){
         return $this->hasMany(post_interaction::class , 'post_id', 'id');
+    }
+
+    public function checkPostLiked($userId, $postId){
+        Log::debug("Checking post liked : ". $userId.'-post : '. $postId);
+        $postInteraction = post_interaction::where('user_id',$userId)->where('post_id',$postId)->first();
+        if(isset($postInteraction)){
+            $return = $postInteraction->interaction_type == LIKE;
+            Log::debug("check liked ".$return);
+
+            return $return;
+        }
+        return false;
     }
 
 }

@@ -1,8 +1,12 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
+<!doctype html>
+<html>
+@include('layouts.masterLayout')
+@include('layouts.header')
+@php
+    dd('abc')
+@endphp
+<body class="container" style="position:relative;">
+    <div class="row justify-content-center project-content-section">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
@@ -61,5 +65,5 @@
             </div>
         </div>
     </div>
-</div>
-@endsection
+</body>
+</html>

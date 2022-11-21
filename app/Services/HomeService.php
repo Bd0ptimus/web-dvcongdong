@@ -97,6 +97,13 @@ class HomeService
             } else {
                 $postTimes = $postTimes . ' ngày trước';
             }
+            $postData['id'] = $post->id;
+            if($params['userId'] != 0){
+                $postData['isUser'] = true;
+                $postData['liked'] = $post->checkPostLiked($params['userId'], $post->id);
+            }else{
+                $postData['isUser'] = false;
+            }
 
             $postData['times'] = $postTimes;
 

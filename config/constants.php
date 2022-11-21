@@ -1,4 +1,10 @@
 <?php
+
+//Notifications
+const NEXMO_KEY="22bff0b2";
+const NEXMO_API_SECRETE = "7HIsWOC2orXt0ZMd";
+
+//ROLE USER
 const ROLE_SUPER_ADMIN=1;
 const ROLE_ADMIN=2;
 const ROLE_USER=3;
@@ -56,5 +62,6 @@ const SERVICE_TRAVEL = 9;
 const SERVICE_ELECTRONIC = 10;
 
 //Interaction types
+const NOT_INTERACT = 0;
 const LIKE=1;
 

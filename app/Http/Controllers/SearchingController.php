@@ -43,13 +43,14 @@ class SearchingController extends Controller
         $filterData['keyword'] = request('keyword');
         $filterData['classify'] = request('classify');
         $filterData['position'] = request('position');
+        $filterData['userId'] = request('userId');
         $numberStep = request('numberStep');
         try{
             $response = $this->searchService->searchNewFeedLoading($filterData, $numberStep);
         }catch(Exception $e){
             response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
         }
-        return response()->json(['error' => 0, 'msg' => 'Lấy ảnh thành công', 'data'=>$response]);
+        return response()->json(['error' => 0, 'msg' => 'Lấy search thành công', 'data'=>$response]);
     }
 
 

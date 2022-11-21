@@ -20,7 +20,7 @@ class HomeController extends Controller
     public function __construct(HomeService $homeService,
     PostService $postService)
     {
-        // $this->middleware('auth');
+        // $this->middleware('user.auth');
         $this->homeService = $homeService;
         $this->postService = $postService;
     }
@@ -58,6 +58,7 @@ class HomeController extends Controller
     public function newFeedLoading(Request $request){
         $numberStep = request('numberStep');
         $params['city'] = request('cityChoosing');
+        $params['userId'] = request('userId');
         try{
             $response = $this->homeService->newFeedLoading($numberStep, $params);
         }catch(Exception $e){

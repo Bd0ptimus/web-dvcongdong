@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Notification\SMSNotificationController;
+
 
 
 /*
@@ -38,6 +40,8 @@ Route::get('/header', function () {
 Route::get('/test', function () {
     return view('search.index');
 });
+
+Route::get('/test-sms',[SMSNotificationController::class, 'sendSmsNotification']);
 
 Auth::routes();
 

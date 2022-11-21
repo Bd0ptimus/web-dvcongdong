@@ -108,15 +108,25 @@ class PostRepository extends BaseRepository
 
     public function addInteractPost($postId, $userId, $interact){
         switch($interact){
+            case (NOT_INTERACT):
+                $interactType =NOT_INTERACT;
+                break;
             case (LIKE):
                 $interactType =LIKE;
                 break;
         }
-        $like=post_interaction::updateOrCreate([
+        post_interaction::where('user_id', $userId)->where('post_id', $postId)->delete();
+        $like=post_interaction::create([
             'user_id'=>$userId,
             'post_id'=>$postId,
             'interaction_type'=>$interactType,
         ]);
         return $like;
+    }
+
+    public function allPostLiked($userId){
+        return $this->model->whereHas('post_interactions', function($query) use($userId){
+            $query->where('user_id', $userId)->where('interaction_type', LIKE);
+        })->get();
     }
 }

@@ -75,6 +75,14 @@ class SearchService
                 $postTimes = $postTimes . ' ngày trước';
             }
 
+            $postData['id'] = $post->id;
+            if($filter['userId'] != 0){
+                $postData['isUser'] = true;
+                $postData['liked'] = $post->checkPostLiked($filter['userId'], $post->id);
+            }else{
+                $postData['isUser'] = false;
+            }
+
             $postData['times'] = $postTimes;
 
             $postData['title']=  $post->title;

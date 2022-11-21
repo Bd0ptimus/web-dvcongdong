@@ -1,10 +1,12 @@
+<!doctype html>
+<html>
 @include('layouts.masterLayout')
 @include('layouts.header')
-<div class="container">
-    <div class="row justify-content-center">
+<body style="position:relative;">
+    <div class="row justify-content-center project-content-section">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">Đăng nhập</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -52,7 +54,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary normal-button">
                                     Đăng nhập
                                 </button>
 
@@ -68,4 +70,6 @@
             </div>
         </div>
     </div>
-</div>
+</body>
+
+</html>

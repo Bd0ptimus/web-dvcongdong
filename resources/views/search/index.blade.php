@@ -2,6 +2,9 @@
 <html>
 @include('layouts.masterLayout')
 @include('layouts.header')
+@php
+    use App\Admin;
+@endphp
 <link href="{{ asset('css/post/chooseTopic.css?v=') . time() }}" rel="stylesheet">
 <link href="{{ asset('css/search/index.css?v=') . time() }}" rel="stylesheet">
 
@@ -57,7 +60,7 @@
 
 
         </div>
-        <div class="row my-5 newfeed-sec" id="home-newFeed-sec">
+        <div class="row my-5 newfeed-sec" id="search-newFeed-sec">
             @foreach ($posts as $post)
                 <div class="row newfeed-container d-flex justify-content-center">
                     <div class="row newfeed-content-sec">
@@ -103,6 +106,20 @@
                         </div>
 
                         <div class="newfeed-info-sec d-block justify-content-center">
+                            <div class="row newFeed-interact-sec d-flex justify-content-end">
+                                @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
+                                    <span class="newFeed-icon-sec" id="newFeed-post-{{ $post->id }}">
+                                        @if ($post->checkPostLiked(Admin::user()->id, $post->id))
+                                            <i style="color:red;" class="fa-solid fa-heart"
+                                                onclick="unlikePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
+                                        @else
+                                            <i class="fa-regular fa-heart"
+                                                onclick="likePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
+                                        @endif
+                                        {{-- <i style="color:red;" class="fa-solid fa-heart"></i> --}}
+                                    </span>
+                                @endif
+                            </div>
                             <div class="row newFeed-info-title-sec vertical-container">
                                 <p class="newFeed-info-title vertical-element-middle-align">{{ $post->title }}</p>
                             </div>
@@ -180,16 +197,27 @@
                 classify :<?=$classifyChoosen?>,
                 position :<?=$positionChoosen?>,
                 numberStep: numberLoadingStep,
+                userId: {{ Admin::user() !== null ? Admin::user()->id : 0 }},
                 _token: '{{ csrf_token() }}',
             },
             success: function(data) {
-                console.log('data response : ', JSON.stringify(data));
+                console.log('data response in search loadmore: ', JSON.stringify(data));
                 console.log('step: ',numberLoadingStep);
 
                 if (data['error'] == 0) {
                     console.log('Data length : ',data.data.length);
                     data.data.forEach(function(e){
-                        $('#home-newFeed-sec').append(`<div class="row newfeed-container d-flex justify-content-center">
+                        var likeIcon = '';
+                        if (e.isUser) {
+                            var userId = {{ Admin::user() !== null ? Admin::user()->id : 0 }};
+                            if (!e.liked) {
+                                likeIcon =
+                                    `<i class="fa-regular fa-heart" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                            } else {
+                                likeIcon = `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                            }
+                        }
+                        $('#search-newFeed-sec').append(`<div class="row newfeed-container d-flex justify-content-center">
                                                             <div class="row newfeed-content-sec">
                                                                 <div class="newfeed-image-sec  newFeed-image-sec">
                                                                     <img class="newFeed-image" src="${e.image}">
@@ -197,6 +225,11 @@
                                                                 </div>
 
                                                                 <div class="newfeed-info-sec d-block justify-content-center">
+                                                                    <div class="row newFeed-interact-sec d-flex justify-content-end">
+                                                                        <span class="newFeed-icon-sec" id="newFeed-post-${e.id}">
+                                                                            ${likeIcon}
+                                                                        </span>
+                                                                    </div>
                                                                     <div class="row newFeed-info-title-sec vertical-container">
                                                                         <p class="newFeed-info-title vertical-element-middle-align">${e.title}</p>
                                                                     </div>

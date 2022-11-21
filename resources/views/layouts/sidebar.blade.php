@@ -21,8 +21,18 @@
     {{-- <span class="fs-4 mb-close-btn"><i class="fa-regular fa-circle-xmark fa-xl" onclick="mbCloseSidebar()"
             style="float:right; width: 20px; height:20px;"></i></span> --}}
     <ul class="nav nav-pills flex-column mb-2">
+        @if (Admin::user() == !null)
+            <li class="nav-item nav-item-container">
+                <a href="" class="nav-link" aria-current="page">
+                    <i class="fa-solid fa-user"></i>
+                    <span>
+                        {{Admin::user()->name}}
+                    </span>
+                </a>
+            </li>
+        @endif
         <li class="nav-item nav-item-container">
-            <a href="{{route('search.index')}}" class="nav-link" aria-current="page">
+            <a href="{{ route('search.index') }}" class="nav-link" aria-current="page">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <span>
                     Tìm kiếm
@@ -30,6 +40,14 @@
             </a>
         </li>
         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
+            <li class="nav-item nav-item-container">
+                <a href="{{ route('post.postInteract.postLiked',['userId'=>Admin::user()->id]) }}" class="nav-link" aria-current="page">
+                    <i class="fa-solid fa-heart"></i>
+                    <span>
+                        Bài viết đã thích
+                    </span>
+                </a>
+            </li>
             <li class="nav-item nav-item-container">
                 <a href="{{ route('post.index') }}" class="nav-link" aria-current="page">
                     <i class="fa-solid fa-paper-plane"></i>
@@ -202,12 +220,25 @@
     </a>
     <hr> --}}
     <ul class="nav nav-pills flex-column mb-2">
+        @if (Admin::user() !== null)
+            <li class="nav-item d-flex justify-content-center">
+                <a href="#" class="nav-link nav-icon-item" aria-current="page">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </li>
+        @endif
         <li class="nav-item d-flex justify-content-center">
             <a href="#" class="nav-link nav-icon-item" aria-current="page">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </a>
         </li>
         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
+            <li class="nav-item d-flex justify-content-center">
+                <a href="{{ route('post.postInteract.postLiked',['userId'=>Admin::user()->id]) }}" class="nav-link nav-icon-item" aria-current="page">
+                    <i class="fa-solid fa-heart"></i>
+                </a>
+            </li>
+
             <li class="nav-item d-flex justify-content-center">
                 <a href="{{ route('post.index') }}" class="nav-link nav-icon-item" aria-current="page">
                     <i class="fa-solid fa-paper-plane"></i>

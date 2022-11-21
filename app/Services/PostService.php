@@ -188,20 +188,44 @@ class PostService
         return $this->postRepo->findPostsWithCondition($filterData, $numberStep);
     }
 
+    public function postLiked($userId){
+        return $this->postRepo->allPostLiked($userId);
+    }
+
     public function likePost($postId, $userId){
         $respone['error'] = 1;
-        // Log::debug('check condition : '. Admin::user()!==null);
-        Log::debug('check user : '. Admin::user()->isRole(ROLE_USER));
-
-        Log::debug('check condition : '. Admin::user()->isRole(ROLE_USER));
-        Log::debug('check userId input : '.$userId);
-
-        Log::debug('check use id : '. Admin::user()->id);
 
         if(Admin::user()!==null&&Admin::user()->isRole(ROLE_USER)&&$userId == Admin::user()->id){
             Log::debug('in post service like post');
-            $this->postRepo->addInteractPost($postId, $userId, LIKE);
-            $respone['error'] = 0;
+            DB::beginTransaction();
+            try{
+                $this->postRepo->addInteractPost($postId, $userId, LIKE);
+                $respone['error'] = 0;
+                DB::commit();
+            }catch(Exception $e){
+                Log::debug('error in likepost : ' . $e);
+                DB::rollBack();
+                $respone['error'] = 1;
+            }
+
+        }
+        return $respone;
+    }
+
+    public function unlikePost($postId, $userId){
+        $response['error']=1;
+        if(Admin::user()!==null&&Admin::user()->isRole(ROLE_USER)&&$userId == Admin::user()->id){
+
+            DB::beginTransaction();
+            try{
+                $this->postRepo->addInteractPost($postId, $userId, NOT_INTERACT);
+             $respone['error'] = 0;
+                DB::commit();
+            }catch(Exception $e){
+                Log::debug('error in unlikepost : ' . $e);
+                DB::rollBack();
+                $respone['error'] = 1;
+            }
         }
         return $respone;
     }

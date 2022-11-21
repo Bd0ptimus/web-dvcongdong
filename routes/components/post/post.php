@@ -12,5 +12,8 @@ Route::group(['prefix' => 'post', 'as'=>'post.'], function($route){
     $route->post('/choose-topic', [ PostsController::class, 'checkTypeInsideClassify'])->name('chooseTopic');
     $route->group(['prefix'=>'post-interact', 'as'=>'postInteract.'], function($route){
         $route->post('like', [InteractionController::class, 'likePost'])->name('like');
+        $route->post('unlike', [InteractionController::class, 'unlikePost'])->name('unlike');
+        $route->any('posts-liked/{userId}', [InteractionController::class, 'postLiked'])->name('postLiked');
+
     });
 });
