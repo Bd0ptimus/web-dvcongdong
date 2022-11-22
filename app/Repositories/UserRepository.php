@@ -24,18 +24,27 @@ class UserRepository extends BaseRepository
      */
 
 
-    public function addNewUser($data){
+    public function addNewUser($data,  $accountType){
         $this->model->create([
             'username'=>$data->username,
             'name' => $data->name,
             'email' => $data->email,
             'password' =>Hash::make($data->password),
-            'user_role'=>ROLE_USER,
+            'user_role'=>$accountType,
+            'active'=>USER_ACTIVATED,
         ]);
     }
 
 
+    public function findAccountsWithCondition($column, $condition){
+        return $this->model->where($column, $condition)->get();
+    }
 
+    public function changeAccountActionStatus($userId, $actionStatus){
+        $this->model->where('id', $userId)->update([
+            'active'=>$actionStatus,
+        ]);
+    }
 
 
 

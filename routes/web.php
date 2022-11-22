@@ -22,6 +22,7 @@ require_once 'components/post/post.php';
 require_once 'components/home/home.php';
 require_once 'components/search/search.php';
 require_once 'components/auth/auth.php';
+require_once 'components/admin/accountManager.php';
 
 
 

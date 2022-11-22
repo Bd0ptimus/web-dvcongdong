@@ -4,6 +4,9 @@
 const NEXMO_KEY="22bff0b2";
 const NEXMO_API_SECRETE = "7HIsWOC2orXt0ZMd";
 
+//User_status
+const USER_ACTIVATED = 1;
+const USER_SUSPENDED = 0;
 //ROLE USER
 const ROLE_SUPER_ADMIN=1;
 const ROLE_ADMIN=2;

@@ -77,8 +77,8 @@ class AuthService
         return $validator;
     }
 
-    public function createAccount($data){
-        $this->userRepo->addNewUser($data);
+    public function createAccount($data, $accountType){
+        $this->userRepo->addNewUser($data,  $accountType);
     }
 
 }

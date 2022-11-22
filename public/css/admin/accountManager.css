@@ -1,0 +1,9 @@
+.action-account-btn{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.action-account-btn:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}

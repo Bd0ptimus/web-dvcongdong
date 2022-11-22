@@ -7,14 +7,14 @@
     use App\Admin;
 @endphp
 {{-- <link href="{{ asset('css/mainScreen/index.css?v=') . time() }}" rel="stylesheet"> --}}
-<link href="{{ asset('css/post/postLiked.css?v=') . time() }}" rel="stylesheet">
+<link href="{{ asset('css/post/myPost.css?v=') . time() }}" rel="stylesheet">
 
 <body style="position:relative;">
     <div class="project-content-section" >
         <div class="row d-block justify-content-center" style="width:100%; margin:auto;">
             <div class="row d-flex justify-content-center" style="margin : 30px auto;">
                 <h3 class="d-flex justify-content-center">
-                    Những bài viết đã thích
+                    Bài viết của tôi
                 </h3>
             </div>
 

@@ -85,16 +85,15 @@ class RegisterController extends Controller
             } else {
                 $user = User::where('username', '=', $request->username)->first();
                 if(isset($user)){
-                    return redirect()->back()->withErrors($validator->errors()->add('password', 'Username đã tồn tại, hãy chọn username khác'))->withInput($request->all());
+                    return redirect()->back()->withErrors($validator->errors()->add('username', 'Username đã tồn tại, hãy chọn username khác'))->withInput($request->all());
                 }
 
                 $user = User::where('email', '=', $request->email)->first();
                 if(isset($user)){
                     return redirect()->back()->withErrors($validator->errors()->add('email', 'Email đã tồn tại, hãy chọn username khác'))->withInput($request->all());
                 }
-                $this->authService->createAccount($request);
+                $this->authService->createAccount($request, ROLE_USER);
                 return view('auth.registerConfirm');
-                // return redirect()->back()->withErrors($validator->errors()->add('username', 'username không tồn tại'))->withInput($request->all());
 
             }
         }

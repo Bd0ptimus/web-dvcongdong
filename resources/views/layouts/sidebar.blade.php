@@ -39,12 +39,30 @@
                 </span>
             </a>
         </li>
+        @if (Admin::user() == !null && Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN]))
+            <li class="nav-item nav-item-container">
+                <a href="{{route('admin.account.index')}}" class="nav-link" aria-current="page">
+                    <i class="fa-solid fa-users"></i>
+                    <span>
+                        Quản lý tài khoản
+                    </span>
+                </a>
+            </li>
+        @endif
         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
             <li class="nav-item nav-item-container">
                 <a href="{{ route('post.postInteract.postLiked',['userId'=>Admin::user()->id]) }}" class="nav-link" aria-current="page">
                     <i class="fa-solid fa-heart"></i>
                     <span>
                         Bài viết đã thích
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item nav-item-container">
+                <a href="" class="nav-link" aria-current="page">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>
+                        Bài viết của tôi
                     </span>
                 </a>
             </li>
@@ -232,10 +250,23 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
             </a>
         </li>
+        @if (Admin::user() == !null && Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN]))
+            <li class="nav-item d-flex justify-content-center">
+                <a href="{{route('admin.account.index')}}" class="nav-link nav-icon-item" aria-current="page">
+                    <i class="fa-solid fa-users"></i>
+                </a>
+            </li>
+        @endif
         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
             <li class="nav-item d-flex justify-content-center">
                 <a href="{{ route('post.postInteract.postLiked',['userId'=>Admin::user()->id]) }}" class="nav-link nav-icon-item" aria-current="page">
                     <i class="fa-solid fa-heart"></i>
+                </a>
+            </li>
+
+            <li class="nav-item d-flex justify-content-center">
+                <a href="" class="nav-link nav-icon-item" aria-current="page">
+                    <i class="fa-solid fa-floppy-disk"></i>
                 </a>
             </li>
 

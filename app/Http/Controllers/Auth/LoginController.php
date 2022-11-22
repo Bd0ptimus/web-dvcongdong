@@ -53,6 +53,9 @@ class LoginController extends Controller
                 $user = User::where('username', '=', $request->username)->first();
                 if(isset($user)){
                     if(Hash::check($request->password, $user->password)){
+                        if($user->active == USER_SUSPENDED){
+                            return view('warnings.accountSuspended');
+                        }
                         Auth::guard('web')->attempt(['username'=>$request->username,'password'=>$request->password]);
                         // dd(Admin::user()->inRoles([ROLE_ADMIN]));
                         return redirect()->route('home');
