@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\LOG;
+use Illuminate\Support\Facades\Route;
 
 use Illuminate\Http\Request;
 
@@ -15,9 +16,12 @@ class PostsController extends Controller
     protected $classifyService;
     protected $postService;
 
-    public function __construct(ClassifyService $classifyService,
+    public function __construct(Request $request,ClassifyService $classifyService,
     PostService $postService){
+        // dd($request->route()->parameter('userId'));
+        $userId = $request->route()->parameter('userId');
         $this->middleware('user.auth');
+        $this->middleware("mypost.permission:$userId")->only(['myPostIndex']);
         $this->classifyService = $classifyService;
         $this->postService = $postService;
     }
@@ -61,6 +65,19 @@ class PostsController extends Controller
             'error' => $response['error'],
             'confirmText'=>$response['confirmText']??'',
         ]);
+    }
+
+
+    public function myPostIndex(Request $request, $userId){
+        // dd($request->get('userId'));
+        $posts = $this->postService->loadMyPost(0, $userId);
+        return view('post.myPost',['posts'=>$posts,
+            'userId' => $userId
+        ]);
+    }
+
+    public function myPostLoadMore(Request $request){
+
     }
 
 }
