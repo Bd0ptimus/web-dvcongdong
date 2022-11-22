@@ -10,7 +10,7 @@
 <link href="{{ asset('css/post/myPost.css?v=') . time() }}" rel="stylesheet">
 
 <body style="position:relative;">
-    <div class="project-content-section" >
+    <div class="project-content-section">
         <div class="row d-block justify-content-center" style="width:100%; margin:auto;">
             <div class="row d-flex justify-content-center" style="margin : 30px auto;">
                 <h3 class="d-flex justify-content-center">
@@ -19,8 +19,8 @@
             </div>
 
 
-            <div class="row my-5 newfeed-sec" style="padding:0px;">
-                @if(sizeof($posts) == 0)
+            <div id="myPost-load" class="row my-5 newfeed-sec" style="padding:0px;">
+                @if (sizeof($posts) == 0)
                     <div class="row d-flex justify-content-center" style="margin : 30px auto;">
                         <h6 class="d-flex justify-content-center">
                             Không có bài viết nào!
@@ -28,7 +28,7 @@
                     </div>
                 @endif
                 @foreach ($posts as $post)
-                    <div class="row newfeed-container d-flex justify-content-center" id="postLiked-{{$post->id}}">
+                    <div class="row newfeed-container d-flex justify-content-center" id="postLiked-{{ $post->id }}">
                         <div class="row newfeed-content-sec">
                             <div class="newfeed-image-sec  newFeed-image-sec">
                                 @php
@@ -73,7 +73,10 @@
 
                             <div class="newfeed-info-sec d-block justify-content-center">
                                 <div class="row newFeed-interact-sec d-flex justify-content-end">
-                                    <a class="postLiked-unlike-btn" onclick="postLikedUnlike({{$post->id}})">Bỏ thích</a>
+                                    <a class="myPost-unlike-btn text-primary"
+                                        onclick="editMyPost({{ $post->id }})">Sửa</a>
+                                    <a class="myPost-unlike-btn text-danger"
+                                        onclick="deleteMyPost({{ $post->id }})">Xóa</a>
                                 </div>
                                 <div class="row newFeed-info-title-sec vertical-container">
                                     <p class="newFeed-info-title vertical-element-middle-align">{{ $post->title }}</p>
@@ -108,24 +111,77 @@
 </body>
 
 <script>
-    function postLikedUnlike(postId){
-        var url = "{{ route('post.postInteract.unlike') }}";
-        $.ajax({
-            method: 'post',
-            url: url,
-            data: {
-                userId: {{Admin::user()!==null?Admin::user()->id:null}},
-                postId : postId,
-                _token: '{{ csrf_token() }}',
-            },
-            success: function(data) {
-                console.log('data response : ', JSON.stringify(data));
-                if(data.error == 0){
-                    $(`#postLiked-${postId}`).remove();
-                }
+    var numberLoadingStep = 1;
+    var allowLoad = true;
+    window.onscroll = function(ev) {
+        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 50) {
+            // you're at the bottom of the page
+            if (allowLoad) {
+                allowLoad = false;
+                newFeedLoadMoreData();
             }
+            console.log("Bottom of page");
+        }
+    };
 
-        });
+    function myPostLoadMoreData() {
+        function newFeedLoadMoreData() {
+            $.ajax({
+                method: 'post',
+                url: '{{ route('home.homeNewFeedLoading') }}',
+                data: {
+                    numberStep: numberLoadingStep,
+                    userId: {{ $userId}},
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(data) {
+                    console.log('data response : ', JSON.stringify(data));
+                    console.log('step: ', numberLoadingStep);
+
+                    if (data['error'] == 0) {
+                        console.log('Data length : ', data.data.length);
+                        data.data.forEach(function(e) {
+                            $('#myPost-load').append(`<div class="newfeed-info-sec d-block justify-content-center">
+                                                        <div class="row newFeed-interact-sec d-flex justify-content-end">
+                                                            <a class="myPost-unlike-btn text-primary"
+                                                                onclick="editMyPost({{ $post->id }})">Sửa</a>
+                                                            <a class="myPost-unlike-btn text-danger"
+                                                                onclick="deleteMyPost({{ $post->id }})">Xóa</a>
+                                                        </div>
+                                                        <div class="row newFeed-info-title-sec vertical-container">
+                                                            <p class="newFeed-info-title vertical-element-middle-align">{{ $post->title }}</p>
+                                                        </div>
+                                                        <div class="row newFeed-info-content-sec">
+                                                            <div class="row newFeed-info-description-sec vertical-container">
+                                                                <p class="newFeed-info-description vertical-element-middle-align">
+                                                                    {{ $post->description }}</p>
+                                                            </div>
+                                                            <div class="row newFeed-info-detail-sec">
+                                                                <div class="newFeed-detail-icon">
+                                                                    <i class="fa-solid fa-location-dot"></i><span> {{ $postAddress }}</span>
+                                                                </div>
+
+                                                                <div class="newFeed-detail-icon">
+                                                                    <i class="fa-solid fa-bars"></i><span> {{ $postClassify }}</span>
+                                                                </div>
+
+                                                                <div class="newFeed-detail-icon">
+                                                                    <i class="fa-solid fa-clock"></i><span> {{ $postTimes }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>`);
+                        })
+                        if (data.data.length > 0) {
+                            numberLoadingStep++;
+                        }
+                    }
+                    allowLoad = true;
+                }
+
+            });
+        }
     }
 </script>
+
 </html>

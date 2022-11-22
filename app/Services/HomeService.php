@@ -19,6 +19,8 @@ use App\Services\PostService;
 
 //repo
 use App\Repositories\HomeRepository;
+use App\Repositories\UserRepository;
+
 
 
 use Exception;
@@ -29,17 +31,20 @@ class HomeService
     protected $classifyService;
     protected $cityService;
     protected $postService;
+    protected $userRepo;
 
     public function __construct(
         HomeRepository $homeRepo,
         ClassifyService $classifyService,
         CityService $cityService,
-        PostService $postService
+        PostService $postService,
+        UserRepository $userRepo
     ) {
         $this->homeRepo = $homeRepo;
         $this->classifyService = $classifyService;
         $this->cityService = $cityService;
         $this->postService = $postService;
+        $this->userRepo = $userRepo;
     }
 
     public function loadAllForHomePage()
@@ -98,7 +103,7 @@ class HomeService
                 $postTimes = $postTimes . ' ngày trước';
             }
             $postData['id'] = $post->id;
-            if($params['userId'] != 0){
+            if($params['userId'] != 0 && $this->userRepo->isUser($params['userId'])){
                 $postData['isUser'] = true;
                 $postData['liked'] = $post->checkPostLiked($params['userId'], $post->id);
             }else{

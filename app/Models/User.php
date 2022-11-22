@@ -63,4 +63,5 @@ class User extends Authenticatable
     public function post_interactions(){
         return $this->hasMany(post_interaction::class, 'user_id', 'id');
     }
+
 }

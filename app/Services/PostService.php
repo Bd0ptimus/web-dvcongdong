@@ -229,4 +229,9 @@ class PostService
         }
         return $respone;
     }
+
+    public function loadMyPost($numPage,$userId){
+        $params['userId']=$userId;
+        return $this->postRepo->loadAllForMyPost($numPage, $params);
+    }
 }
