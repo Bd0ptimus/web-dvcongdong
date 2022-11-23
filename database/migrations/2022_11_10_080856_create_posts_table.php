@@ -16,10 +16,9 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->integer('classify_id');
-            $table->integer('user_id')->unsigned()->nullable(true);
+            $table->integer('user_id')->nullable(true);
             $table->string('title')->nullable(false);
             $table->string('content')->nullable(true);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->Date('exist_from')->format('d-m-Y')->nullable(true);
             $table->Date('exist_to')->format('d-m-Y')->nullable(true);
             $table->string('contact_person');
