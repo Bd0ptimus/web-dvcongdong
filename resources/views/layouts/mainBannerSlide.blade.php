@@ -116,7 +116,7 @@ img {
 }
 
 </style>
-<div>
+<div id="ad-banner">
     <div class="main-slideshow-container">
         <div class="mainSlides main-slide-fade">
             <img src="{{ asset('storage/test/test1.jpg') }}" style="width:100%">

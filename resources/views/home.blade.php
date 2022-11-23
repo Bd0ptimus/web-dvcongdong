@@ -37,7 +37,7 @@
     <div class="project-content-section">
         <div id="img-carousel">
             @include('layouts.mainBannerSlide')
-            <div id="main-search" class="d-flex justify-content-center">
+            <div id="main-search-pc-tb" class="justify-content-center">
                 <div class="box-search-wrapper" id="main-search-section">
                     <div class="container" style="display:block; justify-content: center;">
                         <div class="row main-filter">
@@ -111,7 +111,92 @@
                 </div>
             </div>
 
+
+            <div id="main-search-mb" class="justify-content-center" >
+                <form id="frm-search-job" action="{{ route('search.homeSearch') }}" method="POST">@csrf
+                    <div class="row" style="width : 100%; margin:auto;">
+                        <div class="form-group input-data vertical-container d-flex justify-content-center" style="height : 48px; margin: 10px 0px;">
+                            <input autocomplete="off"
+                                class="form-control form-control-input-text ui-autocomplete-input vertical-element-middle-align"
+                                id="Filter_Keyword" name="homeFilterKeyWord" placeholder="Từ khóa"
+                                type="text" style="height: 46px; width:93%" value="">
+                        </div>
+                    </div>
+                    <div class="row" style="width : 100%; margin:auto;">
+                        <div class="form-group input-data">
+                            <select class="main-filter-classify" name="homeFilterClassify">
+                                <option value="0">Tất cả</option>
+                                @foreach ($classifies as $classify)
+                                    <option value="{{ $classify->id }}">{{ $classify->classify_name }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" style="width : 100%; margin:auto;">
+                        <div class="form-group  input-data">
+                            <select class="main-filter-position" name="homeFilterPosition">
+                                <option value="0">Toàn Nga</option>
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->city }}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" style="width : 100%; margin:auto; height:auto;">
+                        <div class="d-flex justify-content-center search-submit vertical-container" style="height : 50px;">
+                            <button
+                                class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn"
+                                type="submit" style="height: 46px; ">
+                                <i class="fa fa-search"></i><span> Tìm kiếm</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row" style="display:flex; justify-content: center; width:100%; height : 50px; margin:auto;" >
+                    <div class="form-group vertical-container d-flex justify-content-center" style="width:25%;">
+                        <button id="checkCarTicketMb"
+                            class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                            <i class="fa-solid fa-car-on"></i>
+                        </button>
+                    </div>
+                    <div class="form-group vertical-container d-flex justify-content-center"  style="width:25%;">
+                        <button id="checkAdministrativeMb"
+                            class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                            <i class="fa-solid fa-book"></i>
+                        </button>
+                    </div>
+                    <div class="form-group vertical-container d-flex justify-content-center"  style="width:25%;">
+                        <button id="checkTaxdebtMb"
+                            class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                            <i class="fa-solid fa-coins"></i>
+                        </button>
+                    </div>
+                    <div class="form-group vertical-container d-flex justify-content-center"  style="width:25%;">
+                        <button id="checkEntryBanMb"
+                            class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                            <i class="fa-solid fa-plane-circle-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+        {{-- <div class="row my-5 d-flex justify-content-between">
+            <div style="width : 50%; height : auto;">
+                <fxwidget-er inverse="false" amount="1" decimals="2" large="false" shadow="true" symbol="true"
+                    flag="true" changes="true" grouping="true" border="false" main-curr="USD" sel-curr="RUB,VND"
+                    background-color="#ffffff" lang="vi" border-radius="0.5"></fxwidget-er>
+                <script async src="https://s.fx-w.io/widgets/exchange-rates/latest.js?vi"></script>
+            </div>
+            <div style="width : 50%; height : auto;">
+                <div id="ww_b40fc5d8a12e7" v='1.3' loc='id' a='{"t":"responsive","lang":"vi","sl_lpl":1,"ids":["wl3996"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"rgba(255,255,255,1)","cl_font":"#000000","cl_cloud":"#d4d4d4","cl_persp":"#2196F3","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"3","el_wfc":3,"cl_odd":"#0000000a"}'>Weather Data Source: <a href="https://weerlabs.nl/weer_moskou/week/" id="ww_b40fc5d8a12e7_u" target="_blank">Moskou weer deze week</a></div><script async src="https://app1.weatherwidget.org/js/?id=ww_b40fc5d8a12e7"></script>
+            </div>
+        </div> --}}
 
         <div class="row my-5 newfeed-sec" id="home-newFeed-sec">
             @foreach ($posts as $post)
@@ -245,7 +330,7 @@
     var numberLoadingStep = 1;
     var allowLoad = true;
     window.onscroll = function(ev) {
-        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight-50) {
+        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 50) {
             // you're at the bottom of the page
             if (allowLoad) {
                 allowLoad = false;
@@ -279,7 +364,8 @@
                                 likeIcon =
                                     `<i class="fa-regular fa-heart" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
                             } else {
-                                likeIcon = `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                                likeIcon =
+                                    `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
                             }
                         }
                         $('#home-newFeed-sec').append(`<div class="row newfeed-container d-flex justify-content-center">
@@ -365,6 +451,22 @@
         })
 
         $('#checkEntryBan').on('click', function() {
+            modalShowMain(4);
+        })
+
+        $('#checkCarTicketMb').on('click', function() {
+            modalShowMain(1);
+        })
+
+        $('#checkAdministrativeMb').on('click', function() {
+            modalShowMain(2);
+        })
+
+        $('#checkTaxdebtMb').on('click', function() {
+            modalShowMain(3);
+        })
+
+        $('#checkEntryBanMb').on('click', function() {
             modalShowMain(4);
         })
 
