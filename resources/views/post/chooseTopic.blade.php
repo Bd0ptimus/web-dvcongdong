@@ -9,7 +9,7 @@
         <div class="row chooseTopic-main d-flex justify-content-center">
             <div class="row chooseTopic-header-sec" style="width: 100%; padding:20px 0px;">
                 <h3 class="chooseTopic-header chooseTopic-text">
-                    {{$header}}
+                    {{ $header }}
                 </h3>
             </div>
 
@@ -30,7 +30,8 @@
                                         <span class="form-text">Bạn muốn đăng tin về lĩnh vực ? <span
                                                 class="text-danger">(*)</span></span>
                                     </h5>
-                                    <select class="main-filter-classify classify-select" name="mainFilterClassify">
+                                    <select id="classifySelect" class="main-filter-classify classify-select"
+                                        name="mainFilterClassify">
                                         <option value="0">-Chọn một lĩnh vực-</option>
                                         @foreach ($classifies as $classify)
                                             <option value="{{ $classify->id }}">{{ $classify->classify_name }}</option>
@@ -75,54 +76,59 @@
         templateSelection: formatTextClassify,
         selectionCssClass: 'header-function-sec',
     });
-    $(document).ready(function() {
-        $('.classify-select').on('change', function() {
-            let classifyId = $('.classify-select').find(':selected').val();
 
-            $.ajax({
-                method: 'post',
-                url: '{{ route('post.chooseTopic') }}',
-                data: {
-                    classifyId: classifyId,
-                    _token: '{{ csrf_token() }}',
-                },
-                success: function(data) {
-                    if (data.data.haveChildType) {
-                        $('.classify-type-select option').each(function() {
-                            $(this).remove();
-                        });
+    function selectClassifyCall() {
+        let classifyId = $('.classify-select').find(':selected').val();
+        $( "#classifySelect" ).val(classifyId).trigger('change');
+        $.ajax({
+            method: 'post',
+            url: '{{ route('post.chooseTopic') }}',
+            data: {
+                classifyId: classifyId,
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(data) {
+                if (data.data.haveChildType) {
+                    $('.classify-type-select option').each(function() {
+                        $(this).remove();
+                    });
+                    $('.classify-type-select').append(
+                        `<option value="0">-chọn chuyên mục-</option>`);
+                    data.data.classifyTypes.classify_types.forEach(function(e) {
                         $('.classify-type-select').append(
-                            `<option value="0">-chọn chuyên mục-</option>`);
-                        data.data.classifyTypes.classify_types.forEach(function(e) {
-                            $('.classify-type-select').append(
-                                `<option value="${e.id}">${e.type_name}</option>`
-                            );
-                        });
-                        $('.classify-type').show();
-                        if ($('.classify-select').find(':selected').val() != 0 && $('.classify-type').find(':selected').val() != 0) {
-                            setButtonActiveDisabled(0, 'choose-topic-btn');
-                        }else{
-                            setButtonActiveDisabled(1, 'choose-topic-btn');
-                        }
+                            `<option value="${e.id}">${e.type_name}</option>`
+                        );
+                    });
+                    $('.classify-type').show();
+                    if ($('.classify-select').find(':selected').val() != 0 && $('.classify-type').find(
+                            ':selected').val() != 0) {
+                        setButtonActiveDisabled(0, 'choose-topic-btn');
                     } else {
-                        $('.classify-type-select option').each(function() {
-                            $(this).remove();
-                        });
-                        $('.classify-type').hide();
-                        if ($('.classify-select').find(':selected').val() != 0) {
-                            setButtonActiveDisabled(0, 'choose-topic-btn');
-                        }else{
-                            setButtonActiveDisabled(1, 'choose-topic-btn');
-                        }
+                        setButtonActiveDisabled(1, 'choose-topic-btn');
                     }
-
-                },
-                error: function(response) {
-                    console.log('error: ', JSON.stringify(response));
-                    setButtonActiveDisabled(1, 'choose-topic-btn');
+                } else {
+                    $('.classify-type-select option').each(function() {
+                        $(this).remove();
+                    });
+                    $('.classify-type').hide();
+                    if ($('.classify-select').find(':selected').val() != 0) {
+                        setButtonActiveDisabled(0, 'choose-topic-btn');
+                    } else {
+                        setButtonActiveDisabled(1, 'choose-topic-btn');
+                    }
                 }
 
-            });
+            },
+            error: function(response) {
+                console.log('error: ', JSON.stringify(response));
+                setButtonActiveDisabled(1, 'choose-topic-btn');
+            }
+
+        });
+    }
+    $(document).ready(function() {
+        $('.classify-select').on('select2:close', function() {
+            selectClassifyCall();
         })
 
         $('.classify-type').on('change', function() {
