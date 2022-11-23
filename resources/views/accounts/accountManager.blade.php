@@ -142,7 +142,7 @@
 
     </div>
 </body>
-<script src = "http://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer ></script>
+<script src = "https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer ></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#adminTable').DataTable();
