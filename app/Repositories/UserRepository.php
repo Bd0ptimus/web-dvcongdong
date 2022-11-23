@@ -46,6 +46,12 @@ class UserRepository extends BaseRepository
         ]);
     }
 
-
+    public function isUser($userId){
+        $user = $this->model->where('id', $userId)->where('active', USER_ACTIVATED)->first();
+        if(isset($user)){
+            return $user->user_role == ROLE_USER;
+        }
+        return false;
+    }
 
 }

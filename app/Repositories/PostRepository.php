@@ -70,7 +70,7 @@ class PostRepository extends BaseRepository
         }
         $query = $query->where('exist_from', '<=', $now)
             ->where('exist_to', '>=', $now);
-        $query = $query->orderBy('created_at', 'DESC');
+        $query = $query->orderBy('updated_at', 'DESC');
 
         $query = $query->skip(NEW_FEED_LOAD_STEP * $numPage)->take(NEW_FEED_LOAD_STEP)->get();
 
@@ -100,7 +100,7 @@ class PostRepository extends BaseRepository
             $query=$query->Where('title', 'like', '%' . $filterData['keyword'] . '%') ;//->orWhere('description', 'like', '%' . $filterData['keyword'] . '%')
         }
         // dd($query->get());
-        $query=$query->orderBy('created_at', 'DESC');
+        $query=$query->orderBy('updated_at', 'DESC');
         $query=$query->skip(NEW_FEED_LOAD_STEP * $numPage)->take(NEW_FEED_LOAD_STEP)->get();
         return $query;
     }
@@ -128,5 +128,13 @@ class PostRepository extends BaseRepository
         return $this->model->whereHas('post_interactions', function($query) use($userId){
             $query->where('user_id', $userId)->where('interaction_type', LIKE);
         })->get();
+    }
+
+    public function loadAllForMyPost($numPage, $params){
+        $query = $this->model->newQuery();
+        $query = $query->where('user_id',$params['userId']);
+        $query=$query->orderBy('updated_at', 'DESC');
+        $query=$query->skip(NEW_FEED_LOAD_STEP * $numPage)->take(NEW_FEED_LOAD_STEP)->get();
+        return $query;
     }
 }

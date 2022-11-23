@@ -1,0 +1,11 @@
+.myPost-unlike-btn{
+    text-decoration: none;
+    width: 30px;
+    font-size: 12px;
+    padding:0px;
+    font-weight:600;
+}
+
+.postLiked-unlike-btn{
+    cursor:pointer;
+}

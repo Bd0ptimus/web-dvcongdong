@@ -19,15 +19,15 @@ class AccountManagerController extends Controller
     public function __construct(AdminService $adminService,
     AuthService $authService){
         $this->middleware('user.auth');
+        $this->middleware('admin.permission');
         $this->adminService=$adminService;
         $this->authService=$authService;
     }
 
     public function index(Request $request){
-        if(Admin::user() !==null && !Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN])){
-            return view('warnings.notPermissionToAccessPage');
-        }
-
+        // if(Admin::user() !==null && !Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN])){
+        //     return view('warnings.notPermissionToAccessPage');
+        // }
         $data = $this->adminService->takeAllForAccountManager();
         return view('accounts.accountManager',[
             'admins' => $data['adminsAcc'],
