@@ -23,12 +23,7 @@
     position: relative;
 }
 
-#main-search{
-    position: absolute;
-    top : 15%;
-    width : 100%;
-    height:auto;
-}
+
 
 .main-service-checking-btn{
     width : 90%;
@@ -41,28 +36,86 @@
 
 
 @media screen and (min-width : 1020px) and (max-width: 5000px){
+    #main-search-pc-tb{
+        position: absolute;
+        top : 15%;
+        width : 100%;
+        height:auto;
+    }
+    #main-search-mb{
+        display:none;
+    }
+    #main-search-pc-tb{
+        display:flex;
+    }
     #main-search-section{
+        display:block;
+    }
+    #ad-banner{
         display:block;
     }
 }
 
 
 @media screen and (min-width : 820px) and (max-width: 1020px){
+    #main-search-pc-tb{
+        position: absolute;
+        top : 15%;
+        width : 100%;
+        height:auto;
+    }
+    #main-search-mb{
+        display:none;
+    }
+    #main-search-pc-tb{
+        display:flex;
+    }
     #main-search-section{
+        display:block;
+    }
+    #ad-banner{
         display:block;
     }
 }
 
 
 @media screen and (min-width : 450px) and (max-width: 820px){
+    #main-search-pc-tb{
+        position: absolute;
+        top : 15%;
+        width : 100%;
+        height:auto;
+    }
+    #main-search-mb{
+        display:none;
+    }
+    #main-search-pc-tb{
+        display:flex;
+    }
     #main-search-section{
+        display:block;
+    }
+    #ad-banner{
         display:block;
     }
 }
 
 
 @media screen and (max-width: 450px){
+    #main-search-mb{
+        display:block;
+        border-radius: 6px;
+        background-color:rgba(102,102,102,.7);
+        width : 100%;
+        margin: 30px auto;
+    }
+    #main-search-pc-tb{
+        display:none;
+    }
     #main-search-section{
+        display:block;
+    }
+    #ad-banner{
         display:none;
     }
 }
