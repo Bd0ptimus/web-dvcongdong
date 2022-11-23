@@ -32,4 +32,8 @@ class RestaurantService
     public function uploadPostRestaurant($request){
         return $this->restaurantRepo->momBabyPostCreate($request);
     }
+
+    public function findPostRestaurantById($id){
+        return $this->restaurantRepo->findById($id);
+    }
 }

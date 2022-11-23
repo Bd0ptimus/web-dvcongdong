@@ -31,6 +31,9 @@ use App\Services\WebServicesService;
 use App\Repositories\PostRepository;
 
 
+//Models
+use App\Models\post;
+
 use Exception;
 
 class PostService
@@ -230,8 +233,119 @@ class PostService
         return $respone;
     }
 
-    public function loadMyPost($numPage,$userId){
-        $params['userId']=$userId;
+    public function loadMyPost($numPage,$params){
         return $this->postRepo->loadAllForMyPost($numPage, $params);
+    }
+
+    public function loadMoreMyPost($numPage,$params){
+        $posts = $this->postRepo->loadAllForMyPost($numPage, $params);
+        $response = [];
+        foreach ($posts as $post) {
+            //load img
+            $imgPath = asset('storage/template/post/none-pic-logo.jpg');
+            foreach ($post->post_attachments as $attachment) {
+                if ($attachment->attachment_type == POST_DESCRIPTION_PHOTO) {
+                    $imgPath = asset($attachment->attachment_path);
+                    break;
+                }
+            }
+            $postData['image'] = $imgPath;
+
+            //address
+            $postAddress = 'Toàn Nga';
+            if (isset($post->city)) {
+                $postAddress = $post->city->city;
+            }
+
+            $postData['address'] = $postAddress;
+
+            //classify
+            $postClassify = CLASSIFY_SLUG[$post->posts_classify_type];
+            if ($post->posts_classify_type == SERVICE_SLUG) {
+                $postClassify = $postClassify . ', ' . SERVICE_TYPE_SLUG[$post->posts_classify->services_type_type];
+            }
+            $postData['classify'] = $postClassify;
+
+            //Times
+            $now = \Carbon\Carbon::now();
+            $createdAt = \Carbon\Carbon::parse($post->created_at);
+            $postTimes = $createdAt->diffInDays($now);
+            if ($postTimes == 0) {
+                $postTimes = $createdAt->diffInHours($now);
+                if ($postTimes == 0) {
+                    $postTimes = 'gần đây';
+                } else {
+                    $postTimes = $postTimes . ' giờ trước';
+                }
+            } elseif ($postTimes > 30) {
+                $postTimes = date('m/d/Y', strtotime($createdAt));
+            } else {
+                $postTimes = $postTimes . ' ngày trước';
+            }
+            $postData['id'] = $post->id;
+            $postData['times'] = $postTimes;
+
+            $postData['title']=  $post->title;
+            $postData['description'] = $post->description;
+
+            array_push($response, $postData);
+        }
+
+        return $response;
+    }
+
+    public function deletePost($postId){
+        $post = post::where('id', $postId)->first();
+        if(Admin::user()->id != $post->user_id){
+            $response['permission_allow'] = 0;
+        }else{
+            $response['permission_allow'] = 1;
+            DB::beginTransaction();
+            try{
+                switch($post->classify_id){
+                    case (REAL_ESTATE):
+                        $postRelation = $this->realEstateService->findPostRealEstateById($post->posts_classify_id);
+                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        break;
+                    case (SERVICE):
+                        $this->webServicesService->findServiceById($post->posts_classify_id);
+                        $this->postRepo->deleteById($postId);
+                        break;
+                    case (JOB):
+                        $postRelation = $this->jobService->findPostJobById($post->posts_classify_id);
+                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        break;
+                    case (CAR_TRADE):
+                        $postRelation = $this->carTradeService->findPostCarTradeById($post->posts_classify_id);
+                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        break;
+                    case (GARMENT):
+                        $postRelation = $this->garmentService->findPostGarmentById($post->posts_classify_id);
+                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        break;
+                    case (MOM_BABY):
+                        $postRelation = $this->momBabyService->findPostMombabyById($post->posts_classify_id);
+                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        break;
+                    case (RESTAURANT):
+                        $postRelation =$this->restaurantService->findPostRestaurantById($post->posts_classify_id);
+                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        break;
+                    case (AD):
+                        $postRelation =$this->classifyAdsService->findPostAdsById($post->posts_classify_id);
+                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        break;
+                }
+
+                // $this->postRepo->deleteAllPostById($postId);
+                DB::commit();
+                $response['error'] = 0;
+            }catch(Exception $e){
+                DB::rollBack();
+                Log::debug('error in delete post : '. $e);
+                $response['error'] = 1;
+            }
+        }
+        return $response;
     }
 }

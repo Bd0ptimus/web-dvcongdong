@@ -32,4 +32,8 @@ class RealEstateService
     public function uploadPostRealEstate($request){
         return $this->realEstateRepo->realEstatePostCreate($request);
     }
+
+    public function findPostRealEstateById($id){
+        return $this->realEstateRepo->findById($id);
+    }
 }
