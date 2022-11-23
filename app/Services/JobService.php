@@ -32,4 +32,8 @@ class JobService
     public function uploadPostJob($request){
         return $this->jobRepo->jobPostCreate($request);
     }
+
+    public function findPostJobById($id){
+        return $this->jobRepo->findById($id);
+    }
 }

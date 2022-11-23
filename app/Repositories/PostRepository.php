@@ -4,6 +4,10 @@ namespace App\Repositories;
 
 use Carbon\Carbon;
 use App\Repositories\BaseRepository;
+use App\Repositories\PostAttachmentRepository;
+use Illuminate\Support\Facades\Log;
+
+
 //use Your Model
 use App\Admin;
 
@@ -17,14 +21,16 @@ use App\Models\post_interaction;
 class PostRepository extends BaseRepository
 {
     protected $model;
+    protected $postAttachmentRepo;
     /**
      * BaseRepository constructor.
      *
      * @param Model $model
      */
-    public function __construct(post $model)
+    public function __construct(post $model,PostAttachmentRepository $postAttachmentRepo)
     {
         $this->model = $model;
+        $this->postAttachmentRepo = $postAttachmentRepo;
     }
     /**
      * @return string
@@ -136,5 +142,12 @@ class PostRepository extends BaseRepository
         $query=$query->orderBy('updated_at', 'DESC');
         $query=$query->skip(NEW_FEED_LOAD_STEP * $numPage)->take(NEW_FEED_LOAD_STEP)->get();
         return $query;
+    }
+
+    public function deleteAllPostById($postId, $relation){
+        // Log::debug('check relation : '. print_r($relation, true));
+        // exit;
+        $relation->post()->delete();
+        $this->postAttachmentRepo->deletePostAttachmentsByPostId($postId);
     }
 }

@@ -70,14 +70,40 @@ class PostsController extends Controller
 
     public function myPostIndex(Request $request, $userId){
         // dd($request->get('userId'));
-        $posts = $this->postService->loadMyPost(0, $userId);
+        $params['userId']=$userId;
+        $posts = $this->postService->loadMyPost(0, $params);
         return view('post.myPost',['posts'=>$posts,
             'userId' => $userId
         ]);
     }
 
     public function myPostLoadMore(Request $request){
+        $params['userId'] = request('userId');
+        $data = [];
+        try{
+            $data = $this->postService->loadMoreMyPost(request('numberStep'), $params);
 
+        }catch(\Exception $e){
+            response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+        }
+        return response()->json(['error' => 0, 'msg' => 'load more my post thành công', 'data' => $data ]);
+    }
+
+    public function deletePost(Request $request){
+        $data = [];
+        try{
+            $data = $this->postService->deletePost(request('postId'));
+            if($data['permission_allow'] == 0){
+                return response()->json(['error' => 1, 'msg' => 'Bạn không có quyền xóa bài viết này', 'data' => $data]);
+            }else{
+                if($data['error'] == 1){
+                    return response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+                }
+            }
+        }catch(\Exception $e){
+            return response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+        }
+        return response()->json(['error' => 0, 'msg' => 'load more my post thành công', 'data' => $data ]);
     }
 
 }

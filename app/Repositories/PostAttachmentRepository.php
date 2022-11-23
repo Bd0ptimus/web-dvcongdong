@@ -43,4 +43,9 @@ class PostAttachmentRepository extends BaseRepository
     }
 
 
+    public function deletePostAttachmentsByPostId($postId){
+        $this->model->where('post_id', $postId)->delete();
+    }
+
+
 }

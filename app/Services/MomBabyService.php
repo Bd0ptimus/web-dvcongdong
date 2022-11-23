@@ -32,4 +32,8 @@ class MomBabyService
     public function uploadPostMomBaby($request){
         return $this->momBabyRepo->momBabyPostCreate($request);
     }
+
+    public function findPostMombabyById($id){
+        return $this->momBabyRepo->findById($id);
+    }
 }

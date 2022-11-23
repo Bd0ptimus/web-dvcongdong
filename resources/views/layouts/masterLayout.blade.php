@@ -77,6 +77,29 @@
 
         });
     }
+
+    function deleteMyPost(postId, contentId){
+        var url = "{{ route('post.deletePost') }}";
+        $.ajax({
+            method: 'post',
+            url: url,
+            data: {
+                postId : postId,
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(data) {
+                console.log('data response : ', JSON.stringify(data));
+                if(data.permission_allow == 0){
+                    window.location.href = '{{route("home")}}'
+                }else{
+                    if(data.error == 0){
+                        $(`#${contentId}`).remove();
+                    }
+                }
+            }
+
+        });
+    }
 </script>
 
 <!-- Styles -->

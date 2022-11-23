@@ -59,7 +59,7 @@
                 </a>
             </li>
             <li class="nav-item nav-item-container">
-                <a href="{{route('post.myPost',['userId'=>Admin::user()->id])}}" class="nav-link" aria-current="page">
+                <a href="{{route('post.myPost.index',['userId'=>Admin::user()->id])}}" class="nav-link" aria-current="page">
                     <i class="fa-solid fa-floppy-disk"></i>
                     <span>
                         Bài viết của tôi
@@ -265,7 +265,7 @@
             </li>
 
             <li class="nav-item d-flex justify-content-center">
-                <a href="{{route('post.myPost',['userId'=>Admin::user()->id])}}" class="nav-link nav-icon-item" aria-current="page">
+                <a href="{{route('post.myPost.index',['userId'=>Admin::user()->id])}}" class="nav-link nav-icon-item" aria-current="page">
                     <i class="fa-solid fa-floppy-disk"></i>
                 </a>
             </li>

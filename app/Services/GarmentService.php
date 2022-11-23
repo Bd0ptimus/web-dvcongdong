@@ -32,4 +32,8 @@ class GarmentService
     public function uploadPostGarment($request){
         return $this->garmentRepo->garmentPostCreate($request);
     }
+
+    public function findPostGarmentById($id){
+        return $this->garmentRepo->findById($id);
+    }
 }

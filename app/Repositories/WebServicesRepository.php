@@ -77,6 +77,8 @@ class WebServicesRepository extends BaseRepository
         return $serviceElec;
     }
 
-
+    public function deleteService($relation){
+        return $relation->service()->delete();
+    }
 
 }

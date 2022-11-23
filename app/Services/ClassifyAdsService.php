@@ -32,4 +32,8 @@ class ClassifyAdsService
     public function uploadPostAds($request){
         return $this->classifyAdsRepo->adsPostCreate($request);
     }
+
+    public function findPostAdsById($id){
+        return $this->classifyAdsRepo->findById($id);
+    }
 }

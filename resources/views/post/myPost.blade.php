@@ -28,7 +28,7 @@
                     </div>
                 @endif
                 @foreach ($posts as $post)
-                    <div class="row newfeed-container d-flex justify-content-center" id="postLiked-{{ $post->id }}">
+                    <div class="row newfeed-container d-flex justify-content-center" id="myPost-{{ $post->id }}">
                         <div class="row newfeed-content-sec">
                             <div class="newfeed-image-sec  newFeed-image-sec">
                                 @php
@@ -74,9 +74,9 @@
                             <div class="newfeed-info-sec d-block justify-content-center">
                                 <div class="row newFeed-interact-sec d-flex justify-content-end">
                                     <a class="myPost-unlike-btn text-primary"
-                                        onclick="editMyPost({{ $post->id }})">Sửa</a>
+                                        onclick="editMyPost({{ $post->id }}, 'myPost-{{$post->id}}')">Sửa</a>
                                     <a class="myPost-unlike-btn text-danger"
-                                        onclick="deleteMyPost({{ $post->id }})">Xóa</a>
+                                        onclick="deleteMyPost({{ $post->id }},'myPost-{{$post->id}}')">Xóa</a>
                                 </div>
                                 <div class="row newFeed-info-title-sec vertical-container">
                                     <p class="newFeed-info-title vertical-element-middle-align">{{ $post->title }}</p>
@@ -118,69 +118,78 @@
             // you're at the bottom of the page
             if (allowLoad) {
                 allowLoad = false;
-                newFeedLoadMoreData();
+                myPostLoadMoreData();
             }
             console.log("Bottom of page");
         }
     };
 
+
+
     function myPostLoadMoreData() {
-        function newFeedLoadMoreData() {
-            $.ajax({
-                method: 'post',
-                url: '{{ route('home.homeNewFeedLoading') }}',
-                data: {
-                    numberStep: numberLoadingStep,
-                    userId: {{ $userId}},
-                    _token: '{{ csrf_token() }}',
-                },
-                success: function(data) {
-                    console.log('data response : ', JSON.stringify(data));
-                    console.log('step: ', numberLoadingStep);
+        $.ajax({
+            method: 'post',
+            url: '{{ route('post.myPost.loading') }}',
+            data: {
+                numberStep: numberLoadingStep,
+                userId: {{ $userId }},
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(data) {
+                console.log('data response : ', JSON.stringify(data));
+                console.log('step: ', numberLoadingStep);
 
-                    if (data['error'] == 0) {
-                        console.log('Data length : ', data.data.length);
-                        data.data.forEach(function(e) {
-                            $('#myPost-load').append(`<div class="newfeed-info-sec d-block justify-content-center">
-                                                        <div class="row newFeed-interact-sec d-flex justify-content-end">
-                                                            <a class="myPost-unlike-btn text-primary"
-                                                                onclick="editMyPost({{ $post->id }})">Sửa</a>
-                                                            <a class="myPost-unlike-btn text-danger"
-                                                                onclick="deleteMyPost({{ $post->id }})">Xóa</a>
-                                                        </div>
-                                                        <div class="row newFeed-info-title-sec vertical-container">
-                                                            <p class="newFeed-info-title vertical-element-middle-align">{{ $post->title }}</p>
-                                                        </div>
-                                                        <div class="row newFeed-info-content-sec">
-                                                            <div class="row newFeed-info-description-sec vertical-container">
-                                                                <p class="newFeed-info-description vertical-element-middle-align">
-                                                                    {{ $post->description }}</p>
+                if (data['error'] == 0) {
+                    console.log('Data length : ', data.data.length);
+                    data.data.forEach(function(e) {
+                        $('#myPost-load').append(`<div class="row newfeed-container d-flex justify-content-center" id = "myPost-${e.id}">
+                                                            <div class="row newfeed-content-sec">
+                                                                <div class="newfeed-image-sec  newFeed-image-sec">
+                                                                    <img class="newFeed-image" src='${e.image}'>
+
+                                                                </div>
+
+                                                                <div class="newfeed-info-sec d-block justify-content-center">
+                                                                    <div class="row newFeed-interact-sec d-flex justify-content-end">
+                                                                        <a class="myPost-unlike-btn text-primary"
+                                                                            onclick="editMyPost(${e.id}, 'myPost-${e.id}')">Sửa</a>
+                                                                        <a class="myPost-unlike-btn text-danger"
+                                                                            onclick="deleteMyPost(${e.id}, 'myPost-${e.id}')">Xóa</a>
+                                                                    </div>
+                                                                    <div class="row newFeed-info-title-sec vertical-container">
+                                                                        <p class="newFeed-info-title vertical-element-middle-align">${e.title}</p>
+                                                                    </div>
+                                                                    <div class="row newFeed-info-content-sec">
+                                                                        <div class="row newFeed-info-description-sec vertical-container">
+                                                                            <p class="newFeed-info-description vertical-element-middle-align">
+                                                                                ${e.description}</p>
+                                                                        </div>
+                                                                        <div class="row newFeed-info-detail-sec">
+                                                                            <div class="newFeed-detail-icon">
+                                                                                <i class="fa-solid fa-location-dot"></i><span> ${e.address}</span>
+                                                                            </div>
+
+                                                                            <div class="newFeed-detail-icon">
+                                                                                <i class="fa-solid fa-bars"></i><span> ${e.classify}</span>
+                                                                            </div>
+
+                                                                            <div class="newFeed-detail-icon">
+                                                                                <i class="fa-solid fa-clock"></i><span> ${e.times}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div class="row newFeed-info-detail-sec">
-                                                                <div class="newFeed-detail-icon">
-                                                                    <i class="fa-solid fa-location-dot"></i><span> {{ $postAddress }}</span>
-                                                                </div>
-
-                                                                <div class="newFeed-detail-icon">
-                                                                    <i class="fa-solid fa-bars"></i><span> {{ $postClassify }}</span>
-                                                                </div>
-
-                                                                <div class="newFeed-detail-icon">
-                                                                    <i class="fa-solid fa-clock"></i><span> {{ $postTimes }}</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>`);
-                        })
-                        if (data.data.length > 0) {
-                            numberLoadingStep++;
-                        }
+                                                        </div>`);
+                    })
+                    if (data.data.length > 0) {
+                        numberLoadingStep++;
                     }
-                    allowLoad = true;
                 }
+                allowLoad = true;
+            }
 
-            });
-        }
+        });
     }
 </script>
 

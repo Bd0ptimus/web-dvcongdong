@@ -32,4 +32,8 @@ class CarTradeService
     public function uploadPostCarTrade($request){
         return $this->carTradeRepo->carTradePostCreate($request);
     }
+
+    public function findPostCarTradeById($id){
+        return $this->carTradeRepo->findById($id);
+    }
 }
