@@ -44,6 +44,12 @@ Route::get('/test', function () {
     return view('auth.registerConfirm');
 });
 
+Route::get('/storage-link', function(){
+    $targetFolder = storage_path('app/public');
+    $linkFolder = public_path('storage');
+    symlink($targetFolder, $linkFolder);
+});
+
 // Route::get('/test-sms',[SMSNotificationController::class, 'sendSmsNotification']);
 
 Auth::routes();
