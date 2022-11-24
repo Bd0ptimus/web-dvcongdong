@@ -51,8 +51,8 @@
                             <h6 class="mt-2">Biển số xe</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="25" name='checkCar-carLicense' type="text" class="form-control h-100"
-                                value="" />
+                            <input maxlength="25" style="border-colorsetupBorderColor" id="checkCar-carLicense"
+                                name='checkCar-carLicense' type="text" class="form-control h-100" value="" />
                         </div>
                     </div>
                     <div class="row my-1">
@@ -60,8 +60,8 @@
                             <h6 class="mt-2">Chứng nhận sở hữu xe</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="55" name='checkCar-certCarOwnerShip' type="text" class="form-control h-100"
-                                value="" />
+                            <input maxlength="55" id="checkCar-certCarOwnerShip" name='checkCar-certCarOwnerShip'
+                                type="text" class="form-control h-100" value="" />
                         </div>
                     </div>
                 </form>
@@ -134,8 +134,8 @@
                             <h6 class="mt-2">Họ tên - Tiếng Nga</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="25" name='checkEntry-nameRussian' type="text" class="form-control h-100"
-                                value="" />
+                            <input maxlength="25" id="checkEntry-nameRussian" name='checkEntry-nameRussian'
+                                type="text" class="form-control h-100" value="" />
                         </div>
                     </div>
                     <div class="row my-1">
@@ -143,41 +143,52 @@
                             <h6 class="mt-2">Họ tên - Tiếng Latin</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="55" name='checkEntry-nameLatin' type="text" class="form-control h-100"
-                                value="" />
+                            <input maxlength="55" id="checkEntry-nameLatin" name='checkEntry-nameLatin'
+                                type="text" class="form-control h-100" value="" />
                         </div>
                     </div>
                     <div class="row my-1">
                         <div class="col-ms-6" style="width : 40%;">
                             <h6 class="mt-2">Giới tính</h6>
-                            <select class="select-btn" name ="checkEntry-gender">
+                            <select class="select-btn" name="checkEntry-gender">
                                 <option value="1" selected>Nam</option>
                                 <option value="2">Nữ</option>
                             </select>
                         </div>
                         <div class="col-ms-6" style="width : 60%;">
                             <h6 class="mt-2">Ngày sinh</h6>
-                            <input maxlength="55" name='checkEntry-dob' type="date" class="form-control"
-                                value="" />
+                            <input maxlength="55" id="checkEntry-dob" name='checkEntry-dob' type="date"
+                                class="form-control" value="" />
                         </div>
                     </div>
 
                     <div class="row my-1">
                         <div class="col-ms-6" style="width : 40%;">
                             <h6 class="mt-2">Số hộ chiếu</h6>
-                            <input maxlength="55" name='checkEntry-passportSeries' type="text" class="form-control"
-                                value="" />
+                            <input maxlength="55" id="checkEntry-passportSeries" name='checkEntry-passportSeries'
+                                type="text" class="form-control" value="" />
                         </div>
                         <div class="col-ms-6" style="width : 60%;">
                             <h6 class="mt-2">Ngày hết hạn hộ chiếu</h6>
-                            <input maxlength="55" name='checkEntry-passportExpiredDate' type="date" class="form-control"
+                            <input maxlength="55" id="checkEntry-passportExpiredDate"
+                                name='checkEntry-passportExpiredDate' type="date" class="form-control"
                                 value="" />
                         </div>
                     </div>
                 </form>
 
             </div>
+            <div class="row justify-content-center mt-3" id="checkingInfo-warning-sec" style="display:none;"
+                style="width: 100%;">
+                <div class="row warning-sec" style="margin: 0px 30px;">
+                    <ul id="checkingInfo-warning">
+                        <li class="warning-text">abc</li>
+                        <li class="warning-text">dtdadw</li>
+                        <li class="warning-text">aweawd</li>
+                    </ul>
+                </div>
 
+            </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button id="checkingServiceBtn" type="button" class="btn modal-btn">Xác nhận</button>
             </div>
@@ -256,13 +267,20 @@
     </style>
 </div>
 <script type="text/javascript">
+    //checkingType : 1-checkCarTicket
+    //checkingType : 2-checkAdminist
+    //checkingType : 3-checkTaxdebt
+    //checkingType : 4-checkEntryBan
+    var checkingType = 0;
+
     function controlServiceCheckingModal(index) {
+        resetForms();
         $('.serviceCheckingModalBody').hide();
         $('.modalTitle').removeClass('modal-active');
         $('.mbModal').removeAttr("selected");
         $('#mbModalTitle').val(index);
         $('#tabletModalTitle').val(index);
-
+        checkingType = index;
 
         switch (index) {
             case 1:
@@ -303,8 +321,32 @@
         controlServiceCheckingModal(parseInt($('#tabletModalTitle').val()));
     })
 
-    function test() {
-        console.log('checkign service model');
+    function resetForms() {
+        var setupBorderColor = "rgba(0, 0, 0, 0.175)";
+        $('#checkCar-carLicense').css('border-color', setupBorderColor);
+        $('#checkCar-certCarOwnerShip').css('border-color', setupBorderColor);
+        $('#checkEntry-nameRussian').css('border-color', setupBorderColor);
+        $('#checkEntry-nameLatin').css('border-color', setupBorderColor);
+        $('#checkEntry-dob').css('border-color', setupBorderColor);
+        $('#checkEntry-passportSeries').css('border-color', setupBorderColor);
+        $('#checkEntry-passportExpiredDate').css('border-color', setupBorderColor);
+    }
+
+    function sendRequestChecking(data){
+        console.log(data);
+        var url = "{{ route('check.addNew') }}";
+        $.ajax({
+            method: 'post',
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: url,
+            data: data,
+            success: function(data) {
+                console.log('data response : ', JSON.stringify(data));
+            }
+
+        });
     }
 
     $(document).ready(function() {
@@ -313,8 +355,9 @@
         //     placeholder: 'Phân loại',
         //     selectionCssClass: 'header-function-sec',
         // });
+        resetForms();
         $('#sidebarServiceChecking').on('click', function() {
-            console.log(' sidebarServiceChecking click');
+            // console.log(' sidebarServiceChecking click');
             modalShow(1);
         })
 
@@ -327,9 +370,83 @@
             $('#service-checking-modal-container').modal('show');
         }
 
+
+
         $('#main-checking-service-modal-close').on('click', function() {
             $('#service-checking-modal-container').modal('hide');
         })
+
+        $('#checkingServiceBtn').on('click', function() {
+            resetForms();
+            $('#checkingInfo-warning').empty();
+            var haveError = false;
+            var data={};
+            switch (checkingType) {
+                case (1):
+                    if ($('#checkCar-carLicense').val() == "") {
+                        $('#checkCar-carLicense').css('border-color', 'red');
+                        haveError = true;
+                    }
+                    if ($('#checkCar-certCarOwnerShip').val() == "") {
+                        $('#checkCar-certCarOwnerShip').css('border-color', 'red');
+                        haveError = true;
+                    }
+
+                    if(!haveError){
+                        data={
+                            checkingType:<?=CAR_TICKET_TYPE?>,
+                            carLicense:$('#checkCar-carLicense').val(),
+                            certCarOwnerShip: $('#checkCar-certCarOwnerShip').val(),
+                        };
+                    }
+                    break;
+                case (2):
+                    haveError = true;
+
+                    break;
+                case (3):
+                    haveError = true;
+
+                    break;
+                case (4):
+                    if ($('#checkEntry-nameRussian').val() == "") {
+                        $('#checkEntry-nameRussian').css('border-color', 'red');
+                        haveError = true;
+                    }
+                    if ($('#checkEntry-nameLatin').val() == "") {
+                        $('#checkEntry-nameLatin').css('border-color', 'red');
+                        haveError = true;
+                    }
+                    if($('#checkEntry-dob').val() == ""){
+                        $('#checkEntry-dob').css('border-color', 'red');
+                        haveError = true;
+                    }
+                    if($('#checkEntry-passportSeries').val() == ""){
+                        $('#checkEntry-passportSeries').css('border-color', 'red');
+                        haveError = true;
+                    }
+                    if($('#checkEntry-passportExpiredDate').val() == ""){
+                        $('#checkEntry-passportExpiredDate').css('border-color', 'red');
+                        haveError = true;
+                    }
+
+                    if(!haveError){
+                        data={
+                            checkingType:<?=ENTRY_BAN_TYPE?>,
+                            nameRussian:$('#checkEntry-nameRussian').val(),
+                            nameLatin: $('#checkEntry-nameLatin').val(),
+                            dob: $('#checkEntry-dob').val(),
+                            passportSeries: $('#checkEntry-passportSeries').val(),
+                            passportExpiredDate: $('#checkEntry-passportExpiredDate').val(),
+                        };
+                    }
+                    break;
+            }
+
+            if(!haveError){
+                sendRequestChecking(data);
+            }
+        });
 
     });
 </script>
