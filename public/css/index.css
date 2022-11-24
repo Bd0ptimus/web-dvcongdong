@@ -323,6 +323,12 @@
     border-radius: 6px;
     border: solid 1px #1d8daf;
 }
+
+.select-btn{
+    border-radius: 6px;
+    height : 40px;
+    border : 0px;
+}
 /*-------end app button-------*/
 
 
@@ -468,3 +474,12 @@
     color:rgba(102,102,102,.7);
 }
 /*-------end post-------*/
+
+
+/*--------Modal  --------*/
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    overflow-y: scroll;
+}

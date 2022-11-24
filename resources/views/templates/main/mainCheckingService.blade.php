@@ -1,7 +1,7 @@
-
 <div class="modal fade clearfix px-5" id="service-checking-modal-container" tabindex="-1" role="dialog"
-    aria-labelledby="serviceCheckingModalContainer" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered " role="document" style="max-width: 1000px;">
+    aria-labelledby="serviceCheckingModalContainer" aria-hidden="true" style="padding:0px;">
+    <div class="modal-dialog modal-dialog-centered " role="document"
+        style="max-width: 1000px; width: 100%; margin : auto;">
         <div class="modal-content">
             <div class="modal-header">
 
@@ -21,53 +21,46 @@
                 </div>
 
                 <div class="mb-only">
-                    <select class="mbTabletModalTitle" id="mbModalTitle">
+                    <select class="mbTabletModalTitle select-btn" id="mbModalTitle">
                         <option class="mbModal" id="mbModalCheckCarTicket" value="1">Kiểm tra phạt xe</option>
-                        <option class="mbModal" id="mbModalAdministrative" value="2">Kiểm tra lỗi hành chính</option>
+                        <option class="mbModal" id="mbModalAdministrative" value="2">Kiểm tra lỗi hành chính
+                        </option>
                         <option class="mbModal" id="mbModalTaxdebt" value="3">Kiểm tra nợ thuế</option>
                         <option class="mbModal" id="mbModalEntryBan" value="4">Kiểm tra cấm nhập cảnh</option>
                     </select>
                 </div>
                 <div class="tablet-only">
-                    <select class="mbTabletModalTitle" id="tabletModalTitle">
+                    <select class="mbTabletModalTitle select-btn" id="tabletModalTitle">
                         <option class="mbModal" id="tabletModalCheckCarTicket" value="1">Kiểm tra phạt xe</option>
-                        <option class="mbModal" id="tabletModalAdministrative" value="2">Kiểm tra lỗi hành chính</option>
+                        <option class="mbModal" id="tabletModalAdministrative" value="2">Kiểm tra lỗi hành chính
+                        </option>
                         <option class="mbModal" id="tabletModalTaxdebt" value="3">Kiểm tra nợ thuế</option>
                         <option class="mbModal" id="tabletModalEntryBan" value="4">Kiểm tra cấm nhập cảnh</option>
                     </select>
                 </div>
-                <span id="main-checking-service-modal-close" class="fs-4" ><i class="fa-regular fa-circle-xmark" style="float:right; width: 20px; height:20px; margin-right:5px;"></i></span>
+                <span id="main-checking-service-modal-close" class="fs-4"><i class="fa-regular fa-circle-xmark"
+                        style="float:right; width: 20px; height:20px; margin-right:5px;"></i></span>
 
             </div>
 
 
             <div class="modal-body">
                 <form id="modalBodyCarTicket" class="serviceCheckingModalBody" method="POST" action=""> @csrf
-                    <h1>car</h1>
-                    <div class="row my-2">
+                    <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0" style="display:block; justify-content: center;">
-                            <h5 class="mt-3">Thông tin</h5>
+                            <h6 class="mt-2">Biển số xe</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="25" name='userName' type="text" class="form-control h-100"
+                            <input maxlength="25" name='carLicense' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
-                    <div class="row my-2">
+                    <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0">
-                            <h5 class="mt-3">Thông tin</h5>
+                            <h6 class="mt-2">Chứng nhận sở hữu xe</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="55" name='userName' type="text" class="form-control h-100"
-                                value="" />
-                        </div>
-                    </div>
-                    <div class="row my-2">
-                        <div class="col-xs-4 h-100 m-0">
-                            <h5 class="mt-3">Thông tin</h5>
-                        </div>
-                        <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="55" name='userName' type="text" class="form-control h-100"
+                            <input maxlength="55" name='certCarOwnerShip' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
@@ -75,27 +68,27 @@
 
                 <form id="modalBodyAdministrative" class="serviceCheckingModalBody" method="POST" action=""> @csrf
                     <h1>adminis</h1>
-                    <div class="row my-2">
+                    <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0" style="display:block; justify-content: center;">
-                            <h5 class="mt-3">Thông tin</h5>
+                            <h6 class="mt-2">Thông tin</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
                             <input maxlength="25" name='userName' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
-                    <div class="row my-2">
+                    <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0">
-                            <h5 class="mt-3">Thông tin</h5>
+                            <h6 class="mt-2">Thông tin</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
                             <input maxlength="55" name='userName' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
-                    <div class="row my-2">
+                    <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0">
-                            <h5 class="mt-3">Thông tin</h5>
+                            <h6 class="mt-2">Thông tin</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
                             <input maxlength="55" name='userName' type="text" class="form-control h-100"
@@ -106,27 +99,27 @@
 
                 <form id="modalBodyTaxdebt" class="serviceCheckingModalBody" method="POST" action=""> @csrf
                     <h1>tax</h1>
-                    <div class="row my-2">
+                    <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0" style="display:block; justify-content: center;">
-                            <h5 class="mt-3">Thông tin</h5>
+                            <h6 class="mt-2">Thông tin</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
                             <input maxlength="25" name='userName' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
-                    <div class="row my-2">
+                    <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0">
-                            <h5 class="mt-3">Thông tin</h5>
+                            <h6 class="mt-2">Thông tin</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
                             <input maxlength="55" name='userName' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
-                    <div class="row my-2">
+                    <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0">
-                            <h5 class="mt-3">Thông tin</h5>
+                            <h6 class="mt-2">Thông tin</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
                             <input maxlength="55" name='userName' type="text" class="form-control h-100"
@@ -136,31 +129,59 @@
                 </form>
 
                 <form id="modalBodyEntryBan" class="serviceCheckingModalBody" method="POST" action=""> @csrf
-                    <h1>entry</h1>
-                    <div class="row my-2">
+                    <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0" style="display:block; justify-content: center;">
-                            <h5 class="mt-3">Thông tin</h5>
+                            <h6 class="mt-2">Họ tên - Tiếng Nga</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="25" name='userName' type="text" class="form-control h-100"
+                            <input maxlength="25" name='nameRussian' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
-                    <div class="row my-2">
+                    <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0">
-                            <h5 class="mt-3">Thông tin</h5>
+                            <h6 class="mt-2">Họ tên - Tiếng Latin</h6>
+                        </div>
+                        <div class="col-xs-7 h-100 m-0">
+                            <input maxlength="55" name='nameLatin' type="text" class="form-control h-100"
+                                value="" />
+                        </div>
+                    </div>
+                    <div class="row my-1">
+                        <div class="col-ms-6" style="width : 40%;">
+                            <h6 class="mt-2">Giới tính</h6>
+                            <select class="select-btn" name ="entryBan-gender">
+                                <option value="1" selected>Nam</option>
+                                <option value="2">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="col-ms-6" style="width : 60%;">
+                            <h6 class="mt-2">Ngày sinh</h6>
+                            <input maxlength="55" name='userName' type="date" class="form-control"
+                                value="" />
+                        </div>
+                    </div>
+
+                    {{-- <div class="row my-1">
+                        <div class="col-xs-4 h-100 m-0">
+                            <h6 class="mt-2">Quốc tịch</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
                             <input maxlength="55" name='userName' type="text" class="form-control h-100"
                                 value="" />
                         </div>
-                    </div>
-                    <div class="row my-2">
-                        <div class="col-xs-4 h-100 m-0">
-                            <h5 class="mt-3">Thông tin</h5>
+                    </div> --}}
+
+
+                    <div class="row my-1">
+                        <div class="col-ms-6" style="width : 40%;">
+                            <h6 class="mt-2">Số hộ chiếu</h6>
+                            <input maxlength="55" name='userName' type="text" class="form-control"
+                                value="" />
                         </div>
-                        <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="55" name='userName' type="text" class="form-control h-100"
+                        <div class="col-ms-6" style="width : 60%;">
+                            <h6 class="mt-2">Ngày hết hạn hộ chiếu</h6>
+                            <input maxlength="55" name='userName' type="date" class="form-control"
                                 value="" />
                         </div>
                     </div>
@@ -240,7 +261,7 @@
 
         @media screen and (max-width: 450px) {
             .modal-header {
-                padding:  10px 0px 10px 5px;
+                padding: 10px 0px 10px 5px;
             }
         }
     </style>
@@ -250,13 +271,16 @@
         $('.serviceCheckingModalBody').hide();
         $('.modalTitle').removeClass('modal-active');
         $('.mbModal').removeAttr("selected");
+        $('#mbModalTitle').val(index);
+        $('#tabletModalTitle').val(index);
+
+
         switch (index) {
             case 1:
                 $('#modalBodyCarTicket').show();
                 $('#modalCheckCarTicket').addClass('modal-active');
                 $('#mbModalCheckCarTicket').attr("selected", "selected");
                 $('#tabletModalCheckCarTicket').attr("selected", "selected");
-
                 break;
             case 2:
                 $('#modalBodyAdministrative').show();
@@ -282,30 +306,30 @@
         }
     }
 
-    $('#mbModalTitle').on('change', function(){
+    $('#mbModalTitle').on('change', function() {
         controlServiceCheckingModal(parseInt($('#mbModalTitle').val()));
     })
 
-    $('#tabletModalTitle').on('change', function(){
+    $('#tabletModalTitle').on('change', function() {
         controlServiceCheckingModal(parseInt($('#tabletModalTitle').val()));
     })
 
-    function test(){
+    function test() {
         console.log('checkign service model');
     }
 
     $(document).ready(function() {
-        $('.mbTabletModalTitle').select2({
-            width: "100%",
-            placeholder: 'Phân loại',
-            selectionCssClass: 'header-function-sec',
-        });
-        $('#sidebarServiceChecking').on('click', function(){
+        // $('.mbTabletModalTitle').select2({
+        //     width: "100%",
+        //     placeholder: 'Phân loại',
+        //     selectionCssClass: 'header-function-sec',
+        // });
+        $('#sidebarServiceChecking').on('click', function() {
             console.log(' sidebarServiceChecking click');
             modalShow(1);
         })
 
-        function modalShow(index){
+        function modalShow(index) {
             //index : 1-checkCarTicket
             //index : 2-checkAdminist
             //index : 3-checkTaxdebt
@@ -314,7 +338,7 @@
             $('#service-checking-modal-container').modal('show');
         }
 
-        $('#main-checking-service-modal-close').on('click', function(){
+        $('#main-checking-service-modal-close').on('click', function() {
             $('#service-checking-modal-container').modal('hide');
         })
 
