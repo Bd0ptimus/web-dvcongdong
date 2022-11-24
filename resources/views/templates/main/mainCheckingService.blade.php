@@ -274,6 +274,7 @@
     var checkingType = 0;
 
     function controlServiceCheckingModal(index) {
+        resetFormStyle();
         resetForms();
         $('.serviceCheckingModalBody').hide();
         $('.modalTitle').removeClass('modal-active');
@@ -321,27 +322,32 @@
         controlServiceCheckingModal(parseInt($('#tabletModalTitle').val()));
     })
 
-    function resetForms() {
+    function resetFormStyle(){
         var setupBorderColor = "rgba(0, 0, 0, 0.175)";
         $('#checkCar-carLicense').css('border-color', setupBorderColor);
+        $('#checkCar-certCarOwnerShip').css('border-color', setupBorderColor);
+        $('#checkEntry-nameRussian').css('border-color', setupBorderColor);
+        $('#checkEntry-nameLatin').css('border-color', setupBorderColor);
+        $('#checkEntry-dob').css('border-color', setupBorderColor);
+        $('#checkEntry-passportSeries').css('border-color', setupBorderColor);
+        $('#checkEntry-passportExpiredDate').css('border-color', setupBorderColor);
+
+
+    }
+
+    function resetForms() {
         $('#checkCar-carLicense').val("");
 
-        $('#checkCar-certCarOwnerShip').css('border-color', setupBorderColor);
         $('#checkCar-certCarOwnerShip').val("");
 
-        $('#checkEntry-nameRussian').css('border-color', setupBorderColor);
         $('#checkEntry-nameRussian').val("");
 
-        $('#checkEntry-nameLatin').css('border-color', setupBorderColor);
         $('#checkEntry-nameLatin').val("");
 
-        $('#checkEntry-dob').css('border-color', setupBorderColor);
         $('#checkEntry-dob').val("");
 
-        $('#checkEntry-passportSeries').css('border-color', setupBorderColor);
         $('#checkEntry-passportSeries').val("");
 
-        $('#checkEntry-passportExpiredDate').css('border-color', setupBorderColor);
         $('#checkEntry-passportExpiredDate').val("");
 
     }
@@ -376,7 +382,7 @@
         //     placeholder: 'Phân loại',
         //     selectionCssClass: 'header-function-sec',
         // });
-        resetForms();
+        resetFormStyle();
         $('#sidebarServiceChecking').on('click', function() {
             // console.log(' sidebarServiceChecking click');
             modalShow(1);
@@ -398,7 +404,7 @@
         })
 
         $('#checkingServiceBtn').on('click', function() {
-            resetForms();
+            resetFormStyle();
             $('#checkingInfo-warning').empty();
             var haveError = false;
             var data = {};
