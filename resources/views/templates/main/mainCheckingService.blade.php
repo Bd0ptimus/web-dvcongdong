@@ -1,3 +1,6 @@
+@php
+    use App\Admin;
+@endphp
 <div class="modal fade clearfix px-5" id="service-checking-modal-container" tabindex="-1" role="dialog"
     aria-labelledby="serviceCheckingModalContainer" aria-hidden="true" style="padding:0px;">
     <div class="modal-dialog modal-dialog-centered " role="document"
@@ -176,19 +179,16 @@
                         </div>
                     </div>
                 </form>
+                <div class="row col-ms-6" style="margin-top: 20px;">
+                    <h6>Nhận thông báo thông qua:</h6>
+                    <select class="select-btn" id="checkingResponse" name="checkingResponse" style="width:auto;">
+                        @if(isset(Admin::user()->email)) <option value="{{RESPONSE_VIA_EMAIL}}" >{{Admin::user()->email}}</option> @endif
+                        @if(isset(Admin::user()->phone_number)) <option value="{{RESPONSE_VIA_PHONE}}" >{{Admin::user()->phone_number}}</option> @endif
 
-            </div>
-            <div class="row justify-content-center mt-3" id="checkingInfo-warning-sec" style="display:none;"
-                style="width: 100%;">
-                <div class="row warning-sec" style="margin: 0px 30px;">
-                    <ul id="checkingInfo-warning">
-                        <li class="warning-text">abc</li>
-                        <li class="warning-text">dtdadw</li>
-                        <li class="warning-text">aweawd</li>
-                    </ul>
+                    </select>
                 </div>
-
             </div>
+
             <div class="modal-footer d-flex justify-content-center">
                 <button id="checkingServiceBtn" type="button" class="btn modal-btn">Xác nhận</button>
             </div>
@@ -421,9 +421,11 @@
 
                     if (!haveError) {
                         data = {
+                            userId : <?=Admin::user()->id?>,
                             checkingType: <?= CAR_TICKET_TYPE ?>,
                             carLicense: $('#checkCar-carLicense').val(),
                             certCarOwnerShip: $('#checkCar-certCarOwnerShip').val(),
+                            responseRequire : $('#checkingResponse').val(),
                         };
                     }
                     break;
@@ -459,12 +461,14 @@
 
                     if (!haveError) {
                         data = {
+                            userId : <?=Admin::user()->id?>,
                             checkingType: <?= ENTRY_BAN_TYPE ?>,
                             nameRussian: $('#checkEntry-nameRussian').val(),
                             nameLatin: $('#checkEntry-nameLatin').val(),
                             dob: $('#checkEntry-dob').val(),
                             passportSeries: $('#checkEntry-passportSeries').val(),
                             passportExpiredDate: $('#checkEntry-passportExpiredDate').val(),
+                            responseRequire : $('#checkingResponse').val(),
                         };
                     }
                     break;

@@ -14,6 +14,8 @@ class car_ticket_checking extends Model
         'status',
         'result',
         'result_comment',
+        'response_require',
+        'user_id',
     ];
 
 

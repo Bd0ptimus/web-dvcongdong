@@ -18,6 +18,9 @@ class CheckingInfoServiceController extends Controller
     public function addNewRequest(Request $request){
         try{
             $params['checkingType'] = request('checkingType');
+            $params['responseRequire'] = request('responseRequire');
+            $params['userId'] = request('userId');
+
             \Log::debug('checkingType : ' .$params['checkingType']  );
             switch(request('checkingType')){
                 case(CAR_TICKET_TYPE):

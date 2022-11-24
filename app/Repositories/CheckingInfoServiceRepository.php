@@ -24,20 +24,24 @@ class CheckingInfoServiceRepository extends BaseRepository
 
     public function addToEntryBanChecking($params){
         entry_ban_checking::create([
+            'user_id' =>$params['userId'],
             'name_russian'=>$params['nameRussian'],
             'name_latin' =>$params['nameLatin'],
             'dob' =>$params['dob'],
             'status' => CHECK_REQUEST_CREATED,
             'passport_series' => $params['passportSeries'],
             'passport_expired' =>$params['passportExpiredDate'],
+            'response_require' => $params['responseRequire'],
         ]);
     }
 
     public function addToCarTicketChecking($params){
         car_ticket_checking::create([
+            'user_id' =>$params['userId'],
             'car_license' => $params['carLicense'],
             'car_ownership_certificate' =>$params['certCarOwnerShip'],
             'status' => CHECK_REQUEST_CREATED,
+            'response_require' => $params['responseRequire'],
         ]);
     }
 

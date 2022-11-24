@@ -90,7 +90,12 @@ class RegisterController extends Controller
 
                 $user = User::where('email', '=', $request->email)->first();
                 if(isset($user)){
-                    return redirect()->back()->withErrors($validator->errors()->add('email', 'Email đã tồn tại, hãy chọn username khác'))->withInput($request->all());
+                    return redirect()->back()->withErrors($validator->errors()->add('email', 'Email đã tồn tại, hãy chọn email khác'))->withInput($request->all());
+                }
+
+                if(!str_contains($request->registerSubmit, '+')){
+                    $validator->errors()->add('phone', 'Định dạng số điện thoại không đúng');
+                    return redirect()->back()->withErrors($validator)->withInput($request->all());
                 }
                 $this->authService->createAccount($request, ROLE_USER);
                 return view('auth.registerConfirm');

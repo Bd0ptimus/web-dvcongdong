@@ -185,7 +185,7 @@
 </div> --}}
 
 <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm"
-    style="position:fixed; z-index:2000; right:0px; width:100%; top:0px; background-color:rgb(248,249,250);">
+    style="position:fixed; z-index:1000; right:0px; width:100%; top:0px; background-color:rgb(248,249,250);">
     <div class="container">
         <div class="d-flex justify-content-start">
             <button onclick="sidebarOpen()" id="toggler-btn" class="navbar-toggler" type="button" data-bs-toggle="collapse"

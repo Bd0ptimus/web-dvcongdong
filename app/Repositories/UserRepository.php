@@ -32,6 +32,7 @@ class UserRepository extends BaseRepository
             'password' =>Hash::make($data->password),
             'user_role'=>$accountType,
             'active'=>USER_ACTIVATED,
+            'phone_number' =>$data->registerSubmit,
         ]);
     }
 

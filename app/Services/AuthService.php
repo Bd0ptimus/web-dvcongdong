@@ -50,7 +50,7 @@ class AuthService
 
     public function registerValidate($request){
         $messages = [
-            'required' => ':attribute bắt buộc phaỉ được nhập.',
+            'required' => ':attribute bắt buộc phải được nhập.',
             'min' => 'Mật khẩu phải có ít nhất 8 ký tự',
             'username.max' => 'Email chỉ có tối đa 255 ký tự',
             'password.max' => 'Mật khẩu chỉ có tối đa 255 ký tự',
@@ -71,7 +71,7 @@ class AuthService
                 'confirmed'
             ],
             'password_confirmation' => 'required|min:8',
-
+            'phone' => 'required',
         ], $messages);
 
         return $validator;

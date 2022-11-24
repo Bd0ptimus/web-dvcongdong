@@ -417,6 +417,14 @@
 
         });
     }
+
+    function checkUserExist(){
+        var userId = '<?=Admin::user()!==null?Admin::user()->id:null?>';
+        if(userId==''){
+            window.location.href = '{{route("warning.accountRequire")}}'
+            die();
+        }
+    }
     $(document).ready(function() {
         function formatTextClassify(icon) {
             return $('<span><i class="fa-solid fa-bars"></i>     ' + icon.text + '</span>');
@@ -440,34 +448,42 @@
         });
 
         $('#checkCarTicket').on('click', function() {
+            checkUserExist();
             modalShowMain(1);
         })
 
         $('#checkAdministrative').on('click', function() {
+            checkUserExist();
             modalShowMain(2);
         })
 
         $('#checkTaxdebt').on('click', function() {
+            checkUserExist();
             modalShowMain(3);
         })
 
         $('#checkEntryBan').on('click', function() {
+            checkUserExist();
             modalShowMain(4);
         })
 
         $('#checkCarTicketMb').on('click', function() {
+            checkUserExist();
             modalShowMain(1);
         })
 
         $('#checkAdministrativeMb').on('click', function() {
+            checkUserExist();
             modalShowMain(2);
         })
 
         $('#checkTaxdebtMb').on('click', function() {
+            checkUserExist();
             modalShowMain(3);
         })
 
         $('#checkEntryBanMb').on('click', function() {
+            checkUserExist();
             modalShowMain(4);
         })
 
