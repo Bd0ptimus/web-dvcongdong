@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="vi">
 @include('layouts.masterLayout')
 @include('layouts.header')
 <link href="{{ asset('css/mainScreen/index.css?v=') . time() }}" rel="stylesheet">

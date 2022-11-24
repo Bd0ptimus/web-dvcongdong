@@ -23,7 +23,7 @@
 @endsection --}}
 
 <!doctype html>
-<html>
+<html lang="vi">
 
 @include('layouts.masterLayout')
 @include('layouts.header')
