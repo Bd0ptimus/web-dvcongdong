@@ -324,12 +324,26 @@
     function resetForms() {
         var setupBorderColor = "rgba(0, 0, 0, 0.175)";
         $('#checkCar-carLicense').css('border-color', setupBorderColor);
+        $('#checkCar-carLicense').val("");
+
         $('#checkCar-certCarOwnerShip').css('border-color', setupBorderColor);
+        $('#checkCar-certCarOwnerShip').val("");
+
         $('#checkEntry-nameRussian').css('border-color', setupBorderColor);
+        $('#checkEntry-nameRussian').val("");
+
         $('#checkEntry-nameLatin').css('border-color', setupBorderColor);
+        $('#checkEntry-nameLatin').val("");
+
         $('#checkEntry-dob').css('border-color', setupBorderColor);
+        $('#checkEntry-dob').val("");
+
         $('#checkEntry-passportSeries').css('border-color', setupBorderColor);
+        $('#checkEntry-passportSeries').val("");
+
         $('#checkEntry-passportExpiredDate').css('border-color', setupBorderColor);
+        $('#checkEntry-passportExpiredDate').val("");
+
     }
 
     function sendRequestChecking(data) {
