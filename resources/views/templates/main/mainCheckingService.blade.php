@@ -421,7 +421,7 @@
 
                     if (!haveError) {
                         data = {
-                            userId : <?=Admin::user()->id?>,
+                            userId : <?=Admin::user()!==null?Admin::user()->id:''?>,
                             checkingType: <?= CAR_TICKET_TYPE ?>,
                             carLicense: $('#checkCar-carLicense').val(),
                             certCarOwnerShip: $('#checkCar-certCarOwnerShip').val(),
@@ -461,7 +461,7 @@
 
                     if (!haveError) {
                         data = {
-                            userId : <?=Admin::user()->id?>,
+                            userId : <?=Admin::user()!==null?Admin::user()->id:''?>,
                             checkingType: <?= ENTRY_BAN_TYPE ?>,
                             nameRussian: $('#checkEntry-nameRussian').val(),
                             nameLatin: $('#checkEntry-nameLatin').val(),
