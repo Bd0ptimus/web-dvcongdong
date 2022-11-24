@@ -323,6 +323,7 @@
 
         </div>
     </div>
+    @include('templates.notification.toast');
     @extends('templates.main.mainCheckingService')
 </body>
 

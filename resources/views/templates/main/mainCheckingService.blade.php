@@ -332,18 +332,25 @@
         $('#checkEntry-passportExpiredDate').css('border-color', setupBorderColor);
     }
 
-    function sendRequestChecking(data){
+    function sendRequestChecking(data) {
         console.log(data);
         var url = "{{ route('check.addNew') }}";
         $.ajax({
             method: 'post',
             headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             url: url,
             data: data,
             success: function(data) {
                 console.log('data response : ', JSON.stringify(data));
+                if (data.error == 0) {
+                    $('#toast-success-text').text('Gửi yêu cầu thành công. Vui lòng đợi phản hồi');
+                    $('#notification-success').toast('show');
+                } else {
+                    $('#toast-fail-text').text('Có lỗi xảy ra, vui lòng thử lại');
+                    $('#notification-fail').toast('show');
+                }
             }
 
         });
@@ -380,7 +387,7 @@
             resetForms();
             $('#checkingInfo-warning').empty();
             var haveError = false;
-            var data={};
+            var data = {};
             switch (checkingType) {
                 case (1):
                     if ($('#checkCar-carLicense').val() == "") {
@@ -392,10 +399,10 @@
                         haveError = true;
                     }
 
-                    if(!haveError){
-                        data={
-                            checkingType:<?=CAR_TICKET_TYPE?>,
-                            carLicense:$('#checkCar-carLicense').val(),
+                    if (!haveError) {
+                        data = {
+                            checkingType: <?= CAR_TICKET_TYPE ?>,
+                            carLicense: $('#checkCar-carLicense').val(),
                             certCarOwnerShip: $('#checkCar-certCarOwnerShip').val(),
                         };
                     }
@@ -417,23 +424,23 @@
                         $('#checkEntry-nameLatin').css('border-color', 'red');
                         haveError = true;
                     }
-                    if($('#checkEntry-dob').val() == ""){
+                    if ($('#checkEntry-dob').val() == "") {
                         $('#checkEntry-dob').css('border-color', 'red');
                         haveError = true;
                     }
-                    if($('#checkEntry-passportSeries').val() == ""){
+                    if ($('#checkEntry-passportSeries').val() == "") {
                         $('#checkEntry-passportSeries').css('border-color', 'red');
                         haveError = true;
                     }
-                    if($('#checkEntry-passportExpiredDate').val() == ""){
+                    if ($('#checkEntry-passportExpiredDate').val() == "") {
                         $('#checkEntry-passportExpiredDate').css('border-color', 'red');
                         haveError = true;
                     }
 
-                    if(!haveError){
-                        data={
-                            checkingType:<?=ENTRY_BAN_TYPE?>,
-                            nameRussian:$('#checkEntry-nameRussian').val(),
+                    if (!haveError) {
+                        data = {
+                            checkingType: <?= ENTRY_BAN_TYPE ?>,
+                            nameRussian: $('#checkEntry-nameRussian').val(),
                             nameLatin: $('#checkEntry-nameLatin').val(),
                             dob: $('#checkEntry-dob').val(),
                             passportSeries: $('#checkEntry-passportSeries').val(),
@@ -443,7 +450,7 @@
                     break;
             }
 
-            if(!haveError){
+            if (!haveError) {
                 sendRequestChecking(data);
             }
         });
