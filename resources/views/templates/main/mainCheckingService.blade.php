@@ -51,7 +51,7 @@
                             <h6 class="mt-2">Biển số xe</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="25" name='carLicense' type="text" class="form-control h-100"
+                            <input maxlength="25" name='checkCar-carLicense' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             <h6 class="mt-2">Chứng nhận sở hữu xe</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="55" name='certCarOwnerShip' type="text" class="form-control h-100"
+                            <input maxlength="55" name='checkCar-certCarOwnerShip' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                             <h6 class="mt-2">Họ tên - Tiếng Nga</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="25" name='nameRussian' type="text" class="form-control h-100"
+                            <input maxlength="25" name='checkEntry-nameRussian' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
@@ -143,45 +143,34 @@
                             <h6 class="mt-2">Họ tên - Tiếng Latin</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="55" name='nameLatin' type="text" class="form-control h-100"
+                            <input maxlength="55" name='checkEntry-nameLatin' type="text" class="form-control h-100"
                                 value="" />
                         </div>
                     </div>
                     <div class="row my-1">
                         <div class="col-ms-6" style="width : 40%;">
                             <h6 class="mt-2">Giới tính</h6>
-                            <select class="select-btn" name ="entryBan-gender">
+                            <select class="select-btn" name ="checkEntry-gender">
                                 <option value="1" selected>Nam</option>
                                 <option value="2">Nữ</option>
                             </select>
                         </div>
                         <div class="col-ms-6" style="width : 60%;">
                             <h6 class="mt-2">Ngày sinh</h6>
-                            <input maxlength="55" name='userName' type="date" class="form-control"
+                            <input maxlength="55" name='checkEntry-dob' type="date" class="form-control"
                                 value="" />
                         </div>
                     </div>
 
-                    {{-- <div class="row my-1">
-                        <div class="col-xs-4 h-100 m-0">
-                            <h6 class="mt-2">Quốc tịch</h6>
-                        </div>
-                        <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="55" name='userName' type="text" class="form-control h-100"
-                                value="" />
-                        </div>
-                    </div> --}}
-
-
                     <div class="row my-1">
                         <div class="col-ms-6" style="width : 40%;">
                             <h6 class="mt-2">Số hộ chiếu</h6>
-                            <input maxlength="55" name='userName' type="text" class="form-control"
+                            <input maxlength="55" name='checkEntry-passportSeries' type="text" class="form-control"
                                 value="" />
                         </div>
                         <div class="col-ms-6" style="width : 60%;">
                             <h6 class="mt-2">Ngày hết hạn hộ chiếu</h6>
-                            <input maxlength="55" name='userName' type="date" class="form-control"
+                            <input maxlength="55" name='checkEntry-passportExpiredDate' type="date" class="form-control"
                                 value="" />
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="vi">
 @include('layouts.masterLayout')
 @include('layouts.header')
 <link href="{{ asset('css/post/chooseTopic.css?v=') . time() }}" rel="stylesheet">
