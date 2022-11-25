@@ -17,7 +17,7 @@
         <div class="row d-block justify-content-center" style="width:100%; margin:auto;">
             <div class="row d-flex justify-content-center" style="margin : 30px auto;">
                 <h3 class="d-flex justify-content-center">
-                    Quản lý tài khoản
+                    Dịch vụ kiểm tra
                 </h3>
 
             </div>

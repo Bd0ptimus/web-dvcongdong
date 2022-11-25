@@ -182,8 +182,12 @@
                 <div class="row col-ms-6" style="margin-top: 20px;">
                     <h6>Nhận thông báo thông qua:</h6>
                     <select class="select-btn" id="checkingResponse" name="checkingResponse" style="width:auto;">
-                        @if(isset(Admin::user()->email)) <option value="{{RESPONSE_VIA_EMAIL}}" >{{Admin::user()->email}}</option> @endif
-                        @if(isset(Admin::user()->phone_number)) <option value="{{RESPONSE_VIA_PHONE}}" >{{Admin::user()->phone_number}}</option> @endif
+                        @if (isset(Admin::user()->email))
+                            <option value="{{ RESPONSE_VIA_EMAIL }}">{{ Admin::user()->email }}</option>
+                        @endif
+                        @if (isset(Admin::user()->phone_number))
+                            <option value="{{ RESPONSE_VIA_PHONE }}">{{ Admin::user()->phone_number }}</option>
+                        @endif
 
                     </select>
                 </div>
@@ -322,7 +326,7 @@
         controlServiceCheckingModal(parseInt($('#tabletModalTitle').val()));
     })
 
-    function resetFormStyle(){
+    function resetFormStyle() {
         var setupBorderColor = "rgba(0, 0, 0, 0.175)";
         $('#checkCar-carLicense').css('border-color', setupBorderColor);
         $('#checkCar-certCarOwnerShip').css('border-color', setupBorderColor);
@@ -382,11 +386,19 @@
         //     placeholder: 'Phân loại',
         //     selectionCssClass: 'header-function-sec',
         // });
-        resetFormStyle();
+
         $('#sidebarServiceChecking').on('click', function() {
-            // console.log(' sidebarServiceChecking click');
-            modalShow(1);
+            checkUserExist();
+            var isAdmin =
+                '<?= Admin::user() !== null ? Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN]) : '' ?>';
+            if (isAdmin == '1') {
+                console.log('user is admin');
+            } else {
+                modalShow(1);
+            }
         })
+        resetFormStyle();
+
 
         function modalShow(index) {
             //index : 1-checkCarTicket
@@ -421,11 +433,11 @@
 
                     if (!haveError) {
                         data = {
-                            userId : <?=Admin::user()!==null?Admin::user()->id:''?>,
+                            userId: '<?= Admin::user() !== null ? Admin::user()->id : '' ?>',
                             checkingType: <?= CAR_TICKET_TYPE ?>,
                             carLicense: $('#checkCar-carLicense').val(),
                             certCarOwnerShip: $('#checkCar-certCarOwnerShip').val(),
-                            responseRequire : $('#checkingResponse').val(),
+                            responseRequire: $('#checkingResponse').val(),
                         };
                     }
                     break;
@@ -461,14 +473,14 @@
 
                     if (!haveError) {
                         data = {
-                            userId : <?=Admin::user()!==null?Admin::user()->id:''?>,
+                            userId: '<?= Admin::user() !== null ? Admin::user()->id : '' ?>',
                             checkingType: <?= ENTRY_BAN_TYPE ?>,
                             nameRussian: $('#checkEntry-nameRussian').val(),
                             nameLatin: $('#checkEntry-nameLatin').val(),
                             dob: $('#checkEntry-dob').val(),
                             passportSeries: $('#checkEntry-passportSeries').val(),
                             passportExpiredDate: $('#checkEntry-passportExpiredDate').val(),
-                            responseRequire : $('#checkingResponse').val(),
+                            responseRequire: $('#checkingResponse').val(),
                         };
                     }
                     break;

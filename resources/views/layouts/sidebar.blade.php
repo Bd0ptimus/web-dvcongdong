@@ -10,7 +10,7 @@
 @php
     use App\Admin;
 @endphp
-<div id="full-sidebar" style="display:none; z-index:10000; overflow-y: scroll;"
+<div id="full-sidebar" style="display:none; z-index:1005; overflow-y: scroll;"
     class=" flex-column flex-shrink-0 p-3 bg-light sidebar-container" onmouseleave="miniSidebar()">
     {{-- <div class="d-flex justify-content-between mb-3 mb-md-0 me-md-auto link text-decoration-none" style="width: 100%;">
         <span class="fs-4">Nguoiviettainga</span>
@@ -75,7 +75,14 @@
                 </a>
             </li>
         @endif
-
+        <li class="nav-item nav-item-container">
+            <a href="#" class="nav-link" aria-current="page" id="sidebarServiceChecking">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <span>
+                    Dịch vụ kiểm tra
+                </span>
+            </a>
+        </li>
 
         @if (Admin::user() == null)
             <li class="nav-item nav-item-container">
@@ -96,15 +103,9 @@
             </li>
         @endif
 
+
+
         @if (Admin::user() !== null)
-            <li class="nav-item nav-item-container">
-                <a href="#" class="nav-link" aria-current="page" id="sidebarServiceChecking">
-                    <i class="fa-solid fa-file-circle-exclamation"></i>
-                    <span>
-                        Dịch vụ kiểm tra
-                    </span>
-                </a>
-            </li>
             <li class="nav-item nav-item-container">
                 <a href="{{ route('logout') }}" class="nav-link" aria-current="page"
                     onclick="event.preventDefault();
@@ -276,7 +277,11 @@
                 </a>
             </li>
         @endif
-
+        <li class="nav-item d-flex justify-content-center">
+            <a href="#" class="nav-link nav-icon-item" aria-current="page">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+            </a>
+        </li>
 
 
         @if (Admin::user() == null)
@@ -291,12 +296,8 @@
                 </a>
             </li>
         @endif
+
         @if (Admin::user() !== null)
-            <li class="nav-item d-flex justify-content-center">
-                <a href="#" class="nav-link nav-icon-item" aria-current="page">
-                    <i class="fa-solid fa-file-circle-exclamation"></i>
-                </a>
-            </li>
             <li class="nav-item d-flex justify-content-center">
                 <a href="{{ route('logout') }}" class="nav-link nav-icon-item" aria-current="page">
                     <i class="fa-solid fa-right-from-bracket"></i>

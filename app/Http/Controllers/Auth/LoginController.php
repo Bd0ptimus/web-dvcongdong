@@ -56,7 +56,7 @@ class LoginController extends Controller
                         if($user->active == USER_SUSPENDED){
                             return view('warnings.accountSuspended');
                         }
-                        Auth::guard('web')->attempt(['username'=>$request->username,'password'=>$request->password]);
+                        Auth::guard('web')->attempt(['username'=>$request->username,'password'=>$request->password], $request->remember);
                         // dd(Admin::user()->inRoles([ROLE_ADMIN]));
                         return redirect()->route('home');
                     }

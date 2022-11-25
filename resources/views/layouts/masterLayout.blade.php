@@ -12,7 +12,30 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer></script>
+
+
 <script type="text/javascript">
+    // $(document).ready(function() {
+    //     $('#sidebarServiceChecking').on('click', function() {
+    //         checkUserExist();
+    //         var isAdmin =
+    //             '<?= Admin::user() !== null ? Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN]) : '' ?>';
+    //         if (isAdmin == '1') {
+    //             console.log('user is admin');
+    //         } else {
+    //             modalShow(1);
+    //         }
+    //     })
+    // });
+
+    function checkUserExist() {
+        var userId = '<?= Admin::user() !== null ? Admin::user()->id : null ?>';
+        if (userId == '') {
+            window.location.href = '{{ route('warning.accountRequire') }}'
+            die();
+        }
+    }
     function removePreviewImage(idForRemove, inputId) {
         document.getElementById(`${inputId}`).value = "";
         // var file = document.getElementById('logoUpload').value;
@@ -35,42 +58,46 @@
         }
     }
 
-    function unlikePost(userId,postId, newFeedPostId){
+    function unlikePost(userId, postId, newFeedPostId) {
         var url = "{{ route('post.postInteract.unlike') }}";
         $.ajax({
             method: 'post',
             url: url,
             data: {
                 userId: userId,
-                postId : postId,
+                postId: postId,
                 _token: '{{ csrf_token() }}',
             },
             success: function(data) {
                 console.log('data response : ', JSON.stringify(data));
-                if(data.error == 0){
+                if (data.error == 0) {
                     $(`#${newFeedPostId}`).empty();
-                    $(`#${newFeedPostId}`).append(`<i class="fa-regular fa-heart"  onclick="likePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`);
+                    $(`#${newFeedPostId}`).append(
+                        `<i class="fa-regular fa-heart"  onclick="likePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`
+                        );
                 }
             }
 
         });
     }
 
-    function likePost(userId,postId, newFeedPostId){
+    function likePost(userId, postId, newFeedPostId) {
         var url = "{{ route('post.postInteract.like') }}";
         $.ajax({
             method: 'post',
             url: url,
             data: {
                 userId: userId,
-                postId : postId,
+                postId: postId,
                 _token: '{{ csrf_token() }}',
             },
             success: function(data) {
                 console.log('data response : ', JSON.stringify(data));
-                if(data.error == 0){
+                if (data.error == 0) {
                     $(`#${newFeedPostId}`).empty();
-                    $(`#${newFeedPostId}`).append(`<i style="color:red;" class="fa-solid fa-heart"  onclick="unlikePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`);
+                    $(`#${newFeedPostId}`).append(
+                        `<i style="color:red;" class="fa-solid fa-heart"  onclick="unlikePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`
+                        );
 
                 }
             }
@@ -78,21 +105,21 @@
         });
     }
 
-    function deleteMyPost(postId, contentId){
+    function deleteMyPost(postId, contentId) {
         var url = "{{ route('post.deletePost') }}";
         $.ajax({
             method: 'post',
             url: url,
             data: {
-                postId : postId,
+                postId: postId,
                 _token: '{{ csrf_token() }}',
             },
             success: function(data) {
                 console.log('data response : ', JSON.stringify(data));
-                if(data.permission_allow == 0){
-                    window.location.href = '{{route("home")}}'
-                }else{
-                    if(data.error == 0){
+                if (data.permission_allow == 0) {
+                    window.location.href = '{{ route('home') }}'
+                } else {
+                    if (data.error == 0) {
                         $(`#${contentId}`).remove();
                     }
                 }
@@ -101,6 +128,8 @@
         });
     }
 </script>
+@extends('templates.main.mainCheckingService')
+
 
 <!-- Styles -->
 <link href="{{ asset('css/app.css?v=') . time() }}" rel="stylesheet">
@@ -108,4 +137,4 @@
 <link href="{{ asset('css/index.css?v=') . time() }}" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
-
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">

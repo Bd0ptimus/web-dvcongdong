@@ -79,47 +79,50 @@
                                 </div>
                             </form>
                         </div>
+                        @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER) || Admin::user()==null)
+                            <div class="row main-filter">
+                                <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
+                                    <button id="checkCarTicket"
+                                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                                        <i class="fa-solid fa-car-on"></i><span> Kiểm tra lỗi phạt xe</span>
+                                    </button>
+                                </div>
+                                <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
+                                    <button id="checkAdministrative"
+                                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                                        <i class="fa-solid fa-book"></i><span> Kiểm tra lỗi hành chính</span>
+                                    </button>
+                                </div>
+                                <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
+                                    <button id="checkTaxdebt"
+                                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                                        <i class="fa-solid fa-coins"></i><span> Kiểm tra nợ thuế</span>
+                                    </button>
+                                </div>
+                                <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
+                                    <button id="checkEntryBan"
+                                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                                        <i class="fa-solid fa-plane-circle-xmark"></i><span> Kiểm tra cấm nhập
+                                            cảnh</span>
+                                    </button>
+                                </div>
 
-                        <div class="row main-filter">
-                            <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
-                                <button id="checkCarTicket"
-                                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                                    <i class="fa-solid fa-car-on"></i><span> Kiểm tra lỗi phạt xe</span>
-                                </button>
                             </div>
-                            <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
-                                <button id="checkAdministrative"
-                                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                                    <i class="fa-solid fa-book"></i><span> Kiểm tra lỗi hành chính</span>
-                                </button>
-                            </div>
-                            <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
-                                <button id="checkTaxdebt"
-                                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                                    <i class="fa-solid fa-coins"></i><span> Kiểm tra nợ thuế</span>
-                                </button>
-                            </div>
-                            <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
-                                <button id="checkEntryBan"
-                                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                                    <i class="fa-solid fa-plane-circle-xmark"></i><span> Kiểm tra cấm nhập cảnh</span>
-                                </button>
-                            </div>
-
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
 
 
-            <div id="main-search-mb" class="justify-content-center" >
+            <div id="main-search-mb" class="justify-content-center">
                 <form id="frm-search-job" action="{{ route('search.homeSearch') }}" method="POST">@csrf
                     <div class="row" style="width : 100%; margin:auto;">
-                        <div class="form-group input-data vertical-container d-flex justify-content-center" style="height : 48px; margin: 10px 0px;">
+                        <div class="form-group input-data vertical-container d-flex justify-content-center"
+                            style="height : 48px; margin: 10px 0px;">
                             <input autocomplete="off"
                                 class="form-control form-control-input-text ui-autocomplete-input vertical-element-middle-align"
-                                id="Filter_Keyword" name="homeFilterKeyWord" placeholder="Từ khóa"
-                                type="text" style="height: 46px; width:93%" value="">
+                                id="Filter_Keyword" name="homeFilterKeyWord" placeholder="Từ khóa" type="text"
+                                style="height: 46px; width:93%" value="">
                         </div>
                     </div>
                     <div class="row" style="width : 100%; margin:auto;">
@@ -146,7 +149,8 @@
                         </div>
                     </div>
                     <div class="row" style="width : 100%; margin:auto; height:auto;">
-                        <div class="d-flex justify-content-center search-submit vertical-container" style="height : 50px;">
+                        <div class="d-flex justify-content-center search-submit vertical-container"
+                            style="height : 50px;">
                             <button
                                 class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn"
                                 type="submit" style="height: 46px; ">
@@ -156,26 +160,27 @@
                     </div>
                 </form>
 
-                <div class="row" style="display:flex; justify-content: center; width:100%; height : 50px; margin:auto;" >
+                <div class="row"
+                    style="display:flex; justify-content: center; width:100%; height : 50px; margin:auto;">
                     <div class="form-group vertical-container d-flex justify-content-center" style="width:25%;">
                         <button id="checkCarTicketMb"
                             class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
                             <i class="fa-solid fa-car-on"></i>
                         </button>
                     </div>
-                    <div class="form-group vertical-container d-flex justify-content-center"  style="width:25%;">
+                    <div class="form-group vertical-container d-flex justify-content-center" style="width:25%;">
                         <button id="checkAdministrativeMb"
                             class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
                             <i class="fa-solid fa-book"></i>
                         </button>
                     </div>
-                    <div class="form-group vertical-container d-flex justify-content-center"  style="width:25%;">
+                    <div class="form-group vertical-container d-flex justify-content-center" style="width:25%;">
                         <button id="checkTaxdebtMb"
                             class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
                             <i class="fa-solid fa-coins"></i>
                         </button>
                     </div>
-                    <div class="form-group vertical-container d-flex justify-content-center"  style="width:25%;">
+                    <div class="form-group vertical-container d-flex justify-content-center" style="width:25%;">
                         <button id="checkEntryBanMb"
                             class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
                             <i class="fa-solid fa-plane-circle-xmark"></i>
@@ -324,7 +329,6 @@
         </div>
     </div>
     @include('templates.notification.toast');
-    @extends('templates.main.mainCheckingService')
 </body>
 
 <script>
@@ -418,13 +422,7 @@
         });
     }
 
-    function checkUserExist(){
-        var userId = '<?=Admin::user()!==null?Admin::user()->id:null?>';
-        if(userId==''){
-            window.location.href = '{{route("warning.accountRequire")}}'
-            die();
-        }
-    }
+
     $(document).ready(function() {
         function formatTextClassify(icon) {
             return $('<span><i class="fa-solid fa-bars"></i>     ' + icon.text + '</span>');
