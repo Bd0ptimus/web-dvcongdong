@@ -79,7 +79,7 @@
                                 </div>
                             </form>
                         </div>
-                        @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER) || Admin::user()==null)
+                        @if ((Admin::user() !== null && Admin::user()->isRole(ROLE_USER)) || Admin::user() == null)
                             <div class="row main-filter">
                                 <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
                                     <button id="checkCarTicket"
@@ -204,7 +204,221 @@
         </div> --}}
 
         <div class="row my-5 newfeed-sec" id="home-newFeed-sec">
+            <div class="row d-block justify-content-center newfeed-container2">
+                <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
+                    <div class="newFeed-detail-icon">
+                        <i class="fa-solid fa-location-dot"></i><span> Moscow</span>
+                    </div>
+
+                    <div class="newFeed-detail-icon">
+                        <i class="fa-solid fa-bars"></i><span> Nhà đất</span>
+                    </div>
+
+                    <div class="newFeed-detail-icon">
+                        <i class="fa-solid fa-clock"></i><span> 2 ngày trước</span>
+                    </div>
+                </div>
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
+                    style="padding:0px;">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="newFeed-image2" src={{ asset('storage/template/post/none-pic-logo.jpg') }}>
+                        </div>
+                        <div class=" carousel-item active">
+                            <img class="newFeed-image2" src={{ asset('storage/test/test1.jpg') }}>
+                        </div>
+                        <div class="carousel-item active">
+                            <img class="newFeed-image2" src={{ asset('storage/test/test2.jpg') }}>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+
+                </div>
+
+                <div class="row newFeed-content-small-sec2 ">
+                    <div class="row newFeed-info-title-sec2">
+                        <p class="newFeed-info-title2">Australian Citizenship Test
+                            Revision at LCViet Australia - 98% Successful Rate</p>
+                    </div>
+                    <div class="row newFeed-info-text-sec2">
+                        <p class="newFeed-info-text2">AUSTRALIAN
+                            CITIZENSHIP.
+
+                            Call 0452 511 577 (Ms. Esther) We are please to boast a 98% SUCCESSFUL
+                            RATE</p>
+                    </div>
+                    <hr />
+                </div>
+
+                <div class="row newFeed-interact-sec2 d-flex justify-content-center">
+                    <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2"></i>
+                </div>
+            </div>
+
+
+            {{-- <div class="row newfeed-container d-flex justify-content-center">
+                <div class="row newfeed-content-sec">
+                    <div class="newfeed-image-sec  newFeed-image-sec">
+                        <img class="newFeed-image" src={{ asset('storage/template/post/none-pic-logo.jpg') }}>
+                    </div>
+
+                    <div class="newfeed-info-sec d-block justify-content-center">
+                        <div class="row newFeed-info-title-sec vertical-container">
+                            <p class="newFeed-info-title vertical-element-middle-align">Australian Citizenship Test
+                                Revision at LCViet Australia - 98% Successful Rate</p>
+                        </div>
+                        <div class="row newFeed-info-content-sec">
+                            <div class="row newFeed-info-description-sec vertical-container">
+                                <p class="newFeed-info-description vertical-element-middle-align">AUSTRALIAN
+                                    CITIZENSHIP. Call 0452 511 577 (Ms. Esther) We are please to boast a 98% SUCCESSFUL
+                                    RATE</p>
+                            </div>
+                            <div class="row newFeed-info-detail-sec">
+                                <div class="newFeed-detail-icon">
+                                    <i class="fa-solid fa-location-dot"></i><span> Moscow</span>
+                                </div>
+
+                                <div class="newFeed-detail-icon">
+                                    <i class="fa-solid fa-bars"></i><span> Nhà đất</span>
+                                </div>
+
+                                <div class="newFeed-detail-icon">
+                                    <i class="fa-solid fa-clock"></i><span> 2 ngày trước</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+
             @foreach ($posts as $post)
+                @php
+                    $imgPath = 'storage/template/post/none-pic-logo.jpg';
+                    foreach ($post->post_attachments as $attachment) {
+                        if ($attachment->attachment_type == POST_DESCRIPTION_PHOTO) {
+                            $imgPath = $attachment->attachment_path;
+                            break;
+                        }
+                    }
+
+                    $postAddress = 'Toàn Nga';
+                    if (isset($post->city)) {
+                        $postAddress = $post->city->city;
+                    }
+
+                    $postClassify = CLASSIFY_SLUG[$post->posts_classify_type];
+                    if ($post->posts_classify_type == SERVICE_SLUG) {
+                        $postClassify = $postClassify . ', ' . SERVICE_TYPE_SLUG[$post->posts_classify->services_type_type];
+                    }
+
+                    $now = \Carbon\Carbon::now();
+                    $createdAt = \Carbon\Carbon::parse($post->created_at);
+                    $postTimes = $createdAt->diffInDays($now);
+                    if ($postTimes == 0) {
+                        $postTimes = $createdAt->diffInHours($now);
+                        if ($postTimes == 0) {
+                            $postTimes = 'gần đây';
+                        } else {
+                            $postTimes = $postTimes . ' giờ trước';
+                        }
+                    } elseif ($postTimes > 30) {
+                        $postTimes = date('m/d/Y', strtotime($createdAt));
+                    } else {
+                        $postTimes = $postTimes . ' ngày trước';
+                    }
+
+                @endphp
+                <div class="row d-block justify-content-center newfeed-container2">
+                    <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
+                        <div class="newFeed-detail-icon">
+                            <i class="fa-solid fa-location-dot"></i><span> {{ $postAddress }}</span>
+                        </div>
+
+                        <div class="newFeed-detail-icon">
+                            <i class="fa-solid fa-bars"></i><span> {{ $postClassify }}</span>
+                        </div>
+
+                        <div class="newFeed-detail-icon">
+                            <i class="fa-solid fa-clock"></i><span> {{ $postTimes }}</span>
+                        </div>
+                    </div>
+                    @if (sizeof($post->post_attachments) != 0)
+                        <div id="homePageNewFeedImgCarousel{{ $post->id }}" class="carousel slide"
+                            data-bs-ride="carousel" style="padding:0px;">
+                            <div class="carousel-indicators">
+                                @for ($i = 0; $i < sizeof($post->post_attachments); $i++)
+                                    <button type="button"
+                                        data-bs-target="#homePageNewFeedImgCarousel{{ $post->id }}"
+                                        data-bs-slide-to="{{$i}}" @if ($i == 0) class="active" @endif
+                                        aria-current="true"></button>
+                                @endfor
+                            </div>
+                            <div class="carousel-inner">
+                                @foreach ($post->post_attachments as $key=> $attachment)
+                                    <div class="carousel-item @if($key==0) active @endif">
+                                        <img class="newFeed-image2" src={{ asset($attachment->attachment_path) }}>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#homePageNewFeedImgCarousel{{ $post->id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#homePageNewFeedImgCarousel{{ $post->id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+
+                        </div>
+                    @endif
+
+                    <div class="row newFeed-content-small-sec2 ">
+                        <div class="row newFeed-info-title-sec2">
+                            <p class="newFeed-info-title2">{{ $post->title }}</p>
+                        </div>
+                        <div class="row newFeed-info-text-sec2">
+                            <p class="newFeed-info-text2">{!! nl2br($post->description) !!}</p>
+                        </div>
+
+                    </div>
+
+                    @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
+                        <hr />
+                        <div class="row newFeed-interact-sec2 d-flex justify-content-center"
+                            id="newFeed-post-{{ $post->id }}">
+                            @if ($post->checkPostLiked(Admin::user()->id, $post->id))
+                                <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2"
+                                    onclick="unlikePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
+                            @else
+                                <i class="fa-regular fa-heart fa-xl interact-icon2"
+                                    onclick="likePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            @endforeach
+
+
+            {{-- @foreach ($posts as $post)
                 <div class="row newfeed-container d-flex justify-content-center">
                     <div class="row newfeed-content-sec">
                         <div class="newfeed-image-sec  newFeed-image-sec">
@@ -259,7 +473,6 @@
                                             <i class="fa-regular fa-heart"
                                                 onclick="likePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
                                         @endif
-                                        {{-- <i style="color:red;" class="fa-solid fa-heart"></i> --}}
                                     </span>
                                 @endif
                             </div>
@@ -267,8 +480,10 @@
                                 <p class="newFeed-info-title vertical-element-middle-align">{{ $post->title }}</p>
                             </div>
                             <div class="row newFeed-info-content-sec">
-                                <div class="row newFeed-info-description-sec vertical-container"  style="overflow:hidden;">
-                                    <p class="newFeed-info-description vertical-element-middle-align" style="overflow:hidden;">
+                                <div class="row newFeed-info-description-sec vertical-container"
+                                    style="overflow:hidden;">
+                                    <p class="newFeed-info-description vertical-element-middle-align"
+                                        style="overflow:hidden;">
                                         {!! nl2br($post->description) !!}</p>
                                 </div>
                                 <div class="row newFeed-info-detail-sec">
@@ -288,7 +503,7 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @endforeach --}}
             {{-- <div class="row newfeed-container d-flex justify-content-center">
                 <div class="row newfeed-content-sec">
                     <div class="newfeed-image-sec  newFeed-image-sec">
@@ -366,50 +581,83 @@
                         if (e.isUser) {
                             var userId = {{ Admin::user() !== null ? Admin::user()->id : 0 }};
                             if (!e.liked) {
-                                likeIcon =
-                                    `<i class="fa-regular fa-heart" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                                likeIcon =`<hr /><div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}">
+                                                <i class="fa-regular fa-heart fa-xl interact-icon2" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
+                                            </div>`;
+                                    // `<i class="fa-regular fa-heart" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
                             } else {
-                                likeIcon =
-                                    `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                                likeIcon = `<hr /><div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}">
+                                                <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
+                                            </div>`;
+                                    // `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
                             }
                         }
-                        $('#home-newFeed-sec').append(`<div class="row newfeed-container d-flex justify-content-center">
-                                                            <div class="row newfeed-content-sec">
-                                                                <div class="newfeed-image-sec  newFeed-image-sec">
-                                                                    <img class="newFeed-image" src="${e.image}">
+                        var imagesCarousel = '';
+                        if(e.images.length > 0){
+                            var indicator = '';
+                            var images = '';
+                            for(var i =0; i<e.images.length;i++){
 
+                                if(i==0){
+                                    indicator=indicator + `<button type="button" data-bs-target="#homePageNewFeedImgCarousel${e.id}" class="active" data-bs-slide-to="${i}" aria-label="Slide ${i+1}" aria-current="true"></button>`;
+                                    images = images+`<div class="carousel-item active">
+                                                    <img class="newFeed-image2" src='${e.images[i]}'>
+                                                </div>`;
+                                    continue;
+                                }
+                                indicator = indicator + `<button type="button" data-bs-target="#homePageNewFeedImgCarousel${e.id}" data-bs-slide-to="${i}" aria-label="Slide ${i+1}" aria-current="true"></button>`;
+                                images = images+`<div class="carousel-item">
+                                                    <img class="newFeed-image2" src='${e.images[i]}'>
+                                                </div>`;
+                            }
+
+
+                            imagesCarousel = `<div id="homePageNewFeedImgCarousel${e.id}" class="carousel slide" data-bs-ride="carousel"
+                                                                style="padding:0px;">
+                                                                <div class="carousel-indicators">
+                                                                    ${indicator}
+                                                                </div>
+                                                                <div class="carousel-inner">
+                                                                    ${images}
+                                                                </div>
+                                                                <button class="carousel-control-prev" type="button" data-bs-target="#homePageNewFeedImgCarousel${e.id}"
+                                                                    data-bs-slide="prev">
+                                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                    <span class="visually-hidden">Previous</span>
+                                                                </button>
+                                                                <button class="carousel-control-next" type="button" data-bs-target="#homePageNewFeedImgCarousel${e.id}"
+                                                                    data-bs-slide="next">
+                                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                    <span class="visually-hidden">Next</span>
+                                                                </button>
+                                                            </div>`;
+                        }
+                        $('#home-newFeed-sec').append(`<div class="row d-block justify-content-center newfeed-container2">
+                                                            <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
+                                                                <div class="newFeed-detail-icon">
+                                                                    <i class="fa-solid fa-location-dot"></i><span> ${e.address}</span>
                                                                 </div>
 
-                                                                <div class="newfeed-info-sec d-block justify-content-center">
-                                                                    <div class="row newFeed-interact-sec d-flex justify-content-end">
-                                                                        <span class="newFeed-icon-sec" id="newFeed-post-${e.id}">
-                                                                            ${likeIcon}
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="row newFeed-info-title-sec vertical-container">
-                                                                        <p class="newFeed-info-title vertical-element-middle-align">${e.title}</p>
-                                                                    </div>
-                                                                    <div class="row newFeed-info-content-sec">
-                                                                        <div class="row newFeed-info-description-sec vertical-container">
-                                                                            <p class="newFeed-info-description vertical-element-middle-align">
-                                                                                ${e.description}</p>
-                                                                        </div>
-                                                                        <div class="row newFeed-info-detail-sec">
-                                                                            <div class="newFeed-detail-icon">
-                                                                                <i class="fa-solid fa-location-dot"></i><span> ${e.address}</span>
-                                                                            </div>
+                                                                <div class="newFeed-detail-icon">
+                                                                    <i class="fa-solid fa-bars"></i><span> ${e.classify}</span>
+                                                                </div>
 
-                                                                            <div class="newFeed-detail-icon">
-                                                                                <i class="fa-solid fa-bars"></i><span> ${e.classify}</span>
-                                                                            </div>
-
-                                                                            <div class="newFeed-detail-icon">
-                                                                                <i class="fa-solid fa-clock"></i><span> ${e.times}</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="newFeed-detail-icon">
+                                                                    <i class="fa-solid fa-clock"></i><span> ${e.times}</span>
                                                                 </div>
                                                             </div>
+                                                            ${imagesCarousel}
+
+                                                            <div class="row newFeed-content-small-sec2 ">
+                                                                <div class="row newFeed-info-title-sec2">
+                                                                    <p class="newFeed-info-title2">${e.title}</p>
+                                                                </div>
+                                                                <div class="row newFeed-info-text-sec2">
+                                                                    <p class="newFeed-info-text2">${e.description}</p>
+                                                                </div>
+                                                            </div>
+
+                                                            ${likeIcon}
                                                         </div>`);
                     })
                     if (data.data.length > 0) {

@@ -63,13 +63,15 @@ class HomeService
         foreach ($posts as $post) {
             //load img
             $imgPath = asset('storage/template/post/none-pic-logo.jpg');
+            $postData['images']=[];
             foreach ($post->post_attachments as $attachment) {
-                if ($attachment->attachment_type == POST_DESCRIPTION_PHOTO) {
-                    $imgPath = asset($attachment->attachment_path);
-                    break;
-                }
+                array_push($postData['images'] ,asset($attachment->attachment_path));
+                // if ($attachment->attachment_type == POST_DESCRIPTION_PHOTO) {
+                //     $imgPath = asset($attachment->attachment_path);
+                //     break;
+                // }
             }
-            $postData['image'] = $imgPath;
+            // $postData['images'] = $imgPath;
 
             //address
             $postAddress = 'Toàn Nga';
@@ -113,7 +115,7 @@ class HomeService
             $postData['times'] = $postTimes;
 
             $postData['title']=  $post->title;
-            $postData['description'] = $post->description;
+            $postData['description'] = nl2br($post->description);
 
             array_push($response, $postData);
         }
