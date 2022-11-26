@@ -138,7 +138,7 @@
                         </div>
                         <div class="col-xs-7 h-100 m-0">
                             <input maxlength="25" id="checkEntry-nameRussian" name='checkEntry-nameRussian'
-                                type="text" class="form-control h-100" value="" />
+                                type="text" class="form-control h-100" value="" required />
                         </div>
                     </div>
                     <div class="row my-1">
@@ -147,7 +147,7 @@
                         </div>
                         <div class="col-xs-7 h-100 m-0">
                             <input maxlength="55" id="checkEntry-nameLatin" name='checkEntry-nameLatin'
-                                type="text" class="form-control h-100" value="" />
+                                type="text" class="form-control h-100" value="" required />
                         </div>
                     </div>
                     <div class="row my-1">
@@ -169,13 +169,12 @@
                         <div class="col-ms-6" style="width : 40%;">
                             <h6 class="mt-2">Số hộ chiếu</h6>
                             <input maxlength="55" id="checkEntry-passportSeries" name='checkEntry-passportSeries'
-                                type="text" class="form-control" value="" />
+                                type="text" class="form-control" value="" required />
                         </div>
                         <div class="col-ms-6" style="width : 60%;">
                             <h6 class="mt-2">Ngày hết hạn hộ chiếu</h6>
                             <input maxlength="55" id="checkEntry-passportExpiredDate"
-                                name='checkEntry-passportExpiredDate' type="date" class="form-control"
-                                value="" />
+                                name='checkEntry-passportExpiredDate' type="date" class="form-control"/>
                         </div>
                     </div>
                 </form>
@@ -381,11 +380,7 @@
     }
 
     $(document).ready(function() {
-        // $('.mbTabletModalTitle').select2({
-        //     width: "100%",
-        //     placeholder: 'Phân loại',
-        //     selectionCssClass: 'header-function-sec',
-        // });
+
 
         $('#sidebarServiceChecking').on('click', function() {
             checkUserExist();
@@ -393,6 +388,7 @@
                 '<?= Admin::user() !== null ? Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN]) : '' ?>';
             if (isAdmin == '1') {
                 console.log('user is admin');
+                window.location.href = '{{ route('admin.checkingInfo.index') }}'
             } else {
                 modalShow(1);
             }

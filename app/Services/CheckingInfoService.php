@@ -36,4 +36,16 @@ class CheckingInfoService
 
     }
 
+    public function loadAllCheckingRequest(){
+        $response['carTickets']['created']=$this->checkingInfoServiceRepo->loadAllCarTicket()['created'];
+        $response['carTickets']['completed']=$this->checkingInfoServiceRepo->loadAllCarTicket()['completed'];
+        $response['entryBans']['created']=$this->checkingInfoServiceRepo->loadAllEntryBan()['created'];
+        $response['entryBans']['completed']=$this->checkingInfoServiceRepo->loadAllEntryBan()['completed'];
+        return $response;
+    }
+
+    public function carTicketResultUpdate($request){
+        $this->checkingInfoServiceRepo->carTicketResultUpdate($request);
+    }
+
 }

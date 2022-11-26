@@ -483,3 +483,13 @@
 .modal-body{
     overflow-y: scroll;
 }
+/*-----end modal------*/
+
+/*-------input date-----*/
+input[type=date]:required:invalid::-webkit-datetime-edit {
+    color: transparent;
+}
+input[type=date]:focus::-webkit-datetime-edit {
+    color: black !important;
+}
+/*--------end date----*/

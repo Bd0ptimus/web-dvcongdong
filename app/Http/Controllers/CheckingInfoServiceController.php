@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Mail;
 use Illuminate\Http\Request;
-
+use App\Mail\CheckingService;
 //Services
 use App\Services\CheckingInfoService;
 
@@ -12,6 +12,8 @@ class CheckingInfoServiceController extends Controller
 
     protected $checkingInfoService;
     public function __construct(CheckingInfoService $checkingInfoService){
+        $this->middleware('user.auth');
+        $this->middleware('admin.permission')->only(['adminIndex']);
         $this->checkingInfoService = $checkingInfoService;
     }
 
@@ -40,5 +42,23 @@ class CheckingInfoServiceController extends Controller
             response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
         }
         return response()->json(['error' => 0, 'msg' => 'Lưu thành công']);
+    }
+
+    public function adminIndex(Request $request){
+        $data=$this->checkingInfoService->loadAllCheckingRequest();
+        return view('checkingService.checkingServiceManager',[
+            'carTickets'=>$data['carTickets'],
+            'entryBans'=>$data['entryBans'],
+        ]);
+    }
+
+    public function carTicketResultUpdate(Request $request){
+        $this->checkingInfoService->carTicketResultUpdate($request);
+        if($request->carTicketModalResponseOption == RESPONSE_VIA_EMAIL){
+            Mail::to($request->carTicketModalResponseAddress)->send(new CheckingService('Kiểm Tra Lỗi Phạt Xe', $request->carTicketModalNameRequester, $request->carTicketModalResult));
+        }elseif($request->carTicketModalResponseOption == RESPONSE_VIA_PHONE){
+
+        }
+        return redirect()->back();
     }
 }

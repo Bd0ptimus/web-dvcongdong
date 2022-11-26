@@ -11,7 +11,8 @@ use Laravel\Sanctum\HasApiTokens;
 //Models
 use App\Models\post;
 use App\Models\post_interaction;
-
+use App\Models\car_ticket_checking;
+use App\Models\entry_ban_checking;
 use App\Admin;
 class User extends Authenticatable
 {
@@ -64,5 +65,14 @@ class User extends Authenticatable
     public function post_interactions(){
         return $this->hasMany(post_interaction::class, 'user_id', 'id');
     }
+
+    public function carTickets(){
+        return $this->hasMany(car_ticket_checking::class, 'user_id', 'id');
+    }
+
+    public function entryBans(){
+        return $this->hasMany(entry_bans::class, 'user_id', 'id');
+    }
+
 
 }

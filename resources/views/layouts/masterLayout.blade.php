@@ -14,20 +14,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer></script>
 
-
 <script type="text/javascript">
-    // $(document).ready(function() {
-    //     $('#sidebarServiceChecking').on('click', function() {
-    //         checkUserExist();
-    //         var isAdmin =
-    //             '<?= Admin::user() !== null ? Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN]) : '' ?>';
-    //         if (isAdmin == '1') {
-    //             console.log('user is admin');
-    //         } else {
-    //             modalShow(1);
-    //         }
-    //     })
-    // });
+
 
     function checkUserExist() {
         var userId = '<?= Admin::user() !== null ? Admin::user()->id : null ?>';
@@ -36,6 +24,7 @@
             die();
         }
     }
+
     function removePreviewImage(idForRemove, inputId) {
         document.getElementById(`${inputId}`).value = "";
         // var file = document.getElementById('logoUpload').value;
@@ -74,7 +63,7 @@
                     $(`#${newFeedPostId}`).empty();
                     $(`#${newFeedPostId}`).append(
                         `<i class="fa-regular fa-heart"  onclick="likePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`
-                        );
+                    );
                 }
             }
 
@@ -97,7 +86,7 @@
                     $(`#${newFeedPostId}`).empty();
                     $(`#${newFeedPostId}`).append(
                         `<i style="color:red;" class="fa-solid fa-heart"  onclick="unlikePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`
-                        );
+                    );
 
                 }
             }

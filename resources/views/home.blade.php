@@ -267,9 +267,9 @@
                                 <p class="newFeed-info-title vertical-element-middle-align">{{ $post->title }}</p>
                             </div>
                             <div class="row newFeed-info-content-sec">
-                                <div class="row newFeed-info-description-sec vertical-container">
-                                    <p class="newFeed-info-description vertical-element-middle-align">
-                                        {{ $post->description }}</p>
+                                <div class="row newFeed-info-description-sec vertical-container"  style="overflow:hidden;">
+                                    <p class="newFeed-info-description vertical-element-middle-align" style="overflow:hidden;">
+                                        {!! nl2br($post->description) !!}</p>
                                 </div>
                                 <div class="row newFeed-info-detail-sec">
                                     <div class="newFeed-detail-icon">

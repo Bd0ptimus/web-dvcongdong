@@ -98,7 +98,7 @@ class HomeService
                     $postTimes = $postTimes . ' giờ trước';
                 }
             } elseif ($postTimes > 30) {
-                $postTimes = date('m/d/Y', strtotime($createdAt));
+                $postTimes = date('d/m/Y', strtotime($createdAt));
             } else {
                 $postTimes = $postTimes . ' ngày trước';
             }

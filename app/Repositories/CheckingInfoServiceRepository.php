@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Log;
+
 //use Your Model
 use App\Admin;
 
@@ -27,10 +29,10 @@ class CheckingInfoServiceRepository extends BaseRepository
             'user_id' =>$params['userId'],
             'name_russian'=>$params['nameRussian'],
             'name_latin' =>$params['nameLatin'],
-            'dob' =>$params['dob'],
+            'dob' =>date('Y-m-d',strtotime($params['dob'])),
             'status' => CHECK_REQUEST_CREATED,
             'passport_series' => $params['passportSeries'],
-            'passport_expired' =>$params['passportExpiredDate'],
+            'passport_expired' =>date('Y-m-d',strtotime($params['passportExpiredDate'])),
             'response_require' => $params['responseRequire'],
         ]);
     }
@@ -46,6 +48,23 @@ class CheckingInfoServiceRepository extends BaseRepository
     }
 
 
+    public function loadAllCarTicket(){
+        $response['created'] = car_ticket_checking::with('user')->where('status', CHECK_REQUEST_CREATED)->orderBy('updated_at', 'DESC')->get();
+        $response['completed'] = car_ticket_checking::with('user')->where('status', CHECK_REQUEST_COMPLETED)->orderBy('updated_at', 'DESC')->get();
+        return $response;
+    }
 
+    public function loadAllEntryBan(){
+        $response['created'] = entry_ban_checking::with('user')->where('status', CHECK_REQUEST_CREATED)->orderBy('updated_at', 'DESC')->get();
+        $response['completed'] = entry_ban_checking::with('user')->where('status', CHECK_REQUEST_COMPLETED)->orderBy('updated_at', 'DESC')->get();
+        return $response;
+    }
+
+    public function carTicketResultUpdate($request){
+        car_ticket_checking::where('id',$request->carTicketBtn)->update([
+            'result_comment' => $request->carTicketModalResult,
+            'status' => CHECK_REQUEST_COMPLETED
+        ]);
+    }
 
 }
