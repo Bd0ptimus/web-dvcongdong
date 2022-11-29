@@ -193,7 +193,7 @@
                 aria-label="{{ __('Toggle navigation') }}" style="padding : 0px 5px; width:40px;">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <img src="{{asset('storage/logo/logo1-a.jpg')}}" style="height : 40px;">
+            <img src="{{asset('storage/logo/logo1-a.jpg')}}" style="height : 40px;width:auto;">
             <a class="navbar-brand pc-only" href="{{ url('/') }}" style="margin:0px 2%;" >
                 {{ config('app.name', 'Laravel') }}
             </a>
