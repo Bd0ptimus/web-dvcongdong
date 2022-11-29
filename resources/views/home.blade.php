@@ -201,35 +201,35 @@
                 <div id="ww_b40fc5d8a12e7" v='1.3' loc='id' a='{"t":"responsive","lang":"vi","sl_lpl":1,"ids":["wl3996"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"rgba(255,255,255,1)","cl_font":"#000000","cl_cloud":"#d4d4d4","cl_persp":"#2196F3","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"3","el_wfc":3,"cl_odd":"#0000000a"}'>Weather Data Source: <a href="https://weerlabs.nl/weer_moskou/week/" id="ww_b40fc5d8a12e7_u" target="_blank">Moskou weer deze week</a></div><script async src="https://app1.weatherwidget.org/js/?id=ww_b40fc5d8a12e7"></script>
             </div>
         </div> --}}
-
-        <div class="row homeCheckingServiceBtn-sec">
-            <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
-                <button id="checkCarTicket"
-                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                    <i class="fa-solid fa-car-on fa-2xl"></i><br><div> Kiểm tra lỗi phạt xe</div>
-                </button>
+        @if((Admin::user()!==null && Admin::user()->isRole(ROLE_USER))||Admin::user()==null)
+            <div class="row homeCheckingServiceBtn-sec">
+                <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
+                    <button id="checkCarTicket"
+                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                        <i class="fa-solid fa-car-on fa-2xl"></i><br><div> Kiểm tra lỗi phạt xe</div>
+                    </button>
+                </div>
+                <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
+                    <button id="checkAdministrative"
+                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                        <i class="fa-solid fa-book fa-2xl"></i><br><div> Kiểm tra lỗi hành chính</div>
+                    </button>
+                </div>
+                <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
+                    <button id="checkTaxdebt"
+                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                        <i class="fa-solid fa-coins fa-2xl"></i><br><div> Kiểm tra nợ thuế</div>
+                    </button>
+                </div>
+                <div class=" col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
+                    <button id="checkEntryBan"
+                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                        <i class="fa-solid fa-plane-circle-xmark fa-2xl"></i><br><div> Kiểm tra cấm nhập
+                            cảnh</div>
+                    </button>
+                </div>
             </div>
-            <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
-                <button id="checkAdministrative"
-                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                    <i class="fa-solid fa-book fa-2xl"></i><br><div> Kiểm tra lỗi hành chính</div>
-                </button>
-            </div>
-            <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
-                <button id="checkTaxdebt"
-                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                    <i class="fa-solid fa-coins fa-2xl"></i><br><div> Kiểm tra nợ thuế</div>
-                </button>
-            </div>
-            <div class=" col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
-                <button id="checkEntryBan"
-                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                    <i class="fa-solid fa-plane-circle-xmark fa-2xl"></i><br><div> Kiểm tra cấm nhập
-                        cảnh</div>
-                </button>
-            </div>
-        </div>
-
+        @endif
 
 
         <div class="row my-5 newfeed-sec" id="home-newFeed-sec">
