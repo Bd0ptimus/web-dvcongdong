@@ -186,29 +186,83 @@
 
 <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm"
     style="position:fixed; z-index:1000; right:0px; width:100%; top:0px; background-color:rgb(248,249,250);">
-    <div class="container">
+    <div class="container" style="width:100%; margin:0px; padding : 0px; margin:0px 12px;">
         <div class="d-flex justify-content-start">
             <button onclick="sidebarOpen()" id="toggler-btn" class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="{{ __('Toggle navigation') }}">
+                aria-label="{{ __('Toggle navigation') }}" style="padding : 0px 5px; width:40px;">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="{{ url('/') }}" style="margin:0px 2%;">
+            <a class="navbar-brand pc-only" href="{{ url('/') }}" style="margin:0px 2%;">
                 {{ config('app.name', 'Laravel') }}
+            </a>
+            <a class="navbar-brand tablet-only" href="{{ url('/') }}" style="margin:0px 2%;">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+            <a class="navbar-brand mb-only" href="{{ url('/') }}" style="margin:0px 1%;">
+                logo
             </a>
         </div>
 
+        <div class="searchingForm-mb">
+            <form action="{{ route('search.homeSearch') }}"
+                method="post"> @csrf
+                <select class="citySelect-mb" name="homeFilterPosition">
+                    <option value="0">Toàn Nga</option>
+                    @if (isset($cities))
+                        @foreach ($cities as $city)
+                            <option value="{{ $city->id }}">
+                                {{ $city->city }}</option>
+                        @endforeach
+                    @endif
+                </select>
+                <input autocomplete="off"
+                    class="searchInputField-mb"
+                    id="Filter_Keyword" name="homeFilterKeyWord" placeholder="Từ khóa" type="text" value="">
+                <button
+                    class=" btn btn-block btn-topcv-primary btn-border btn-border-thin searchInputBtn-mb-pc-tb"
+                    type="submit" name="homeFilterClassify" value="0">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="searching-sec-pc-tb d-flex justify-content-center">
+            <form class="searchingForm-pc-tb" action="{{ route('search.homeSearch') }}"
+                method="post"> @csrf
+                <select class="citySelect-pc-tb" name="homeFilterPosition">
+                    <option value="0">Toàn Nga</option>
+                    @if (isset($cities))
+                        @foreach ($cities as $city)
+                            <option value="{{ $city->id }}">
+                                {{ $city->city }}</option>
+                        @endforeach
+                    @endif
+                </select>
+                <input autocomplete="off"
+                    class="searchInputField-pc-tb"
+                    id="Filter_Keyword" name="homeFilterKeyWord" placeholder="Từ khóa" type="text" value="">
+                <button
+                    class=" btn btn-block btn-topcv-primary btn-border btn-border-thin searchInputBtn-mb-pc-tb"
+                    type="submit" name="homeFilterClassify" value="0">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
+
         @if (isset($isHome) && $isHome == true)
-            <form id="function" class="col-md-2 vertical-container" action="{{route('home')}}" method="post"> @csrf
+            {{-- <form id="function" class="col-md-2 vertical-container pc-only" action="{{ route('home') }}"
+                method="post"> @csrf
                 <select class="cityChoosing vertical-element-middle-align" id="mainCitySelect" name="mainCity">
                     <option value="">Toàn Nga</option>
                     @if (isset($cities))
                         @foreach ($cities as $city)
-                            <option value="{{ $city->id }}" @if($cityChoosen == $city->id ) selected @endif>{{ $city->city }}</option>
+                            <option value="{{ $city->id }}" @if ($cityChoosen == $city->id) selected @endif>
+                                {{ $city->city }}</option>
                         @endforeach
                     @endif
                 </select>
-            </form>
+            </form> --}}
         @endif
 
 
@@ -268,7 +322,7 @@
             selectionCssClass: 'header-function-sec',
         });
 
-        $('#mainCitySelect').on('change', function(){
+        $('#mainCitySelect').on('change', function() {
             $('#function').submit();
         });
     });

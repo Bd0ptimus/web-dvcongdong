@@ -27,11 +27,25 @@
 
 .main-service-checking-btn{
     width : 90%;
+    height : 120px;
+    padding: 6px 6px;
+    margin : 5%;
 }
 
 .main-filter{
     height :80px;
 }
+
+.main-service-checking-btn-sec{
+    width: 25%;
+    padding: 0px;
+}
+
+
+.homeCheckingServiceBtn-sec{
+    margin: 0px 5px;
+}
+
 
 
 
@@ -53,6 +67,10 @@
     }
     #ad-banner{
         display:block;
+    }
+
+    .homeCheckingServiceBtn-sec{
+        height : 150px;
     }
 }
 
@@ -76,6 +94,9 @@
     #ad-banner{
         display:block;
     }
+    .homeCheckingServiceBtn-sec{
+        height : 150px;
+    }
 }
 
 
@@ -98,6 +119,9 @@
     #ad-banner{
         display:block;
     }
+    .homeCheckingServiceBtn-sec{
+        height : 150px;
+    }
 }
 
 
@@ -117,5 +141,8 @@
     }
     #ad-banner{
         display:none;
+    }
+    .homeCheckingServiceBtn-sec{
+        height : 150px;
     }
 }

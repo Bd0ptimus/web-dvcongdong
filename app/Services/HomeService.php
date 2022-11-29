@@ -114,7 +114,7 @@ class HomeService
 
             $postData['avatar'] = $post->user->user_avatar?asset($post->user->user_avatar):asset('storage/avatar-sample/ava1.jpg');
 
-            $postData['accessTimes'] = $post->access_times;
+            $postData['accessTimes'] = $post->access_times??0;
             $postData['rating']='';
             for($i=1; $i<6;$i++){
                 if($i<= $post->rating_score){

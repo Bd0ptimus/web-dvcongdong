@@ -35,7 +35,7 @@
 <body style="position:relative;">
 
     <div class="project-content-section">
-        <div id="img-carousel">
+        {{-- <div id="img-carousel">
             @include('layouts.mainBannerSlide')
             <div id="main-search-pc-tb" class="justify-content-center">
                 <div class="box-search-wrapper" id="main-search-section">
@@ -188,7 +188,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         {{-- <div class="row my-5 d-flex justify-content-between">
             <div style="width : 50%; height : auto;">
@@ -201,6 +201,36 @@
                 <div id="ww_b40fc5d8a12e7" v='1.3' loc='id' a='{"t":"responsive","lang":"vi","sl_lpl":1,"ids":["wl3996"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"rgba(255,255,255,1)","cl_font":"#000000","cl_cloud":"#d4d4d4","cl_persp":"#2196F3","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"3","el_wfc":3,"cl_odd":"#0000000a"}'>Weather Data Source: <a href="https://weerlabs.nl/weer_moskou/week/" id="ww_b40fc5d8a12e7_u" target="_blank">Moskou weer deze week</a></div><script async src="https://app1.weatherwidget.org/js/?id=ww_b40fc5d8a12e7"></script>
             </div>
         </div> --}}
+
+        <div class="row homeCheckingServiceBtn-sec">
+            <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
+                <button id="checkCarTicket"
+                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                    <i class="fa-solid fa-car-on fa-2xl"></i><br><div> Kiểm tra lỗi phạt xe</div>
+                </button>
+            </div>
+            <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
+                <button id="checkAdministrative"
+                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                    <i class="fa-solid fa-book fa-2xl"></i><br><div> Kiểm tra lỗi hành chính</div>
+                </button>
+            </div>
+            <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
+                <button id="checkTaxdebt"
+                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                    <i class="fa-solid fa-coins fa-2xl"></i><br><div> Kiểm tra nợ thuế</div>
+                </button>
+            </div>
+            <div class=" col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
+                <button id="checkEntryBan"
+                    class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
+                    <i class="fa-solid fa-plane-circle-xmark fa-2xl"></i><br><div> Kiểm tra cấm nhập
+                        cảnh</div>
+                </button>
+            </div>
+        </div>
+
+
 
         <div class="row my-5 newfeed-sec" id="home-newFeed-sec">
             <div class="row d-block justify-content-center newfeed-container2">
@@ -280,42 +310,6 @@
                     <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2"></i>
                 </div>
             </div>
-
-
-            {{-- <div class="row newfeed-container d-flex justify-content-center">
-                <div class="row newfeed-content-sec">
-                    <div class="newfeed-image-sec  newFeed-image-sec">
-                        <img class="newFeed-image" src={{ asset('storage/template/post/none-pic-logo.jpg') }}>
-                    </div>
-
-                    <div class="newfeed-info-sec d-block justify-content-center">
-                        <div class="row newFeed-info-title-sec vertical-container">
-                            <p class="newFeed-info-title vertical-element-middle-align">Australian Citizenship Test
-                                Revision at LCViet Australia - 98% Successful Rate</p>
-                        </div>
-                        <div class="row newFeed-info-content-sec">
-                            <div class="row newFeed-info-description-sec vertical-container">
-                                <p class="newFeed-info-description vertical-element-middle-align">AUSTRALIAN
-                                    CITIZENSHIP. Call 0452 511 577 (Ms. Esther) We are please to boast a 98% SUCCESSFUL
-                                    RATE</p>
-                            </div>
-                            <div class="row newFeed-info-detail-sec">
-                                <div class="newFeed-detail-icon">
-                                    <i class="fa-solid fa-location-dot"></i><span> Moscow</span>
-                                </div>
-
-                                <div class="newFeed-detail-icon">
-                                    <i class="fa-solid fa-bars"></i><span> Nhà đất</span>
-                                </div>
-
-                                <div class="newFeed-detail-icon">
-                                    <i class="fa-solid fa-clock"></i><span> 2 ngày trước</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
 
             @foreach ($posts as $post)
                 @php
@@ -444,128 +438,6 @@
                 </div>
             @endforeach
 
-
-            {{-- @foreach ($posts as $post)
-                <div class="row newfeed-container d-flex justify-content-center">
-                    <div class="row newfeed-content-sec">
-                        <div class="newfeed-image-sec  newFeed-image-sec">
-                            @php
-                                $imgPath = 'storage/template/post/none-pic-logo.jpg';
-                                foreach ($post->post_attachments as $attachment) {
-                                    if ($attachment->attachment_type == POST_DESCRIPTION_PHOTO) {
-                                        $imgPath = $attachment->attachment_path;
-                                        break;
-                                    }
-                                }
-
-                                $postAddress = 'Toàn Nga';
-                                if (isset($post->city)) {
-                                    $postAddress = $post->city->city;
-                                }
-
-                                $postClassify = CLASSIFY_SLUG[$post->posts_classify_type];
-                                if ($post->posts_classify_type == SERVICE_SLUG) {
-                                    $postClassify = $postClassify . ', ' . SERVICE_TYPE_SLUG[$post->posts_classify->services_type_type];
-                                }
-
-                                $now = \Carbon\Carbon::now();
-                                $createdAt = \Carbon\Carbon::parse($post->created_at);
-                                $postTimes = $createdAt->diffInDays($now);
-                                if ($postTimes == 0) {
-                                    $postTimes = $createdAt->diffInHours($now);
-                                    if ($postTimes == 0) {
-                                        $postTimes = 'gần đây';
-                                    } else {
-                                        $postTimes = $postTimes . ' giờ trước';
-                                    }
-                                } elseif ($postTimes > 30) {
-                                    $postTimes = date('m/d/Y', strtotime($createdAt));
-                                } else {
-                                    $postTimes = $postTimes . ' ngày trước';
-                                }
-
-                            @endphp
-                            <img class="newFeed-image" src={{ asset($imgPath) }}>
-
-                        </div>
-
-                        <div class="newfeed-info-sec d-block justify-content-center">
-                            <div class="row newFeed-interact-sec d-flex justify-content-end">
-                                @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
-                                    <span class="newFeed-icon-sec" id="newFeed-post-{{ $post->id }}">
-                                        @if ($post->checkPostLiked(Admin::user()->id, $post->id))
-                                            <i style="color:red;" class="fa-solid fa-heart"
-                                                onclick="unlikePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
-                                        @else
-                                            <i class="fa-regular fa-heart"
-                                                onclick="likePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
-                                        @endif
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="row newFeed-info-title-sec vertical-container">
-                                <p class="newFeed-info-title vertical-element-middle-align">{{ $post->title }}</p>
-                            </div>
-                            <div class="row newFeed-info-content-sec">
-                                <div class="row newFeed-info-description-sec vertical-container"
-                                    style="overflow:hidden;">
-                                    <p class="newFeed-info-description vertical-element-middle-align"
-                                        style="overflow:hidden;">
-                                        {!! nl2br($post->description) !!}</p>
-                                </div>
-                                <div class="row newFeed-info-detail-sec">
-                                    <div class="newFeed-detail-icon">
-                                        <i class="fa-solid fa-location-dot"></i><span> {{ $postAddress }}</span>
-                                    </div>
-
-                                    <div class="newFeed-detail-icon">
-                                        <i class="fa-solid fa-bars"></i><span> {{ $postClassify }}</span>
-                                    </div>
-
-                                    <div class="newFeed-detail-icon">
-                                        <i class="fa-solid fa-clock"></i><span> {{ $postTimes }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach --}}
-            {{-- <div class="row newfeed-container d-flex justify-content-center">
-                <div class="row newfeed-content-sec">
-                    <div class="newfeed-image-sec  newFeed-image-sec">
-                        <img class="newFeed-image" src={{ asset('storage/template/post/none-pic-logo.jpg') }}>
-                    </div>
-
-                    <div class="newfeed-info-sec d-block justify-content-center">
-                        <div class="row newFeed-info-title-sec vertical-container">
-                            <p class="newFeed-info-title vertical-element-middle-align">Australian Citizenship Test
-                                Revision at LCViet Australia - 98% Successful Rate</p>
-                        </div>
-                        <div class="row newFeed-info-content-sec">
-                            <div class="row newFeed-info-description-sec vertical-container">
-                                <p class="newFeed-info-description vertical-element-middle-align">AUSTRALIAN
-                                    CITIZENSHIP. Call 0452 511 577 (Ms. Esther) We are please to boast a 98% SUCCESSFUL
-                                    RATE</p>
-                            </div>
-                            <div class="row newFeed-info-detail-sec">
-                                <div class="newFeed-detail-icon">
-                                    <i class="fa-solid fa-location-dot"></i><span> Moscow</span>
-                                </div>
-
-                                <div class="newFeed-detail-icon">
-                                    <i class="fa-solid fa-bars"></i><span> Nhà đất</span>
-                                </div>
-
-                                <div class="newFeed-detail-icon">
-                                    <i class="fa-solid fa-clock"></i><span> 2 ngày trước</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div> --}}
 
 
         </div>

@@ -66,6 +66,78 @@
     margin : 0px;
 }
 
+.citySelect-mb{
+    height : 39px;
+    width : 90px;
+    border : 0px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+
+}
+
+.searchInputField-mb{
+    height : 39px;
+    width : 100px;
+    border : 0px;
+    padding : 0px;
+}
+
+.citySelect-pc-tb{
+    height : 39px;
+    width : 150px;
+    border : 0px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+
+}
+
+.searchInputField-pc-tb{
+    height : 39px;
+    width : 400px;
+    border : 0px;
+    padding : 0px;
+}
+
+.citySelect-pc-tb:focus, .searchInputField-pc-tb:focus,.citySelect-mb:focus, .searchInputField-mb:focus{
+    outline: none;
+}
+
+.searchInputBtn-mb-pc-tb{
+    height: 43px;
+    width : 40px;
+    background-color: white;
+    color: black;
+    border: 0px;
+    border-radius: 0px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding : 0px;
+}
+
+
+
+/* .searchInputBtn-mb-pc-tb:hover, .searchInputBtn-mb-pc-tb:hover{
+    transition : 0.5s;
+} */
+
+.searchingForm-mb{
+    border: 2px solid #1d8daf;
+    border-radius:10px;
+    background-color: white;
+    float:right;
+}
+
+.searching-sec-pc-tb{
+    position: absolute;
+    width : 100%;
+    left : 0px;
+}
+
+.searchingForm-pc-tb{
+    border: 2px solid #1d8daf;
+    border-radius:12px;
+    background-color: white;
+}
 
 @media screen and (min-width : 1020px) and (max-width: 10000px){
     #login-register{
@@ -79,6 +151,12 @@
     }
     .tablet-only{
         display: none;
+    }
+    .searchingForm-mb{
+        display: none;
+    }
+    .searchingForm-pc-tb{
+        display: block;
     }
 }
 
@@ -95,6 +173,12 @@
     }
     .tablet-only{
         display: none;
+    }
+    .searchingForm-mb{
+        display: none;
+    }
+    .searchingForm-pc-tb{
+        display: block;
     }
 }
 
@@ -119,6 +203,12 @@
     .tablet-only .left-side{
         width: 60%;
     }
+    .searchingForm-mb{
+        display: none;
+    }
+    .searchingForm-pc-tb{
+        display: block;
+    }
 }
 
 
@@ -135,6 +225,14 @@
     .tablet-only{
         display: none;
     }
+    .searchingForm-mb{
+        display: block;
+    }
+    .searchingForm-pc-tb{
+        display: none;
+    }
 }
+
+
 
 
