@@ -67,7 +67,7 @@
 }
 
 .citySelect-mb{
-    height : 39px;
+    height : 35px;
     width : 90px;
     border : 0px;
     border-bottom-left-radius: 10px;
@@ -76,7 +76,7 @@
 }
 
 .searchInputField-mb{
-    height : 39px;
+    height : 35px;
     width : 100px;
     border : 0px;
     padding : 0px;
@@ -103,7 +103,7 @@
 }
 
 .searchInputBtn-mb-pc-tb{
-    height: 43px;
+    height: 35px;
     width : 40px;
     background-color: white;
     color: black;

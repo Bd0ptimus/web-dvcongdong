@@ -35,13 +35,11 @@ class SearchService
         foreach ($posts as $post) {
             //load img
             $imgPath = asset('storage/template/post/none-pic-logo.jpg');
+            $postData['images']=[];
+
             foreach ($post->post_attachments as $attachment) {
-                if ($attachment->attachment_type == POST_DESCRIPTION_PHOTO) {
-                    $imgPath = asset($attachment->attachment_path);
-                    break;
-                }
+                array_push($postData['images'] ,asset($attachment->attachment_path));
             }
-            $postData['image'] = $imgPath;
 
             //address
             $postAddress = 'Toàn Nga';
@@ -82,6 +80,19 @@ class SearchService
             }else{
                 $postData['isUser'] = false;
             }
+
+            $postData['avatar'] = $post->user->user_avatar?asset($post->user->user_avatar):asset('storage/avatar-sample/ava1.jpg');
+
+            $postData['accessTimes'] = $post->access_times??0;
+            $postData['rating']='';
+            for($i=1; $i<6;$i++){
+                if($i<= $post->rating_score){
+                    $postData['rating'] =$postData['rating'].'<span class="fa fa-star rating-star-checked"></span>';
+                }else{
+                    $postData['rating'] =$postData['rating'].'<span class="fa fa-star"></span>';
+                }
+            }
+            $postData['ownerName']  = $post->user->name;
 
             $postData['times'] = $postTimes;
 

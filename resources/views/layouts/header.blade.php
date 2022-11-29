@@ -185,23 +185,24 @@
 </div> --}}
 
 <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm"
-    style="position:fixed; z-index:1000; right:0px; width:100%; top:0px; background-color:rgb(248,249,250);">
-    <div class="container" style="width:100%; margin:0px; padding : 0px; margin:0px 12px;">
+    style="position:fixed; z-index:1000; right:0px; width:100%; top:0px; background-color:rgb(248,249,250); height:56px;">
+    <div class="d-flex justify-content-between" style="width:100%; height:100%; padding : 0px; margin:0px 12px;">
         <div class="d-flex justify-content-start">
             <button onclick="sidebarOpen()" id="toggler-btn" class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="{{ __('Toggle navigation') }}" style="padding : 0px 5px; width:40px;">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand pc-only" href="{{ url('/') }}" style="margin:0px 2%;">
+            <img src="{{asset('storage/logo/logo1-a.jpg')}}" style="height : 40px;">
+            <a class="navbar-brand pc-only" href="{{ url('/') }}" style="margin:0px 2%;" >
                 {{ config('app.name', 'Laravel') }}
             </a>
-            <a class="navbar-brand tablet-only" href="{{ url('/') }}" style="margin:0px 2%;">
+            {{-- <a class="navbar-brand tablet-only" href="{{ url('/') }}" style="margin:0px 2%;">
                 {{ config('app.name', 'Laravel') }}
             </a>
             <a class="navbar-brand mb-only" href="{{ url('/') }}" style="margin:0px 1%;">
                 logo
-            </a>
+            </a> --}}
         </div>
 
         <div class="searchingForm-mb">

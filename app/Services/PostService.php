@@ -23,6 +23,8 @@ use App\Services\MomBabyService;
 use App\Services\RestaurantService;
 use App\Services\ClassifyAdsService;
 use App\Services\WebServicesService;
+use App\Repositories\UserRepository;
+
 
 
 
@@ -50,6 +52,7 @@ class PostService
     protected $restaurantService;
     protected $classifyAdsService;
     protected $webServicesService;
+    protected $userRepo;
 
     public function __construct(
         PostRepository $postRepo,
@@ -63,7 +66,8 @@ class PostService
         MomBabyService $momBabyService,
         RestaurantService $restaurantService,
         ClassifyAdsService $classifyAdsService,
-        WebServicesService $webServicesService
+        WebServicesService $webServicesService,
+        UserRepository $userRepo
     ) {
         $this->postRepo = $postRepo;
         $this->classifyService = $classifyService;
@@ -77,6 +81,7 @@ class PostService
         $this->restaurantService = $restaurantService;
         $this->classifyAdsService= $classifyAdsService;
         $this->webServicesService = $webServicesService;
+        $this->userRepo = $userRepo;
     }
 
     public function takeAllForCreatePost($classifyChoosen, $classifyTypeChoosen = null)
@@ -239,17 +244,17 @@ class PostService
 
     public function loadMoreMyPost($numPage,$params){
         $posts = $this->postRepo->loadAllForMyPost($numPage, $params);
+
         $response = [];
         foreach ($posts as $post) {
+            Log::debug('load more posts : '. $post->id);
+
             //load img
-            $imgPath = asset('storage/template/post/none-pic-logo.jpg');
+            $postData['images']=[];
             foreach ($post->post_attachments as $attachment) {
-                if ($attachment->attachment_type == POST_DESCRIPTION_PHOTO) {
-                    $imgPath = asset($attachment->attachment_path);
-                    break;
-                }
+                array_push($postData['images'] ,asset($attachment->attachment_path));
+
             }
-            $postData['image'] = $imgPath;
 
             //address
             $postAddress = 'Toàn Nga';
@@ -283,6 +288,26 @@ class PostService
                 $postTimes = $postTimes . ' ngày trước';
             }
             $postData['id'] = $post->id;
+
+            if($params['userId'] != 0 && $this->userRepo->isUser($params['userId'])){
+                $postData['isUser'] = true;
+                $postData['liked'] = $post->checkPostLiked($params['userId'], $post->id);
+            }else{
+                $postData['isUser'] = false;
+            }
+
+            $postData['avatar'] = $post->user->user_avatar?asset($post->user->user_avatar):asset('storage/avatar-sample/ava1.jpg');
+
+            $postData['accessTimes'] = $post->access_times??0;
+            $postData['rating']='';
+            for($i=1; $i<6;$i++){
+                if($i<= $post->rating_score){
+                    $postData['rating'] =$postData['rating'].'<span class="fa fa-star rating-star-checked"></span>';
+                }else{
+                    $postData['rating'] =$postData['rating'].'<span class="fa fa-star"></span>';
+                }
+            }
+            $postData['ownerName']  = $post->user->name;
             $postData['times'] = $postTimes;
 
             $postData['title']=  $post->title;
@@ -290,6 +315,8 @@ class PostService
 
             array_push($response, $postData);
         }
+
+        Log::debug('response data : '. print_r($response, true));
 
         return $response;
     }

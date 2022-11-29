@@ -57,12 +57,9 @@ class post extends Model
     }
 
     public function checkPostLiked($userId, $postId){
-        Log::debug("Checking post liked : ". $userId.'-post : '. $postId);
         $postInteraction = post_interaction::where('user_id',$userId)->where('post_id',$postId)->first();
         if(isset($postInteraction)){
             $return = $postInteraction->interaction_type == LIKE;
-            Log::debug("check liked ".$return);
-
             return $return;
         }
         return false;

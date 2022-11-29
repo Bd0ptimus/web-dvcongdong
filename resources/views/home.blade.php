@@ -233,7 +233,7 @@
 
 
         <div class="row my-5 newfeed-sec" id="home-newFeed-sec">
-            <div class="row d-block justify-content-center newfeed-container2">
+            {{-- <div class="row d-block justify-content-center newfeed-container2">
                 <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
                     <div class="newFeed-avatar-sec d-flex justify-content-start">
                         <div class="newFeed-avatar-container d-flex justify-content-center">
@@ -309,7 +309,7 @@
                 <div class="row newFeed-interact-sec2 d-flex justify-content-center">
                     <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2"></i>
                 </div>
-            </div>
+            </div> --}}
 
             @foreach ($posts as $post)
                 @php
@@ -366,19 +366,6 @@
                             </p>
                         </div>
                     </div>
-                    {{-- <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
-                        <div class="newFeed-detail-icon">
-                            <i class="fa-solid fa-location-dot"></i><span> {{ $postAddress }}</span>
-                        </div>
-
-                        <div class="newFeed-detail-icon">
-                            <i class="fa-solid fa-bars"></i><span> {{ $postClassify }}</span>
-                        </div>
-
-                        <div class="newFeed-detail-icon">
-                            <i class="fa-solid fa-clock"></i><span> {{ $postTimes }}</span>
-                        </div>
-                    </div> --}}
                     @if (sizeof($post->post_attachments) != 0)
                         <div style="padding:0px;" class="d-flex justify-content-center">
                             <div class="swiper mySwiper">
