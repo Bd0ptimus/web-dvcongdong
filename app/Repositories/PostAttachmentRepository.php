@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\File;
+
 //use Your Model
 use App\Admin;
 
@@ -44,7 +46,15 @@ class PostAttachmentRepository extends BaseRepository
 
 
     public function deletePostAttachmentsByPostId($postId){
-        $this->model->where('post_id', $postId)->delete();
+        // $this->model->where('post_id', $postId)->delete();
+        $images=$this->model->where('post_id', $postId)->get();
+        foreach($images as $image){
+            if(File::exists(public_path($image->attachment_path))){
+                File::delete(public_path($image->attachment_path));
+            }
+            $image->delete();
+        }
+
     }
 
 

@@ -38,7 +38,7 @@
 
 
 
-@media screen and (min-width : 1020px) and (max-width: 5000px){
+@media screen and (min-width : 1020px) and (max-width: 10000px){
     .filter-section{
         width:50%;
     }

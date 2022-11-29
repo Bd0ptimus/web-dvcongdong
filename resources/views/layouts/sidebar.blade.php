@@ -188,7 +188,7 @@
                 </span>
             </a>
         </li>
-        <li class="nav-item nav-item-container">
+        {{-- <li class="nav-item nav-item-container">
             <a href="#" class="nav-link ">
                 <i class="fa-solid fa-shirt sidebar-icon"></i>
                 <span>
@@ -203,7 +203,7 @@
                     MẸ VÀ BÉ
                 </span>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item nav-item-container">
             <a href="#" class="nav-link ">
                 <i class="fa-solid fa-utensils sidebar-icon"></i>
@@ -216,7 +216,7 @@
             <a href="#" class="nav-link ">
                 <i class="fa-solid fa-rectangle-ad sidebar-icon"></i>
                 <span>
-                    RAO VẶT QUẢNG CÁO
+                    RAO VẶT
                 </span>
             </a>
         </li>
@@ -334,7 +334,7 @@
                 <i class="fa-solid fa-car "></i>
             </a>
         </li>
-        <li class="nav-item d-flex justify-content-center">
+        {{-- <li class="nav-item d-flex justify-content-center">
             <a href="#" class="nav-link nav-icon-item">
                 <i class="fa-solid fa-shirt "></i>
             </a>
@@ -343,7 +343,7 @@
             <a href="#" class="nav-link nav-icon-item">
                 <i class="fa-solid fa-person-breastfeeding "></i>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item d-flex justify-content-center">
             <a href="#" class="nav-link nav-icon-item">
                 <i class="fa-solid fa-utensils"></i>

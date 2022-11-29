@@ -204,37 +204,61 @@
 
         <div class="row my-5 newfeed-sec" id="home-newFeed-sec">
             <div class="row d-block justify-content-center newfeed-container2">
-                <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
-                    <div class="newFeed-detail-icon">
-                        <i class="fa-solid fa-location-dot"></i><span> Moscow</span>
+                <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
+                    <div class="newFeed-avatar-sec d-flex justify-content-start">
+                        <div class="newFeed-avatar-container d-flex justify-content-center">
+                            <img class="newFeed-avatar" src={{ asset('storage/avatar-sample/ava1.jpg') }}>
+                        </div>
                     </div>
 
-                    <div class="newFeed-detail-icon">
-                        <i class="fa-solid fa-bars"></i><span> Nhà đất</span>
-                    </div>
-
-                    <div class="newFeed-detail-icon">
-                        <i class="fa-solid fa-clock"></i><span> 2 ngày trước</span>
+                    <div class="newFeed-posterinfo-sec d-block justify-content-center">
+                        <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">Tên người dùng
+                        </p>
+                        <p class="newFeed-posterinfo-text">
+                            <span>2 ngày trước</span>
+                            <span><i class="fa-solid fa-location-dot"></i>   moscow</span>
+                            <span class="newFeed-post-hashtag">
+                                Nhà đất
+                            </span>
+                        </p>
                     </div>
                 </div>
+
                 <div style="padding:0px;" class="d-flex justify-content-center">
                     <div class="swiper mySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide ">
                                 <img class="newFeed-image2" src={{ asset('storage/test/test1.jpg') }}>
                             </div>
-                            {{-- <div class="swiper-slide ">
+                            <div class="swiper-slide ">
                                 <img class="newFeed-image2" src={{ asset('storage/test/test2.jpg') }}>
                             </div>
                             <div class="swiper-slide ">
                                 <img class="newFeed-image2" src={{ asset('storage/test/test3.jpg') }}>
-                            </div> --}}
+                            </div>
                         </div>
                         <div class="swiper-pagination"></div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
                     </div>
 
+                </div>
+                <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
+                    <div class="newFeed-detail-icon">
+                        <span class="fa fa-star rating-star-checked"></span>
+                        <span class="fa fa-star rating-star-checked"></span>
+                        <span class="fa fa-star rating-star-checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+
+                    <div class="newFeed-detail-icon">
+                        <span> Đánh giá</span>
+                    </div>
+
+                    <div class="newFeed-detail-icon">
+                        <span> 4 lượt truy cập</span>
+                    </div>
                 </div>
 
                 <div class="row newFeed-content-small-sec2 ">
@@ -295,12 +319,9 @@
 
             @foreach ($posts as $post)
                 @php
-                    $imgPath = 'storage/template/post/none-pic-logo.jpg';
-                    foreach ($post->post_attachments as $attachment) {
-                        if ($attachment->attachment_type == POST_DESCRIPTION_PHOTO) {
-                            $imgPath = $attachment->attachment_path;
-                            break;
-                        }
+                    $avatarPath = 'storage/avatar-sample/ava1.jpg';
+                    if($post->user->user_avatar != null){
+                        $avatarPath=$post->user->user_avatar ;
                     }
 
                     $postAddress = 'Toàn Nga';
@@ -331,7 +352,27 @@
 
                 @endphp
                 <div class="row d-block justify-content-center newfeed-container2">
-                    <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
+                    <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
+                        <div class="newFeed-avatar-sec d-flex justify-content-start">
+                            <div class="newFeed-avatar-container d-flex justify-content-center">
+                                <img class="newFeed-avatar" src={{ asset($avatarPath) }}>
+                            </div>
+                        </div>
+
+                        <div class="newFeed-posterinfo-sec d-block justify-content-center">
+                            <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">
+                                {{$post->user->name}}
+                            </p>
+                            <p class="newFeed-posterinfo-text">
+                                <span>{{ $postTimes }}</span>
+                                <span><i class="fa-solid fa-location-dot"></i>    {{ $postAddress }}</span>
+                                <span class="newFeed-post-hashtag">
+                                    {{$postClassify}}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    {{-- <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
                         <div class="newFeed-detail-icon">
                             <i class="fa-solid fa-location-dot"></i><span> {{ $postAddress }}</span>
                         </div>
@@ -343,7 +384,7 @@
                         <div class="newFeed-detail-icon">
                             <i class="fa-solid fa-clock"></i><span> {{ $postTimes }}</span>
                         </div>
-                    </div>
+                    </div> --}}
                     @if (sizeof($post->post_attachments) != 0)
                         <div style="padding:0px;" class="d-flex justify-content-center">
                             <div class="swiper mySwiper">
@@ -361,6 +402,21 @@
 
                         </div>
                     @endif
+                    <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
+                        <div class="newFeed-detail-icon">
+                            @for($i=1; $i<6;$i++)
+                                <span class="fa fa-star @if($i<=$post->rating_score)rating-star-checked @endif"></span>
+                            @endfor
+                        </div>
+
+                        <div class="newFeed-detail-icon">
+                            <span> Đánh giá</span>
+                        </div>
+
+                        <div class="newFeed-detail-icon">
+                            <span> {{$post->access_times}} lượt truy cập</span>
+                        </div>
+                    </div>
 
                     <div class="row newFeed-content-small-sec2 ">
                         <div class="row newFeed-info-title-sec2">
@@ -594,17 +650,24 @@
                             }
                         }
                         $('#home-newFeed-sec').append(`<div class="row d-block justify-content-center newfeed-container2">
-                                                            <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
-                                                                <div class="newFeed-detail-icon">
-                                                                    <i class="fa-solid fa-location-dot"></i><span> ${e.address}</span>
+                                                                        <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
+                                                                <div class="newFeed-avatar-sec d-flex justify-content-start">
+                                                                    <div class="newFeed-avatar-container d-flex justify-content-center">
+                                                                        <img class="newFeed-avatar" src='${e.avatar}'>
+                                                                    </div>
                                                                 </div>
 
-                                                                <div class="newFeed-detail-icon">
-                                                                    <i class="fa-solid fa-bars"></i><span> ${e.classify}</span>
-                                                                </div>
-
-                                                                <div class="newFeed-detail-icon">
-                                                                    <i class="fa-solid fa-clock"></i><span> ${e.times}</span>
+                                                                <div class="newFeed-posterinfo-sec d-block justify-content-center">
+                                                                    <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">
+                                                                        ${e.ownerName}
+                                                                    </p>
+                                                                    <p class="newFeed-posterinfo-text">
+                                                                        <span>2 ngày trước</span>
+                                                                        <span><i class="fa-solid fa-location-dot"></i>   ${e.address}</span>
+                                                                        <span class="newFeed-post-hashtag">
+                                                                            ${e.classify}
+                                                                        </span>
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                             <div style="padding:0px;" class="d-flex justify-content-center">
@@ -615,6 +678,19 @@
                                                                     <div class="swiper-pagination"></div>
                                                                     <div class="swiper-button-next"></div>
                                                                     <div class="swiper-button-prev"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
+                                                                <div class="newFeed-detail-icon">
+                                                                    ${e.rating}
+                                                                </div>
+
+                                                                <div class="newFeed-detail-icon">
+                                                                    <span> Đánh giá</span>
+                                                                </div>
+
+                                                                <div class="newFeed-detail-icon">
+                                                                    <span> ${e.accessTimes} lượt truy cập</span>
                                                                 </div>
                                                             </div>
 

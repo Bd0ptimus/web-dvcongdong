@@ -35,7 +35,7 @@
 
 
 
-@media screen and (min-width : 1020px) and (max-width: 5000px){
+@media screen and (min-width : 1020px) and (max-width: 10000px){
     #main-search-pc-tb{
         position: absolute;
         top : 15%;

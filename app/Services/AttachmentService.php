@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-
+use DateTime;
 //model
 
 //repo
@@ -24,12 +24,14 @@ class AttachmentService
     }
 
     private function generateName(){
-        $length = 50;
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM';
-        $string = "";
-        for ($p = 0; $p < $length; $p++) {
-            @$string .= $characters[mt_rand(0, strlen($characters))];
-        }
+        // $length = 50;
+        // $characters = '0123456789abcdefghijklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM';
+        // $string = "";
+        // for ($p = 0; $p < $length; $p++) {
+        //     @$string .= $characters[mt_rand(0, strlen($characters))];
+        // }
+        $now = DateTime::createFromFormat('U.u', number_format(microtime(true), 6, '.', ''), new \DateTimeZone('UTC'));
+        $string = (int)$now->format("Uu");
         return $string;
     }
 

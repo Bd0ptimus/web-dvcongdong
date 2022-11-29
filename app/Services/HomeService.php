@@ -112,6 +112,18 @@ class HomeService
                 $postData['isUser'] = false;
             }
 
+            $postData['avatar'] = $post->user->user_avatar?asset($post->user->user_avatar):asset('storage/avatar-sample/ava1.jpg');
+
+            $postData['accessTimes'] = $post->access_times;
+            $postData['rating']='';
+            for($i=1; $i<6;$i++){
+                if($i<= $post->rating_score){
+                    $postData['rating'] =$postData['rating'].'<span class="fa fa-star rating-star-checked"></span>';
+                }else{
+                    $postData['rating'] =$postData['rating'].'<span class="fa fa-star"></span>';
+                }
+            }
+            $postData['ownerName']  = $post->user->name;
             $postData['times'] = $postTimes;
 
             $postData['title']=  $post->title;

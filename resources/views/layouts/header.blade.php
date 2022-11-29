@@ -288,7 +288,7 @@
             sidebarOpened = true;
         } else {
             $('#toggler-btn').empty();
-            $('#toggler-btn').append('<i class="fa-solid fa-bars"></i>');
+            $('#toggler-btn').append('<i class="fa-solid fa-bars "></i>');
             $('#full-sidebar').hide();
             $('#full-sidebar').addClass('slide-in');
             $('#full-sidebar').removeClass('slide-out');
