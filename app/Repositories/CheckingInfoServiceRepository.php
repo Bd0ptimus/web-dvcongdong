@@ -47,6 +47,20 @@ class CheckingInfoServiceRepository extends BaseRepository
         ]);
     }
 
+    public function removeCarTicketResult($id){
+        car_ticket_checking::where('id', $id)->update([
+            'result_comment' => '',
+            'status'=>CHECK_REQUEST_CREATED,
+        ]);
+    }
+
+    public function removeEntryBanResult($id){
+        entry_ban_checking::where('id', $id)->update([
+            'result_comment' => '',
+            'status'=>CHECK_REQUEST_CREATED,
+        ]);
+    }
+
 
     public function loadAllCarTicket(){
         $response['created'] = car_ticket_checking::with('user')->where('status', CHECK_REQUEST_CREATED)->orderBy('updated_at', 'DESC')->get();

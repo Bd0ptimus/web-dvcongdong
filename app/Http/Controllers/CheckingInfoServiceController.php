@@ -61,4 +61,15 @@ class CheckingInfoServiceController extends Controller
         }
         return redirect()->back();
     }
+
+    public function removeResult(Request $request){
+        try{
+            $params['checkingType'] = request('checkingType');
+            $params['id'] = request('id');
+            $this->checkingInfoService->removeResult($params);
+        }catch(Exception $e){
+            response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+        }
+        return response()->json(['error' => 0, 'msg' => 'remove thành công']);
+    }
 }

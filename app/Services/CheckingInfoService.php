@@ -36,6 +36,17 @@ class CheckingInfoService
 
     }
 
+    public function removeResult($params){
+        switch($params['checkingType']){
+            case(CAR_TICKET_TYPE):
+                $this->checkingInfoServiceRepo->removeCarTicketResult($params['id']);
+                break;
+            case(ENTRY_BAN_TYPE):
+                $this->checkingInfoServiceRepo->removeEntryBanResult($params['id']);
+                break;
+        }
+    }
+
     public function loadAllCheckingRequest(){
         $response['carTickets']['created']=$this->checkingInfoServiceRepo->loadAllCarTicket()['created'];
         $response['carTickets']['completed']=$this->checkingInfoServiceRepo->loadAllCarTicket()['completed'];

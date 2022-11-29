@@ -54,6 +54,7 @@
     .newFeed-info-description-sec{
         height : 80%;
     }
+
 }
 
 
@@ -110,6 +111,7 @@
     .newFeed-info-description-sec{
         height : 80%;
     }
+
 }
 
 
@@ -164,6 +166,7 @@
     .newFeed-info-description-sec{
         height : 80%;
     }
+
 }
 
 
@@ -220,6 +223,7 @@
     .newFeed-detail-icon{
         padding : 5px;
     }
+
 }
 
 .project-content-section{
@@ -578,3 +582,217 @@ input[type=date]:focus::-webkit-datetime-edit {
     color: black !important;
 }
 /*--------end date----*/
+
+/*-----Carousel-----*/
+.page-carousel-control-btn{
+    background-color: rgba(0,0,0,.5);
+    width: 5%;
+}
+
+.page-carousel-control-icon{
+    color: white;
+}
+
+.page-carousel-indicator{
+    background-color: rgba(0,0,0,.5);
+}
+
+
+/*---Carousel type 2----*/
+:root {
+    --carousel-width: 40vw;
+    --carousel-height: calc(0.7 * var(--carousel-width));
+    --carousel-padding: 5px;
+}
+
+@media (max-width: 479px) {
+    :root {
+        --carousel-width: 95vw;
+    }
+}
+
+.viewport {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carousel-frame {
+    background: #fafafa;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    width: calc(var(--carousel-width) + (2 * var(--carousel-padding)));
+    height: calc(var(--carousel-height) + (2 * var(--carousel-padding)));
+}
+
+.carousel {
+    width: var(--carousel-width);
+    height: var(--carousel-height);
+}
+
+.scroll {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+ul.scroll {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-item-outer {
+    width: 100%;
+    height: 100%
+}
+
+.scroll-item {
+    width: var(--carousel-width);
+    height: 100%;
+}
+
+img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+
+@supports (scroll-snap-align: start) {
+
+    /* modern scroll snap points */
+    .scroll {
+        scroll-snap-type: x mandatory;
+    }
+
+    .scroll-item-outer {
+        scroll-snap-align: center;
+    }
+}
+
+@supports not (scroll-snap-align: start) {
+
+    /* old scroll snap points spec */
+    .scroll {
+        -webkit-scroll-snap-type: mandatory;
+        scroll-snap-type: mandatory;
+        -webkit-scroll-snap-destination: 0% center;
+        scroll-snap-destination: 0% center;
+        -webkit-scroll-snap-points-x: repeat(100%);
+        scroll-snap-points-x: repeat(100%);
+    }
+
+    .scroll-item-outer {
+        scroll-snap-coordinate: 0 0;
+    }
+}
+
+.indicators {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+ul.indicators {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.indicator {
+    padding: 10px;
+}
+
+.indicator-button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #333;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.indicator-button:after {
+    content: '○';
+    font-size: 1.4em;
+    padding: 12px 15px 17px;
+}
+
+.indicator-button:hover {
+    color: #666
+}
+
+.indicator-button:active {
+    color: #999;
+    padding: 0;
+}
+
+.indicator-button[aria-pressed="true"]:after {
+    content: '●';
+}
+/*---End Carousel type 2----*/
+
+
+/*---Carousel type 3----*/
+/* Swiper container stylng */
+.swiper {
+    width: 100%;
+    height: auto;
+    max-height : 400px;
+}
+
+
+.swiper-slide {
+    text-align: center;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.swiper-button-next,
+.swiper-button-prev {
+    outline: none;
+}
+
+
+div.swiper-button-next,
+div.swiper-button-prev {
+    top: 52%
+}
+
+
+/*---End Carousel type 3----*/
+/*-----End Carousel-----*/

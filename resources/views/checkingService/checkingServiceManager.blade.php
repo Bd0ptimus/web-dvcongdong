@@ -130,7 +130,7 @@
                                                 `{{$carTicketCompleted->result_comment}}`,
                                                 `{{$carTicketCompleted->response_require}}`])'
                                                 >Xem hoặc sửa kết quả</a><br>
-                                                <a class="action-account-btn" style="color:blue;">Xóa kết quả</a><br>
+                                                <a class="action-account-btn" style="color:blue;" onclick="removeResult({{CAR_TICKET_TYPE}},{{$carTicketCompleted->id}})">Xóa kết quả</a><br>
                                                 <a class="action-account-btn" style="color:red;">Xóa yêu cầu</a>
 
                                             </th>
@@ -224,20 +224,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($entryBans['completed'] as $key => $entryBanCreated)
+                                @foreach ($entryBans['completed'] as $key => $entryBanCompleted)
                                     <tr>
                                         <th scope="col">{{ $key +1 }}</th>
-                                        <th scope="col">{{ $entryBanCreated->user->name }}</th>
-                                        <th scope="col">{{ $entryBanCreated->id }}</th>
-                                        <th scope="col">{{ $entryBanCreated->name_russian }}</th>
-                                        <th scope="col">{{ $entryBanCreated->name_latin }}</th>
-                                        <th scope="col">{{ date('d-m-Y', strtotime($entryBanCreated->dob)) }}</th>
-                                        <th scope="col">{{ $entryBanCreated->passport_series }}</th>
+                                        <th scope="col">{{ $entryBanCompleted->user->name }}</th>
+                                        <th scope="col">{{ $entryBanCompleted->id }}</th>
+                                        <th scope="col">{{ $entryBanCompleted->name_russian }}</th>
+                                        <th scope="col">{{ $entryBanCompleted->name_latin }}</th>
+                                        <th scope="col">{{ date('d-m-Y', strtotime($entryBanCompleted->dob)) }}</th>
+                                        <th scope="col">{{ $entryBanCompleted->passport_series }}</th>
                                         <th scope="col">
-                                            {{ date('d-m-Y', strtotime($entryBanCreated->passport_expired)) }}</th>
+                                            {{ date('d-m-Y', strtotime($entryBanCompleted->passport_expired)) }}</th>
                                         <th scope="col">
-                                            {{ date('d-m-Y H:m:s', strtotime($entryBanCreated->updated_at)) }}</th>
-                                        @if ($entryBanCreated->status == CHECK_REQUEST_CREATED)
+                                            {{ date('d-m-Y H:m:s', strtotime($entryBanCompleted->updated_at)) }}</th>
+                                        @if ($entryBanCompleted->status == CHECK_REQUEST_CREATED)
                                             <th scope="col" style="color:red;">Chưa kiểm tra</th>
                                         @else
                                             <th scope="col" style="color:green;">Đã hoàn thành</th>
@@ -247,7 +247,7 @@
                                             <th scope="col">
                                                 <a class="action-account-btn" style="color:green;">Xem hoặc sửa kết
                                                     quả</a><br>
-                                                <a class="action-account-btn" style="color:blue;">Xóa kết quả</a><br>
+                                                <a class="action-account-btn" style="color:blue;" onclick="removeResult({{ENTRY_BAN_TYPE}},{{$entryBanCompleted->id}})">Xóa kết quả</a><br>
                                                 <a class="action-account-btn" style="color:red;">Xóa yêu cầu</a>
 
                                             </th>
@@ -291,7 +291,7 @@
     }
 
     function updateCarResult(data){
-        console.log('data : ', data);
+        // console.log('data : ', data);
         resetCarTicketModal();
         $('#carTicketModal-idRequester').text(data[0]);
         $('#carTicketModal-nameRequester').text(data[1]);
@@ -308,6 +308,28 @@
 
         $('#add-checking-request-result').modal('show');
 
+    }
+
+    function removeResult(checkingType, id){
+        var url = "{{ route('admin.checkingInfo.removeResult') }}";
+        $.ajax({
+            method: 'post',
+            url: url,
+            data: {
+                checkingType: checkingType,
+                id: id,
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(data) {
+                console.log('data response : ', JSON.stringify(data));
+                if(data.error == 0){
+                    window.location.href = '{{ route('admin.checkingInfo.index') }}'
+
+                }
+
+            }
+
+        });
     }
 
 

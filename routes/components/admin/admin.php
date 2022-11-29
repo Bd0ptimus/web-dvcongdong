@@ -18,6 +18,7 @@ Route::group(['prefix' => 'admin', 'as'=>'admin.'], function($route){
     $route->group(['prefix'=>'checking-info', 'as'=>'checkingInfo.'], function($route){
         $route->get('/', [CheckingInfoServiceController::class , 'adminIndex'])->name('index');
         $route->post('/carticket-update-result',[CheckingInfoServiceController::class , 'carTicketResultUpdate'])->name('carTicketResultUpdate');
+        $route->post('/remove-result',[CheckingInfoServiceController::class , 'removeResult'])->name('removeResult');
     });
 
 });

@@ -13,6 +13,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer></script>
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
 <script type="text/javascript">
 
@@ -116,6 +117,7 @@
 
         });
     }
+
 </script>
 @extends('templates.main.mainCheckingService')
 
@@ -127,3 +129,4 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />

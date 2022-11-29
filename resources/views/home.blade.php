@@ -188,7 +188,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         {{-- <div class="row my-5 d-flex justify-content-between">
@@ -218,37 +217,23 @@
                         <i class="fa-solid fa-clock"></i><span> 2 ngày trước</span>
                     </div>
                 </div>
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"
-                    style="padding:0px;">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
+                <div style="padding:0px;" class="d-flex justify-content-center">
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide ">
+                                <img class="newFeed-image2" src={{ asset('storage/test/test1.jpg') }}>
+                            </div>
+                            {{-- <div class="swiper-slide ">
+                                <img class="newFeed-image2" src={{ asset('storage/test/test2.jpg') }}>
+                            </div>
+                            <div class="swiper-slide ">
+                                <img class="newFeed-image2" src={{ asset('storage/test/test3.jpg') }}>
+                            </div> --}}
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
                     </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="newFeed-image2" src={{ asset('storage/template/post/none-pic-logo.jpg') }}>
-                        </div>
-                        <div class=" carousel-item active">
-                            <img class="newFeed-image2" src={{ asset('storage/test/test1.jpg') }}>
-                        </div>
-                        <div class="carousel-item active">
-                            <img class="newFeed-image2" src={{ asset('storage/test/test2.jpg') }}>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
 
                 </div>
 
@@ -360,33 +345,19 @@
                         </div>
                     </div>
                     @if (sizeof($post->post_attachments) != 0)
-                        <div id="homePageNewFeedImgCarousel{{ $post->id }}" class="carousel slide"
-                            data-bs-ride="carousel" style="padding:0px;">
-                            <div class="carousel-indicators">
-                                @for ($i = 0; $i < sizeof($post->post_attachments); $i++)
-                                    <button type="button"
-                                        data-bs-target="#homePageNewFeedImgCarousel{{ $post->id }}"
-                                        data-bs-slide-to="{{$i}}" @if ($i == 0) class="active" @endif
-                                        aria-current="true"></button>
-                                @endfor
+                        <div style="padding:0px;" class="d-flex justify-content-center">
+                            <div class="swiper mySwiper">
+                                <div class="swiper-wrapper">
+                                    @foreach ($post->post_attachments as $key => $attachment)
+                                        <div class="swiper-slide ">
+                                            <img class="newFeed-image2" src={{ $attachment->attachment_path }}>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
                             </div>
-                            <div class="carousel-inner">
-                                @foreach ($post->post_attachments as $key=> $attachment)
-                                    <div class="carousel-item @if($key==0) active @endif">
-                                        <img class="newFeed-image2" src={{ asset($attachment->attachment_path) }}>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <button class="carousel-control-prev" type="button"
-                                data-bs-target="#homePageNewFeedImgCarousel{{ $post->id }}" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button"
-                                data-bs-target="#homePageNewFeedImgCarousel{{ $post->id }}" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
 
                         </div>
                     @endif
@@ -549,6 +520,28 @@
 <script>
     var numberLoadingStep = 1;
     var allowLoad = true;
+    let swiper = new Swiper(".mySwiper", {
+        pagination: {
+            el: ".swiper-pagination",
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+
+    function swiperReload() {
+        swiper = new Swiper(`.mySwiper${numberLoadingStep-1}`, {
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    }
+
     window.onscroll = function(ev) {
         if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 50) {
             // you're at the bottom of the page
@@ -581,56 +574,24 @@
                         if (e.isUser) {
                             var userId = {{ Admin::user() !== null ? Admin::user()->id : 0 }};
                             if (!e.liked) {
-                                likeIcon =`<hr /><div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}">
+                                likeIcon = `<hr /><div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}">
                                                 <i class="fa-regular fa-heart fa-xl interact-icon2" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
                                             </div>`;
-                                    // `<i class="fa-regular fa-heart" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                                // `<i class="fa-regular fa-heart" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
                             } else {
                                 likeIcon = `<hr /><div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}">
                                                 <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
                                             </div>`;
-                                    // `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                                // `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
                             }
                         }
-                        var imagesCarousel = '';
-                        if(e.images.length > 0){
-                            var indicator = '';
-                            var images = '';
-                            for(var i =0; i<e.images.length;i++){
-
-                                if(i==0){
-                                    indicator=indicator + `<button type="button" data-bs-target="#homePageNewFeedImgCarousel${e.id}" class="active" data-bs-slide-to="${i}" aria-label="Slide ${i+1}" aria-current="true"></button>`;
-                                    images = images+`<div class="carousel-item active">
-                                                    <img class="newFeed-image2" src='${e.images[i]}'>
-                                                </div>`;
-                                    continue;
-                                }
-                                indicator = indicator + `<button type="button" data-bs-target="#homePageNewFeedImgCarousel${e.id}" data-bs-slide-to="${i}" aria-label="Slide ${i+1}" aria-current="true"></button>`;
-                                images = images+`<div class="carousel-item">
-                                                    <img class="newFeed-image2" src='${e.images[i]}'>
-                                                </div>`;
+                        var images = '';
+                        if (e.images.length > 0) {
+                            for (var i = 0; i < e.images.length; i++) {
+                                images = images + `<div class="swiper-slide ">
+                                                        <img class="newFeed-image2" src="${e.images[i]}">
+                                                    </div>`;
                             }
-
-
-                            imagesCarousel = `<div id="homePageNewFeedImgCarousel${e.id}" class="carousel slide" data-bs-ride="carousel"
-                                                                style="padding:0px;">
-                                                                <div class="carousel-indicators">
-                                                                    ${indicator}
-                                                                </div>
-                                                                <div class="carousel-inner">
-                                                                    ${images}
-                                                                </div>
-                                                                <button class="carousel-control-prev" type="button" data-bs-target="#homePageNewFeedImgCarousel${e.id}"
-                                                                    data-bs-slide="prev">
-                                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                    <span class="visually-hidden">Previous</span>
-                                                                </button>
-                                                                <button class="carousel-control-next" type="button" data-bs-target="#homePageNewFeedImgCarousel${e.id}"
-                                                                    data-bs-slide="next">
-                                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                    <span class="visually-hidden">Next</span>
-                                                                </button>
-                                                            </div>`;
                         }
                         $('#home-newFeed-sec').append(`<div class="row d-block justify-content-center newfeed-container2">
                                                             <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
@@ -646,7 +607,16 @@
                                                                     <i class="fa-solid fa-clock"></i><span> ${e.times}</span>
                                                                 </div>
                                                             </div>
-                                                            ${imagesCarousel}
+                                                            <div style="padding:0px;" class="d-flex justify-content-center">
+                                                                <div class="swiper mySwiper${numberLoadingStep}">
+                                                                    <div class="swiper-wrapper">
+                                                                        ${images}
+                                                                    </div>
+                                                                    <div class="swiper-pagination"></div>
+                                                                    <div class="swiper-button-next"></div>
+                                                                    <div class="swiper-button-prev"></div>
+                                                                </div>
+                                                            </div>
 
                                                             <div class="row newFeed-content-small-sec2 ">
                                                                 <div class="row newFeed-info-title-sec2">
@@ -662,6 +632,7 @@
                     })
                     if (data.data.length > 0) {
                         numberLoadingStep++;
+                        swiperReload();
                     }
                 }
                 allowLoad = true;
@@ -742,6 +713,156 @@
             $('#service-checking-modal-container').modal('show');
         }
     });
+
+
+    // var $item = $('.carousel .carousel-item');
+    // var $wHeight = $(window).height();
+    // $item.eq(0).addClass('active');
+    // $item.height($wHeight);
+    // $item.addClass('full-screen');
+
+    // $('.carousel img').each(function() {
+    //     var $src = $(this).attr('src');
+    //     var $color = $(this).attr('data-color');
+    //     $(this).parent().css({
+    //         'background-image': 'url(' + $src + ')',
+    //         'background-color': $color
+    //     });
+    //     $(this).remove();
+    // });
+
+    // $(window).on('resize', function() {
+    //     $wHeight = $(window).height();
+    //     $item.height($wHeight);
+    // });
+
+    // $('.carousel').carousel({
+    //     interval: 5000,
+    //     pause: "false"
+    // });
+
+
+
+
+    const easingOutQuint = (x, t, b, c, d) =>
+        c * ((t = t / d - 1) * t * t * t * t + 1) + b
+
+    function smoothScrollPolyfill(node, key, target) {
+        const startTime = Date.now()
+        const offset = node[key]
+        const gap = target - offset
+        const duration = 1000
+        let interrupt = false
+
+        const step = () => {
+            const elapsed = Date.now() - startTime
+            const percentage = elapsed / duration
+
+            if (interrupt) {
+                return
+            }
+
+            if (percentage > 1) {
+                cleanup()
+                return
+            }
+
+            node[key] = easingOutQuint(0, elapsed, offset, gap, duration)
+            requestAnimationFrame(step)
+        }
+
+        const cancel = () => {
+            interrupt = true
+            cleanup()
+        }
+
+        const cleanup = () => {
+            node.removeEventListener('wheel', cancel)
+            node.removeEventListener('touchstart', cancel)
+        }
+
+        node.addEventListener('wheel', cancel, {
+            passive: true
+        })
+        node.addEventListener('touchstart', cancel, {
+            passive: true
+        })
+
+        step()
+
+        return cancel
+    }
+
+    function testSupportsSmoothScroll() {
+        let supports = false
+        try {
+            let div = document.createElement('div')
+            div.scrollTo({
+                top: 0,
+                get behavior() {
+                    supports = true
+                    return 'smooth'
+                }
+            })
+        } catch (err) {} // Edge throws an error
+        return supports
+    }
+
+    const hasNativeSmoothScroll = testSupportsSmoothScroll()
+
+    function smoothScroll(node, topOrLeft, horizontal) {
+        if (hasNativeSmoothScroll) {
+            return node.scrollTo({
+                [horizontal ? 'left' : 'top']: topOrLeft,
+                behavior: 'smooth'
+            })
+        } else {
+            return smoothScrollPolyfill(node, horizontal ? 'scrollLeft' : 'scrollTop', topOrLeft)
+        }
+    }
+
+    function debounce(func, ms) {
+        let timeout
+        return () => {
+            clearTimeout(timeout)
+            timeout = setTimeout(() => {
+                timeout = null
+                func()
+            }, ms)
+        }
+    }
+
+    const indicators = document.querySelectorAll('.indicator-button')
+    const scroller = document.querySelector('.scroll')
+
+    function setAriaLabels() {
+        indicators.forEach((indicator, i) => {
+            indicator.setAttribute('aria-label', `Scroll to item #${i + 1}`)
+        })
+    }
+
+    function setAriaPressed(index) {
+        indicators.forEach((indicator, i) => {
+            indicator.setAttribute('aria-pressed', !!(i === index))
+        })
+    }
+
+    indicators.forEach((indicator, i) => {
+        indicator.addEventListener('click', e => {
+            e.preventDefault()
+            e.stopPropagation()
+            setAriaPressed(i)
+            const scrollLeft = Math.floor(scroller.scrollWidth * (i / 4))
+            smoothScroll(scroller, scrollLeft, true)
+        })
+    })
+
+    scroller.addEventListener('scroll', debounce(() => {
+        let index = Math.round((scroller.scrollLeft / scroller.scrollWidth) * 4)
+        setAriaPressed(index)
+    }, 200))
+
+    setAriaLabels()
 </script>
 
 </html>
