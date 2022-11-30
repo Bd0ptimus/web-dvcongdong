@@ -125,7 +125,7 @@
 
     </ul>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul class="nav nav-pills flex-column mb-2">
         <li class="nav-item nav-item-container">
             <a href="{{ route('home') }}" class="nav-link" aria-current="page">
                 <i class="fa-solid fa-house-chimney sidebar-icon"></i>
@@ -231,6 +231,28 @@
 
     </ul>
     <hr>
+    <div class = "row d-flex justify-content-center" style="width:100%; margin-bottom:30px;">
+        <h5 class="contact-text" style="width:auto;">Liên hệ : </h5>
+        <h5 class="contact-text" style="width:auto;">+7 (929) 669-76-70 </h5>
+    </div>
+    <div class = "row d-flex justify-content-center" style="width:100%; margin-bottom:100px;">
+        <div style="width : auto;">
+            <a class = "contact-link d-flex justify-content-center"> <i class="fa-brands fa-facebook fa-xl"></i></a>
+
+        </div>
+        <div style="width : auto;">
+            <a class = " contact-link d-flex justify-content-center"> <i class="fa-brands fa-instagram fa-xl"></i></a>
+
+        </div>
+        <div style="width : auto;">
+            <a class = "contact-link d-flex justify-content-center"> <i class="fa-brands fa-whatsapp fa-xl"></i></a>
+
+        </div>
+        <div style="width : auto;">
+            <a class = " contact-link d-flex justify-content-center"> <i class="fa-brands fa-telegram fa-xl"></i></a>
+
+        </div>
+    </div>
 </div>
 <div id="mini-sidebar" class="flex-column flex-shrink-0 p-3 bg-light sidebar-container"
     style="width : 5%; cursor:pointer; z-index:1000; overflow-y: hidden;" onmouseenter="fullSidebar()">
