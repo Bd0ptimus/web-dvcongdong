@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TestClawler;
+
 use App\Http\Controllers\Notification\SMSNotificationController;
 
 
@@ -43,9 +45,7 @@ Route::get('/header', function () {
     return view('layouts.header');
 });
 
-Route::get('/test', function () {
-    return view('auth.registerConfirm');
-});
+Route::get('/test', [TestClawler::class, 'fetchContent']);
 
 Route::get('/storage-link', function(){
     $targetFolder = storage_path('app/public');

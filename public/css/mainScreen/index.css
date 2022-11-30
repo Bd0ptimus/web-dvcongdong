@@ -46,6 +46,21 @@
     margin: 0px 5px;
 }
 
+.home-currency{
+    padding:5px;
+}
+
+
+
+.home-currency-title{
+    font-weight: 900;
+    font-size: 15px;
+}
+
+.home-currency i{
+    margin-top:10px;
+}
+
 
 
 
@@ -72,6 +87,20 @@
     .homeCheckingServiceBtn-sec{
         height : 150px;
     }
+    .home-currency{
+        width : 25%;
+    }
+
+    .home-currency-title{
+        font-weight: 900;
+        font-size: 15px;
+    }
+    .home-currency-text-content{
+        font-size:15px;
+    }
+    .home-currency-text{
+        margin:0px 5px;
+    }
 }
 
 
@@ -96,6 +125,20 @@
     }
     .homeCheckingServiceBtn-sec{
         height : 150px;
+    }
+
+    .home-currency{
+        width : 25%;
+    }
+    .home-currency-title{
+        font-weight: 900;
+        font-size: 15px;
+    }
+    .home-currency-text-content{
+        font-size:15px;
+    }
+    .home-currency-text{
+        margin:0px 5px;
     }
 }
 
@@ -122,6 +165,19 @@
     .homeCheckingServiceBtn-sec{
         height : 150px;
     }
+    .home-currency{
+        width : 25%;
+    }
+    .home-currency-title{
+        font-weight: 900;
+        font-size: 15px;
+    }
+    .home-currency-text-content{
+        font-size:15px;
+    }
+    .home-currency-text{
+        margin:0px 5px;
+    }
 }
 
 
@@ -144,5 +200,19 @@
     }
     .homeCheckingServiceBtn-sec{
         height : 150px;
+    }
+    .home-currency{
+        width : 50%;
+    }
+
+    .home-currency-title{
+        font-weight: 700;
+        font-size: 12px;
+    }
+    .home-currency-text-content{
+        font-size:12px;
+    }
+    .home-currency-text{
+        margin:0px 2.5px;
     }
 }

@@ -62,7 +62,7 @@
                         }
 
                     @endphp
-                    <div class="row d-block justify-content-center newfeed-container2">
+                    <div class="row d-block justify-content-center newfeed-container2" id='myPost-{{ $post->id }}'>
                         <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
                             <div class="newFeed-avatar-sec d-flex justify-content-start">
                                 <div class="newFeed-avatar-container d-flex justify-content-center">
@@ -129,7 +129,7 @@
 
                         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
                             <hr />
-                            <div class="row d-flex justify-content-center">
+                            <div class="row d-flex justify-content-center" style="margin:auto; padding:auto;">
                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center"
                                     id="newFeed-post-{{ $post->id }}" style="width : 33%; margin:auto;">
                                     @if ($post->checkPostLiked(Admin::user()->id, $post->id))
@@ -345,7 +345,7 @@
                                                     </div>`;
                             }
                         }
-                        $('#myPost-load').append(`<div class="row d-block justify-content-center newfeed-container2">
+                        $('#myPost-load').append(`<div class="row d-block justify-content-center newfeed-container2" id="myPost-${e.id}">
                                                                         <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
                                                                 <div class="newFeed-avatar-sec d-flex justify-content-start">
                                                                     <div class="newFeed-avatar-container d-flex justify-content-center">

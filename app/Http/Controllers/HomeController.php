@@ -50,6 +50,7 @@ class HomeController extends Controller
             'isHome'=>true,
             'posts' =>$posts,
             'cityChoosen' =>$cityChoosing,
+            'currencyExchange' =>$dataForHome['exchange'],
         ]);
     }
 

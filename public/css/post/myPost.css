@@ -9,3 +9,8 @@
 .postLiked-unlike-btn{
     cursor:pointer;
 }
+
+i::before{
+    margin-top:20px;
+}
+

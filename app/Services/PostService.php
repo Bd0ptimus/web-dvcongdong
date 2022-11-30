@@ -24,6 +24,8 @@ use App\Services\RestaurantService;
 use App\Services\ClassifyAdsService;
 use App\Services\WebServicesService;
 use App\Repositories\UserRepository;
+use App\Repositories\PostAttachmentRepository;
+
 
 
 
@@ -53,6 +55,7 @@ class PostService
     protected $classifyAdsService;
     protected $webServicesService;
     protected $userRepo;
+    protected $postAttachmentRepo;
 
     public function __construct(
         PostRepository $postRepo,
@@ -67,7 +70,8 @@ class PostService
         RestaurantService $restaurantService,
         ClassifyAdsService $classifyAdsService,
         WebServicesService $webServicesService,
-        UserRepository $userRepo
+        UserRepository $userRepo,
+        PostAttachmentRepository $postAttachmentRepo
     ) {
         $this->postRepo = $postRepo;
         $this->classifyService = $classifyService;
@@ -82,6 +86,7 @@ class PostService
         $this->classifyAdsService= $classifyAdsService;
         $this->webServicesService = $webServicesService;
         $this->userRepo = $userRepo;
+        $this->postAttachmentRepo = $postAttachmentRepo;
     }
 
     public function takeAllForCreatePost($classifyChoosen, $classifyTypeChoosen = null)
@@ -247,8 +252,6 @@ class PostService
 
         $response = [];
         foreach ($posts as $post) {
-            Log::debug('load more posts : '. $post->id);
-
             //load img
             $postData['images']=[];
             foreach ($post->post_attachments as $attachment) {
@@ -316,7 +319,6 @@ class PostService
             array_push($response, $postData);
         }
 
-        Log::debug('response data : '. print_r($response, true));
 
         return $response;
     }
@@ -337,6 +339,7 @@ class PostService
                     case (SERVICE):
                         $this->webServicesService->findServiceById($post->posts_classify_id);
                         $this->postRepo->deleteById($postId);
+                        $this->postAttachmentRepo->deletePostAttachmentsByPostId($postId);
                         break;
                     case (JOB):
                         $postRelation = $this->jobService->findPostJobById($post->posts_classify_id);

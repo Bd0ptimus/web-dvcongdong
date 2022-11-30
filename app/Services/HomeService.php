@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use App\Services\CityService;
 use App\Services\ClassifyService;
 use App\Services\PostService;
-
+use App\Services\UtilitiesService;
 
 //repo
 use App\Repositories\HomeRepository;
@@ -32,19 +32,21 @@ class HomeService
     protected $cityService;
     protected $postService;
     protected $userRepo;
-
+    protected $utilitiesService;
     public function __construct(
         HomeRepository $homeRepo,
         ClassifyService $classifyService,
         CityService $cityService,
         PostService $postService,
-        UserRepository $userRepo
+        UserRepository $userRepo,
+        UtilitiesService $utilitiesService
     ) {
         $this->homeRepo = $homeRepo;
         $this->classifyService = $classifyService;
         $this->cityService = $cityService;
         $this->postService = $postService;
         $this->userRepo = $userRepo;
+        $this->utilitiesService = $utilitiesService;
     }
 
     public function loadAllForHomePage()
@@ -52,6 +54,7 @@ class HomeService
         $dataReturn = [];
         $dataReturn['classifies'] = $this->classifyService->takeAllClassify();
         $dataReturn['cities'] = $this->cityService->takeAllCity();
+        $dataReturn['exchange'] = $this->utilitiesService->takeAllCurrencyExchangeForMain();
         // dd( $dataReturn);
         return $dataReturn;
     }
@@ -63,9 +66,9 @@ class HomeService
         foreach ($posts as $post) {
             //load img
             $imgPath = asset('storage/template/post/none-pic-logo.jpg');
-            $postData['images']=[];
+            $postData['images'] = [];
             foreach ($post->post_attachments as $attachment) {
-                array_push($postData['images'] ,asset($attachment->attachment_path));
+                array_push($postData['images'], asset($attachment->attachment_path));
                 // if ($attachment->attachment_type == POST_DESCRIPTION_PHOTO) {
                 //     $imgPath = asset($attachment->attachment_path);
                 //     break;
@@ -105,28 +108,28 @@ class HomeService
                 $postTimes = $postTimes . ' ngày trước';
             }
             $postData['id'] = $post->id;
-            if($params['userId'] != 0 && $this->userRepo->isUser($params['userId'])){
+            if ($params['userId'] != 0 && $this->userRepo->isUser($params['userId'])) {
                 $postData['isUser'] = true;
                 $postData['liked'] = $post->checkPostLiked($params['userId'], $post->id);
-            }else{
+            } else {
                 $postData['isUser'] = false;
             }
 
-            $postData['avatar'] = $post->user->user_avatar?asset($post->user->user_avatar):asset('storage/avatar-sample/ava1.jpg');
+            $postData['avatar'] = $post->user->user_avatar ? asset($post->user->user_avatar) : asset('storage/avatar-sample/ava1.jpg');
 
-            $postData['accessTimes'] = $post->access_times??0;
-            $postData['rating']='';
-            for($i=1; $i<6;$i++){
-                if($i<= $post->rating_score){
-                    $postData['rating'] =$postData['rating'].'<span class="fa fa-star rating-star-checked"></span>';
-                }else{
-                    $postData['rating'] =$postData['rating'].'<span class="fa fa-star"></span>';
+            $postData['accessTimes'] = $post->access_times ?? 0;
+            $postData['rating'] = '';
+            for ($i = 1; $i < 6; $i++) {
+                if ($i <= $post->rating_score) {
+                    $postData['rating'] = $postData['rating'] . '<span class="fa fa-star rating-star-checked"></span>';
+                } else {
+                    $postData['rating'] = $postData['rating'] . '<span class="fa fa-star"></span>';
                 }
             }
             $postData['ownerName']  = $post->user->name;
             $postData['times'] = $postTimes;
 
-            $postData['title']=  $post->title;
+            $postData['title'] =  $post->title;
             $postData['description'] = nl2br($post->description);
 
             array_push($response, $postData);

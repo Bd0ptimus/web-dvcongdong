@@ -103,7 +103,7 @@ class PostsController extends Controller
         }catch(\Exception $e){
             return response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
         }
-        return response()->json(['error' => 0, 'msg' => 'load more my post thành công', 'data' => $data ]);
+        return response()->json(['error' => 0, 'msg' => 'Xóa my post thành công', 'data' => $data ]);
     }
 
 }

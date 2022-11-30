@@ -201,30 +201,81 @@
                 <div id="ww_b40fc5d8a12e7" v='1.3' loc='id' a='{"t":"responsive","lang":"vi","sl_lpl":1,"ids":["wl3996"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"rgba(255,255,255,1)","cl_font":"#000000","cl_cloud":"#d4d4d4","cl_persp":"#2196F3","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"3","el_wfc":3,"cl_odd":"#0000000a"}'>Weather Data Source: <a href="https://weerlabs.nl/weer_moskou/week/" id="ww_b40fc5d8a12e7_u" target="_blank">Moskou weer deze week</a></div><script async src="https://app1.weatherwidget.org/js/?id=ww_b40fc5d8a12e7"></script>
             </div>
         </div> --}}
-        @if((Admin::user()!==null && Admin::user()->isRole(ROLE_USER))||Admin::user()==null)
+
+        <div class="row d-flex justify-content-center" style="width:100%;">
+            <div class="home-currency d-flex justify-content-center">
+                <p class="home-currency-text home-currency-title">USD-RUB : </p>
+                <p class="home-currency-text home-currency-text-content"
+                    @if ($currencyExchange['usd_rub']['change'] < 0) style="color:red;" @else style="color:green;" @endif>
+                    {{ $currencyExchange['usd_rub']['last'] }}</p>
+                @if ($currencyExchange['usd_rub']['change'] < 0)
+                    <i class="fa-solid fa-arrow-down fa-xs" style="color:red;"></i>
+                @else
+                    <i class="fa-solid fa-arrow-up fa-xs" style="color:green;"></i>
+                @endif
+            </div>
+
+            <div class="home-currency d-flex justify-content-center">
+                <p class="home-currency-text home-currency-title">USD-VND : </p>
+                <p class="home-currency-text home-currency-text-content"
+                @if ($currencyExchange['usd_vnd']['change'] < 0) style="color:red;" @else style="color:green;" @endif>{{ $currencyExchange['usd_vnd']['last'] }}</p>
+                @if ($currencyExchange['usd_vnd']['change'] < 0)
+                    <i class="fa-solid fa-arrow-down fa-xs" style="color:red;"></i>
+                @else
+                    <i class="fa-solid fa-arrow-up fa-xs" style="color:green;"></i>
+                @endif
+            </div>
+
+            <div class="home-currency d-flex justify-content-center">
+                <p class="home-currency-text home-currency-title">BTC-USD : </p>
+                <p class="home-currency-text home-currency-text-content"
+                @if ($currencyExchange['btc_usd']['change'] < 0) style="color:red;" @else style="color:green;" @endif>{{ $currencyExchange['btc_usd']['last'] }}</p>
+                @if ($currencyExchange['btc_usd']['change'] < 0)
+                    <i class="fa-solid fa-arrow-down fa-xs" style="color:red;"></i>
+                @else
+                    <i class="fa-solid fa-arrow-up fa-xs" style="color:green;"></i>
+                @endif
+            </div>
+
+            <div class="home-currency d-flex justify-content-center">
+                <p class="home-currency-text home-currency-title">ETH-USD : </p>
+                <p class="home-currency-text home-currency-text-content"
+                @if ($currencyExchange['eth_usd']['change'] < 0) style="color:red;" @else style="color:green;" @endif>{{ $currencyExchange['eth_usd']['last'] }}</p>
+                @if ($currencyExchange['eth_usd']['change'] < 0)
+                    <i class="fa-solid fa-arrow-down fa-xs" style="color:red;"></i>
+                @else
+                    <i class="fa-solid fa-arrow-up fa-xs" style="color:green;"></i>
+                @endif
+            </div>
+        </div>
+        @if ((Admin::user() !== null && Admin::user()->isRole(ROLE_USER)) || Admin::user() == null)
             <div class="row homeCheckingServiceBtn-sec">
                 <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
                     <button id="checkCarTicket"
                         class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                        <i class="fa-solid fa-car-on fa-2xl"></i><br><div> Kiểm tra lỗi phạt xe</div>
+                        <i class="fa-solid fa-car-on fa-2xl"></i><br>
+                        <div> Kiểm tra lỗi phạt xe</div>
                     </button>
                 </div>
                 <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
                     <button id="checkAdministrative"
                         class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                        <i class="fa-solid fa-book fa-2xl"></i><br><div> Kiểm tra lỗi hành chính</div>
+                        <i class="fa-solid fa-book fa-2xl"></i><br>
+                        <div> Kiểm tra lỗi hành chính</div>
                     </button>
                 </div>
                 <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
                     <button id="checkTaxdebt"
                         class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                        <i class="fa-solid fa-coins fa-2xl"></i><br><div> Kiểm tra nợ thuế</div>
+                        <i class="fa-solid fa-coins fa-2xl"></i><br>
+                        <div> Kiểm tra nợ thuế</div>
                     </button>
                 </div>
                 <div class=" col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
                     <button id="checkEntryBan"
                         class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                        <i class="fa-solid fa-plane-circle-xmark fa-2xl"></i><br><div> Kiểm tra cấm nhập
+                        <i class="fa-solid fa-plane-circle-xmark fa-2xl"></i><br>
+                        <div> Kiểm tra cấm nhập
                             cảnh</div>
                     </button>
                 </div>
@@ -314,8 +365,8 @@
             @foreach ($posts as $post)
                 @php
                     $avatarPath = 'storage/avatar-sample/ava1.jpg';
-                    if($post->user->user_avatar != null){
-                        $avatarPath=$post->user->user_avatar ;
+                    if ($post->user->user_avatar != null) {
+                        $avatarPath = $post->user->user_avatar;
                     }
 
                     $postAddress = 'Toàn Nga';
@@ -355,13 +406,13 @@
 
                         <div class="newFeed-posterinfo-sec d-block justify-content-center">
                             <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">
-                                {{$post->user->name}}
+                                {{ $post->user->name }}
                             </p>
                             <p class="newFeed-posterinfo-text">
                                 <span>{{ $postTimes }}</span>
-                                <span><i class="fa-solid fa-location-dot"></i>    {{ $postAddress }}</span>
+                                <span><i class="fa-solid fa-location-dot"></i> {{ $postAddress }}</span>
                                 <span class="newFeed-post-hashtag">
-                                    {{$postClassify}}
+                                    {{ $postClassify }}
                                 </span>
                             </p>
                         </div>
@@ -385,8 +436,9 @@
                     @endif
                     <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
                         <div class="newFeed-detail-icon">
-                            @for($i=1; $i<6;$i++)
-                                <span class="fa fa-star @if($i<=$post->rating_score)rating-star-checked @endif"></span>
+                            @for ($i = 1; $i < 6; $i++)
+                                <span
+                                    class="fa fa-star @if ($i <= $post->rating_score) rating-star-checked @endif"></span>
                             @endfor
                         </div>
 
@@ -395,7 +447,7 @@
                         </div>
 
                         <div class="newFeed-detail-icon">
-                            <span> {{$post->access_times}} lượt truy cập</span>
+                            <span> {{ $post->access_times }} lượt truy cập</span>
                         </div>
                     </div>
 

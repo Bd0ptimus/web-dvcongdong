@@ -82,3 +82,10 @@ const CHECK_REQUEST_COMPLETED=2;
 //CHECKING RESPONSE REQUIREMENTS
 const RESPONSE_VIA_EMAIL = 1;
 const RESPONSE_VIA_PHONE = 2;
+
+
+//Currency URLs
+const USD_RUB_EXCHANGE_URL = "https://www.investing.com/currencies/usd-rub";
+const USD_VND_EXCHANGE_URL = "https://www.investing.com/currencies/usd-vnd";
+const BTC_USD_EXCHANGE_URL = "https://www.investing.com/crypto/bitcoin/btc-usd";
+const ETH_USD_EXCHANGE_URL = "https://www.investing.com/crypto/ethereum";

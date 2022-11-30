@@ -7,13 +7,16 @@
     "require": {
         "php": "^7.3|^8.0",
         "doctrine/dbal": "^3.5",
+        "fabpot/goutte": "^4.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-        "nexmo/client": "^2.4"
+        "nexmo/client": "^2.4",
+        "spatie/browsershot": "^3.57",
+        "spatie/crawler": "^7.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
