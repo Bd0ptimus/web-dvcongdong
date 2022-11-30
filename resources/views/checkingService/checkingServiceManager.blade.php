@@ -19,7 +19,7 @@
                 <h3 class="d-flex justify-content-center">
                     Dịch vụ kiểm tra
                 </h3>
-                <button onclick="checkModal()">TEST</button>
+                {{-- <button onclick="checkModal()">TEST</button> --}}
 
             </div>
             <div class="row d-flex justify-content-center" style="margin : 30px auto;" id="checkCarTables">
@@ -131,7 +131,7 @@
                                                 `{{$carTicketCompleted->response_require}}`])'
                                                 >Xem hoặc sửa kết quả</a><br>
                                                 <a class="action-account-btn" style="color:blue;" onclick="removeResult({{CAR_TICKET_TYPE}},{{$carTicketCompleted->id}})">Xóa kết quả</a><br>
-                                                <a class="action-account-btn" style="color:red;">Xóa yêu cầu</a>
+                                                <a class="action-account-btn" style="color:red;"  onclick="removeRequirement({{CAR_TICKET_TYPE}},{{$carTicketCompleted->id}})">Xóa yêu cầu</a>
 
                                             </th>
                                         @endif
@@ -191,7 +191,21 @@
 
                                         @if (Admin::user() !== null && Admin::user()->inRoles([ROLE_SUPER_ADMIN, ROLE_ADMIN]))
                                             <th scope="col">
-                                                <a class="action-account-btn" style="color:blue;">Nhập kết quả</a>
+                                                <a class="action-account-btn" style="color:blue;"
+                                                onclick="updateEntryBan([
+                                                    '{{$entryBanCreated->user->id}}',
+                                                    '{{$entryBanCreated->user->name}}',
+                                                    '{{$entryBanCreated->name_russian}}',
+                                                    '{{$entryBanCreated->name_latin }}',
+                                                    '{{date('d-m-Y', strtotime($entryBanCreated->dob))}}',
+                                                    '{{$entryBanCreated->passport_series}}',
+                                                    '{{date('d-m-Y', strtotime($entryBanCreated->passport_expired))}}',
+                                                    '{{$entryBanCreated->status == CHECK_REQUEST_CREATED?'Chưa kiểm tra':'Đã hoàn thành'}}',
+                                                    '{{$entryBanCreated->response_require==RESPONSE_VIA_EMAIL?$entryBanCreated->user->email:$entryBanCreated->user->phone_number}}',
+                                                    '{{$entryBanCreated->response_require}}',
+                                                    '{{$entryBanCreated->id}}',
+                                                    `{{$entryBanCreated->result_comment}}`
+                                                ])">Nhập kết quả</a>
                                             </th>
                                         @endif
                                     </tr>
@@ -245,10 +259,24 @@
 
                                         @if (Admin::user() !== null && Admin::user()->inRoles([ROLE_SUPER_ADMIN, ROLE_ADMIN]))
                                             <th scope="col">
-                                                <a class="action-account-btn" style="color:green;">Xem hoặc sửa kết
+                                                <a class="action-account-btn" style="color:green;"
+                                                onclick="updateEntryBan([
+                                                    '{{$entryBanCompleted->user->id}}',
+                                                    '{{$entryBanCompleted->user->name}}',
+                                                    '{{$entryBanCompleted->name_russian}}',
+                                                    '{{$entryBanCompleted->name_latin }}',
+                                                    '{{date('d-m-Y', strtotime($entryBanCompleted->dob))}}',
+                                                    '{{$entryBanCompleted->passport_series}}',
+                                                    '{{date('d-m-Y', strtotime($entryBanCompleted->passport_expired))}}',
+                                                    '{{$entryBanCompleted->status == CHECK_REQUEST_CREATED?'Chưa kiểm tra':'Đã hoàn thành'}}',
+                                                    '{{$entryBanCompleted->response_require==RESPONSE_VIA_EMAIL?$entryBanCompleted->user->email:$entryBanCompleted->user->phone_number}}',
+                                                    '{{$entryBanCompleted->response_require}}',
+                                                    '{{$entryBanCompleted->id}}',
+                                                    `{{$entryBanCompleted->result_comment}}`
+                                                ])">Xem hoặc sửa kết
                                                     quả</a><br>
                                                 <a class="action-account-btn" style="color:blue;" onclick="removeResult({{ENTRY_BAN_TYPE}},{{$entryBanCompleted->id}})">Xóa kết quả</a><br>
-                                                <a class="action-account-btn" style="color:red;">Xóa yêu cầu</a>
+                                                <a class="action-account-btn" style="color:red;" onclick="removeRequirement({{ENTRY_BAN_TYPE}},{{$entryBanCompleted->id}})">Xóa yêu cầu</a>
 
                                             </th>
                                         @endif
@@ -263,6 +291,8 @@
 
     </div>
     @include('templates.admin.checkingCarTicketResult')
+    @include('templates.admin.entryBanTicketResult')
+
 
 </body>
 
@@ -272,8 +302,12 @@
         // $('#adminTable_filter').find('label').text(`Tìm kiếm :`);
         // $('#adminTable_filter').find('label').append(`<input type="search" class="" placeholder="" aria-controls="adminTable">`);
 
-        $('#add-checking-request-result-close').on('click', function(){
-            $('#add-checking-request-result').modal('hide');
+        $('#add-checking-carTicket-request-result-close').on('click', function(){
+            $('#add-checking-carTicket-request-result').modal('hide');
+        });
+
+        $('#add-checking-entryBan-request-result-close').on('click', function(){
+            $('#add-checking-entryBan-request-result').modal('hide');
         });
     });
 
@@ -288,6 +322,24 @@
         $('#carTicketModal-result').text('');
 
         $('#carTicketBtn').val('');
+    }
+
+    function resetEntryBanModal(){
+        $('#entryBanModal-idRequester').text('');
+        $('#entryBanModal-nameRequester').text('');
+        $('#entryBanModal-nameRussian').text('');
+        $('#entryBanModal-nameLatin').text('');
+        $('#entryBanModal-dob').text('');
+        $('#entryBanModal-passportSeries').text('');
+        $('#entryBanModal-passportExpired').text('');
+        $('#entryBanModal-status').text('');
+        $('#entryBanModal-responseVia').text('');
+        $('#entryBanModal-result').text('');
+        $('#entryBanModalResponseOption').text('');
+        $('#entryBanModalResponseAddress').text('');
+        $('#entryBanModalNameRequester').text('');
+
+        $('#entryBanBtn').val('');
     }
 
     function updateCarResult(data){
@@ -306,8 +358,29 @@
         $('#carTicketModalResponseAddress').val(data[6]);
         $('#carTicketModalNameRequester').val(data[1]);
 
-        $('#add-checking-request-result').modal('show');
+        $('#add-checking-carTicket-request-result').modal('show');
 
+    }
+
+    function updateEntryBan(data){
+        resetEntryBanModal();
+        $('#entryBanModal-idRequester').text(data[0]);
+        $('#entryBanModal-nameRequester').text(data[1]);
+        $('#entryBanModal-nameRussian').text(data[2]);
+        $('#entryBanModal-nameLatin').text(data[3]);
+        $('#entryBanModal-dob').text(data[4]);
+        $('#entryBanModal-passportSeries').text(data[5]);
+        $('#entryBanModal-passportExpired').text(data[6]);
+        $('#entryBanModal-status').text(data[7]);
+        $('#entryBanModal-responseVia').text(data[8]);
+        $('#entryBanModalResponseOption').val(data[9]);
+        $('#entryBanModalResponseAddress').val(data[8]);
+        $('#entryBanModalNameRequester').val(data[1]);
+        $('#entryBanBtn').val(data[10]);
+        $('#entryBanModal-result').val(data[11]);
+
+
+        $('#add-checking-entryBan-request-result').modal('show');
     }
 
     function removeResult(checkingType, id){
@@ -324,9 +397,28 @@
                 console.log('data response : ', JSON.stringify(data));
                 if(data.error == 0){
                     window.location.href = '{{ route('admin.checkingInfo.index') }}'
-
                 }
+            }
 
+        });
+    }
+
+
+    function removeRequirement(checkingType, id){
+        var url = "{{ route('admin.checkingInfo.removeRequirement') }}";
+        $.ajax({
+            method: 'post',
+            url: url,
+            data: {
+                checkingType: checkingType,
+                id: id,
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(data) {
+                console.log('data response : ', JSON.stringify(data));
+                if(data.error == 0){
+                    window.location.href = '{{ route('admin.checkingInfo.index') }}'
+                }
             }
 
         });
@@ -335,7 +427,7 @@
 
     function checkModal() {
         console.log('modal click');
-        $('#add-checking-request-result').modal('show');
+        $('#add-checking-entryBan-request-result').modal('show');
     }
 </script>
 

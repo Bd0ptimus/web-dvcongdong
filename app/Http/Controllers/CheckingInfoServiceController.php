@@ -62,11 +62,32 @@ class CheckingInfoServiceController extends Controller
         return redirect()->back();
     }
 
+    public function entryBanResultUpdate(Request $request){
+        $this->checkingInfoService->entryBanResultUpdate($request);
+        if($request->entryBanModalResponseOption == RESPONSE_VIA_EMAIL){
+            Mail::to($request->entryBanModalResponseAddress)->send(new CheckingService('Kiểm Tra Cấm nhập cảnh', $request->entryBanModalNameRequester, $request->entryBanModalResult));
+        }elseif($request->entryBanModalResponseOption == RESPONSE_VIA_PHONE){
+
+        }
+        return redirect()->back();
+    }
+
     public function removeResult(Request $request){
         try{
             $params['checkingType'] = request('checkingType');
             $params['id'] = request('id');
             $this->checkingInfoService->removeResult($params);
+        }catch(Exception $e){
+            response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+        }
+        return response()->json(['error' => 0, 'msg' => 'remove thành công']);
+    }
+
+    public function removeRequirement(Request $request){
+        try{
+            $params['checkingType'] = request('checkingType');
+            $params['id'] = request('id');
+            $this->checkingInfoService->removeRequirement($params);
         }catch(Exception $e){
             response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
         }

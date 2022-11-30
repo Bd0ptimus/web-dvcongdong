@@ -47,6 +47,17 @@ class CheckingInfoService
         }
     }
 
+    public function removeRequirement($params){
+        switch($params['checkingType']){
+            case(CAR_TICKET_TYPE):
+                $this->checkingInfoServiceRepo->removeCarTicketRequirement($params['id']);
+                break;
+            case(ENTRY_BAN_TYPE):
+                $this->checkingInfoServiceRepo->removeEntryBanRequirement($params['id']);
+                break;
+        }
+    }
+
     public function loadAllCheckingRequest(){
         $response['carTickets']['created']=$this->checkingInfoServiceRepo->loadAllCarTicket()['created'];
         $response['carTickets']['completed']=$this->checkingInfoServiceRepo->loadAllCarTicket()['completed'];
@@ -57,6 +68,10 @@ class CheckingInfoService
 
     public function carTicketResultUpdate($request){
         $this->checkingInfoServiceRepo->carTicketResultUpdate($request);
+    }
+
+    public function entryBanResultUpdate($request){
+        $this->checkingInfoServiceRepo->entryBanResultUpdate($request);
     }
 
 }
