@@ -237,7 +237,7 @@
     </div>
     <div class = "row d-flex justify-content-center" style="width:100%; margin-bottom:100px;">
         <div style="width : auto;">
-            <a class = "contact-link d-flex justify-content-center"> <i class="fa-brands fa-facebook fa-xl"></i></a>
+            <a class = "contact-link d-flex justify-content-center" > <i class="fa-brands fa-facebook fa-xl"></i></a>
 
         </div>
         <div style="width : auto;">
@@ -245,11 +245,11 @@
 
         </div>
         <div style="width : auto;">
-            <a class = "contact-link d-flex justify-content-center"> <i class="fa-brands fa-whatsapp fa-xl"></i></a>
+            <a class = "contact-link d-flex justify-content-center" target="_blank" href=" https://wa.me/79296697670"> <i class="fa-brands fa-whatsapp fa-xl"></i></a>
 
         </div>
         <div style="width : auto;">
-            <a class = " contact-link d-flex justify-content-center"> <i class="fa-brands fa-telegram fa-xl"></i></a>
+            <a class = " contact-link d-flex justify-content-center" target="_blank" href ="https://t.me/dichvucongdong"> <i class="fa-brands fa-telegram fa-xl"></i></a>
 
         </div>
     </div>
