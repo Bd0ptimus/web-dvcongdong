@@ -403,12 +403,14 @@
 .newfeed-sec{
     margin:auto;
     padding:0px;
+    display: block;
+    justify-content: center;
 }
 
 .newfeed-content-sec{
     padding : 0px;
-    max-width: 1500px;
-    width : 85%;
+    max-width: 1000px;
+    width : 90%;
     border-radius: 6px;
     background-color: #e0e0e0;
     box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
@@ -527,7 +529,8 @@
 }
 /*New feed v2*/
 #home-newFeed-sec{
-    background-color: rgba(0,0,0,.12);
+    background-color: #f8fafc;
+
 
 }
 

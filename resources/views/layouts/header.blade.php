@@ -99,7 +99,7 @@
         </div>
         @if(Admin::user()==null)
             <div class="d-flex justify-content-center">
-                <i class="fa-solid fa-right-to-bracket fa-2xl footer-icon"></i>
+                <i class="fa-solid fa-right-to-bracket fa-2xl footer-icon" onclick="window.location.href='{{route('auth.login')}}';"></i>
             </div>
         @else
             <div class="d-flex justify-content-center">
