@@ -152,23 +152,23 @@
             </a>
         </li>
         <div id="service-submenu" class="submenu-nav-item" style="display:none;">
-            <a href="#" class="submenu-nav-link ">
+            <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_DOCUMENT]) }}"  class="submenu-nav-link ">
                 Giấy tờ
             </a>
             <br>
-            <a href="#" class="submenu-nav-link">
+            <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_MEDICAL]) }}" class="submenu-nav-link">
                 Y tế
             </a>
             <br>
-            <a href="#" class="submenu-nav-link">
+            <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_EDU]) }}" class="submenu-nav-link">
                 Giáo dục
             </a>
             <br>
-            <a href="#" class="submenu-nav-link">
+            <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_TRAVEL]) }}" class="submenu-nav-link">
                 Du lịch
             </a>
             <br>
-            <a href="#" class="submenu-nav-link">
+            <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_ELECTRONIC]) }}" class="submenu-nav-link">
                 Điện tử
             </a>
         </div>

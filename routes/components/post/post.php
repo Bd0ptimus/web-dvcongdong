@@ -9,6 +9,7 @@ use App\Http\Controllers\JobsController;
 use App\Http\Controllers\CarTradeController;
 use App\Http\Controllers\RestaurantsController;
 use App\Http\Controllers\ClassifyAdsController;
+use App\Http\Controllers\ServiceController;
 
 
 
@@ -43,6 +44,12 @@ Route::group(['prefix' => 'post', 'as'=>'post.'], function($route){
         $route->group(['prefix'=>'ad', 'as'=>'ad.'], function($route){
             $route->get('/',[ClassifyAdsController::class, 'index'])->name('index');
             $route->post('/load-more',[ClassifyAdsController::class, 'loadMoreAd'])->name('loadMore');
+        });
+
+        $route->group(['prefix'=>'service', 'as'=>'service.'], function($route){
+            $route->get('/{classifyId}',[ServiceController::class, 'index'])->name('index');
+            $route->post('/load-more/{classifyId}',[ServiceController::class, 'loadMoreService'])->name('loadMore');
+
         });
     });
 

@@ -334,7 +334,7 @@ class PostService
                         $this->postRepo->deleteAllPostById($postId,$postRelation);
                         break;
                     case (SERVICE):
-                        $this->webServicesService->findServiceById($post->posts_classify_id);
+                        $this->webServicesService->deleteService($post->posts_classify_id);
                         $this->postRepo->deleteById($postId);
                         $this->postAttachmentRepo->deletePostAttachmentsByPostId($postId);
                         break;

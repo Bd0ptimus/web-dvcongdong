@@ -100,6 +100,13 @@ class PostRepository extends BaseRepository
 
         if ($filterData['classify'] > 0) {
             $query=$query->where('classify_id', $filterData['classify']);
+            if($filterData['classify'] == SERVICE ){
+                $serviceMatchs = service::where('classify_type_id',$filterData['classifyType'])->pluck('id')->toArray();
+                $query=$query->whereHas('posts_classify', function ($query) use ($serviceMatchs){
+                    $query->whereIn('id', $serviceMatchs );
+                });
+                // dd($query->with('posts_classify')->whereIn('id',$serviceMatchs)->get());
+            }
         }
         // dd($query->get());
         if (isset($filterData['keyword'])) {
