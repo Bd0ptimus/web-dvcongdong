@@ -252,31 +252,49 @@
             <div class="row homeCheckingServiceBtn-sec">
                 <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
                     <button id="checkCarTicket"
-                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                        <i class="fa-solid fa-car-on fa-2xl"></i><br>
-                        <div> Kiểm tra lỗi phạt xe</div>
+                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn d-block justify-content-center">
+                        <div class="row d-flex justify-content-center" style="height: 30%;">
+                            <i class="fa-solid fa-car-on fa-2xl" style="margin-top : 20px;"></i>
+                        </div>
+                        <div class="row d-flex justify-content-center vertical-container "  style="height: 70%;">
+                            <div class="vertical-element-middle-align" style="line-height : 18px;"> Kiểm tra lỗi phạt xe</div>
+                        </div>
+
+
                     </button>
                 </div>
                 <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
                     <button id="checkAdministrative"
-                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                        <i class="fa-solid fa-book fa-2xl"></i><br>
-                        <div> Kiểm tra lỗi hành chính</div>
+                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn d-block justify-content-center">
+                        <div class="row d-flex justify-content-center" style="height: 30%;">
+                            <i class="fa-solid fa-book fa-2xl" style="margin-top : 20px;"></i>
+                        </div>
+                        <div class="row d-flex justify-content-center vertical-container "  style="height: 70%;">
+                            <div class="vertical-element-middle-align"  style="line-height : 18px;"> Kiểm tra lỗi hành chính</div>
+                        </div>
                     </button>
                 </div>
                 <div class="col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
                     <button id="checkTaxdebt"
-                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                        <i class="fa-solid fa-coins fa-2xl"></i><br>
-                        <div> Kiểm tra nợ thuế</div>
+                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn d-block justify-content-center">
+                        <div class="row d-flex justify-content-center" style="height: 30%;">
+                            <i class="fa-solid fa-coins fa-2xl" style="margin-top : 20px;"></i>
+                        </div>
+                        <div class="row d-flex justify-content-center vertical-container "  style="height: 70%;">
+                            <div class="vertical-element-middle-align"  style="line-height : 18px;"> Kiểm tra nợ thuế</div>
+                        </div>
                     </button>
                 </div>
                 <div class=" col-md-3 vertical-container d-flex justify-content-center main-service-checking-btn-sec">
                     <button id="checkEntryBan"
-                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                        <i class="fa-solid fa-plane-circle-xmark fa-2xl"></i><br>
-                        <div> Kiểm tra cấm nhập
-                            cảnh</div>
+                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn d-block justify-content-center">
+                        <div class="row d-flex justify-content-center" style="height: 30%;">
+                            <i class="fa-solid fa-plane-circle-xmark fa-2xl" style="margin-top : 20px;"></i>
+                        </div>
+                        <div class="row d-flex justify-content-center vertical-container "  style="height: 70%;">
+                            <div class="vertical-element-middle-align"  style="line-height : 18px;"> Kiểm tra cấm nhập
+                                cảnh</div>
+                        </div>
                     </button>
                 </div>
             </div>

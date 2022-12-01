@@ -1,3 +1,4 @@
+
 @media screen and (min-width : 1020px) and (max-width: 10000px){
     .pc-only{
         display: flex;
@@ -530,8 +531,6 @@
 /*New feed v2*/
 #home-newFeed-sec{
     background-color: #f8fafc;
-
-
 }
 
 .newfeed-container2{
