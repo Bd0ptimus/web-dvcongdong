@@ -91,8 +91,8 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light shadow-lg bg-body rounded mb-only"
     style="position:fixed; z-index:1000; right:0px; width:100%; bottom:0px; background-color:rgb(248,249,250); height:56px;">
     <div class="d-flex justify-content-around" style="width:100%; height:100%; padding : 0px; margin:0px 5px;">
-        <div class="d-flex justify-content-center">
-            <i class="fa-solid fa-house fa-2xl footer-icon" onclick="window.scrollTo(0, 0);"></i>
+        <div class="d-flex justify-content-center"  onclick="window.scrollTo(0, 0);">
+            <i class="fa-solid fa-house fa-2xl footer-icon"></i>
         </div>
         <div class="d-flex justify-content-center">
             <i class="fa-solid fa-headset fa-2xl footer-icon"></i>
