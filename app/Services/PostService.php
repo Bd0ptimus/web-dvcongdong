@@ -28,9 +28,6 @@ use App\Repositories\PostAttachmentRepository;
 
 
 
-
-
-
 //repo
 use App\Repositories\PostRepository;
 
@@ -178,12 +175,12 @@ class PostService
             // dd($request->files);
             DB::commit();
             $data['error'] = 0;
-            $data['confirmText'] = '<p style="width:auto;">Tin được đăng từ ngày '.date('d/m/Y', strtotime($post->exist_from)).' đến ngày '.date('d/m/Y', strtotime($post->exist_to)).'</p>
-                                    <p style="width:auto;">Bởi người dùng :'.$post->user->name.' </p>
-                                    <p style="width:auto;">Số điện thoại liên hệ :'.$post->contact_phone_number.' </p>
-                                    <p style="width:auto;">Email liên hệ :'.$post->user->email.' </p>
-                                    <p style="width:auto;">Với tiêu đề : '.$post->title.'</p>
-                                    <p style="width:auto;">Với mô tả: '.$post->description.'</p>';
+            $data['confirmText'] = '<p style="width:auto; font-weight:700;">Tin được đăng từ ngày '.date('d/m/Y', strtotime($post->exist_from)).' đến ngày '.date('d/m/Y', strtotime($post->exist_to)).'</p>
+                                    <p style="width:auto; font-weight:700;">Bởi người dùng :</p><p>'.$post->user->name.' </p>
+                                    <p style="width:auto; font-weight:700;">Số điện thoại liên hệ :</p><p>'.$post->contact_phone_number.' </p>
+                                    <p style="width:auto; font-weight:700;">Email liên hệ :</p><p>'.$post->user->email.' </p>
+                                    <p style="width:auto; font-weight:700;">Với tiêu đề : </p><p>'.$post->title.'</p>
+                                    <p style="width:auto; font-weight:700;">Với mô tả: </p><p>'. nl2br($post->description).'</p>';
             return $data;
         } catch (\Exception $e) {
             Log::debug('processUploadNewPost : ' . $e);

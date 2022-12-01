@@ -135,7 +135,7 @@
             </a>
         </li>
         <li class="nav-item nav-item-container">
-            <a href="#" class="nav-link ">
+            <a href="{{ route('post.postCategory.realEstate.index') }}"  class="nav-link ">
                 <i class="fa-solid fa-building sidebar-icon"></i>
                 <span>
                     NHÀ ĐẤT
@@ -173,7 +173,7 @@
             </a>
         </div>
         <li class="nav-item nav-item-container">
-            <a href="#" class="nav-link">
+            <a  href="{{ route('post.postCategory.job.index') }}" class="nav-link">
                 <i class="fa-solid fa-briefcase sidebar-icon"></i>
                 <span>
                     VIỆC LÀM
@@ -181,7 +181,7 @@
             </a>
         </li>
         <li class="nav-item nav-item-container">
-            <a href="#" class="nav-link ">
+            <a href="{{ route('post.postCategory.carTrade.index') }}" class="nav-link ">
                 <i class="fa-solid fa-car sidebar-icon"></i>
                 <span>
                     MUA BÁN XE CỘ
@@ -205,7 +205,7 @@
             </a>
         </li> --}}
         <li class="nav-item nav-item-container">
-            <a href="#" class="nav-link ">
+            <a href="{{ route('post.postCategory.restaurant.index') }}" class="nav-link ">
                 <i class="fa-solid fa-utensils sidebar-icon"></i>
                 <span>
                     NHÀ HÀNG
@@ -213,7 +213,7 @@
             </a>
         </li>
         <li class="nav-item nav-item-container">
-            <a href="#" class="nav-link ">
+            <a href="{{ route('post.postCategory.ad.index') }}"  class="nav-link ">
                 <i class="fa-solid fa-rectangle-ad sidebar-icon"></i>
                 <span>
                     RAO VẶT
@@ -329,7 +329,7 @@
 
     </ul>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
+    <ul class="nav nav-pills flex-column mb-2">
         <li class="nav-item d-flex justify-content-center">
             <a href="#" class="nav-link nav-icon-item" aria-current="page">
                 <i class="fa-solid fa-house-chimney"></i>
