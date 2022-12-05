@@ -25,6 +25,7 @@ class RestaurantRepository extends BaseRepository
     public function momBabyPostCreate($request){
         $restaurant = new restaurant([
             'restaurant_address'=>$request->restaurantAddress??null,
+            'average_bill'=>$request->restaurantAverageBill??null,
         ]);
         $restaurant->save();
         return $restaurant;

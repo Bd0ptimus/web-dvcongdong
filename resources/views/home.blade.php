@@ -218,7 +218,8 @@
             <div class="home-currency d-flex justify-content-center">
                 <p class="home-currency-text home-currency-title">USD-VND : </p>
                 <p class="home-currency-text home-currency-text-content"
-                @if ($currencyExchange['usd_vnd']['change'] < 0) style="color:red;" @else style="color:green;" @endif>{{ $currencyExchange['usd_vnd']['last'] }}</p>
+                    @if ($currencyExchange['usd_vnd']['change'] < 0) style="color:red;" @else style="color:green;" @endif>
+                    {{ $currencyExchange['usd_vnd']['last'] }}</p>
                 @if ($currencyExchange['usd_vnd']['change'] < 0)
                     <i class="fa-solid fa-arrow-down fa-xs" style="color:red;"></i>
                 @else
@@ -229,7 +230,8 @@
             <div class="home-currency d-flex justify-content-center">
                 <p class="home-currency-text home-currency-title">BTC-USD : </p>
                 <p class="home-currency-text home-currency-text-content"
-                @if ($currencyExchange['btc_usd']['change'] < 0) style="color:red;" @else style="color:green;" @endif>{{ $currencyExchange['btc_usd']['last'] }}</p>
+                    @if ($currencyExchange['btc_usd']['change'] < 0) style="color:red;" @else style="color:green;" @endif>
+                    {{ $currencyExchange['btc_usd']['last'] }}</p>
                 @if ($currencyExchange['btc_usd']['change'] < 0)
                     <i class="fa-solid fa-arrow-down fa-xs" style="color:red;"></i>
                 @else
@@ -240,7 +242,8 @@
             <div class="home-currency d-flex justify-content-center">
                 <p class="home-currency-text home-currency-title">ETH-USD : </p>
                 <p class="home-currency-text home-currency-text-content"
-                @if ($currencyExchange['eth_usd']['change'] < 0) style="color:red;" @else style="color:green;" @endif>{{ $currencyExchange['eth_usd']['last'] }}</p>
+                    @if ($currencyExchange['eth_usd']['change'] < 0) style="color:red;" @else style="color:green;" @endif>
+                    {{ $currencyExchange['eth_usd']['last'] }}</p>
                 @if ($currencyExchange['eth_usd']['change'] < 0)
                     <i class="fa-solid fa-arrow-down fa-xs" style="color:red;"></i>
                 @else
@@ -256,8 +259,9 @@
                         <div class="row d-flex justify-content-center" style="height: 30%;">
                             <i class="fa-solid fa-car-on fa-2xl" style="margin-top : 20px;"></i>
                         </div>
-                        <div class="row d-flex justify-content-center vertical-container "  style="height: 70%;">
-                            <div class="vertical-element-middle-align" style="line-height : 18px;"> Kiểm tra lỗi phạt xe</div>
+                        <div class="row d-flex justify-content-center vertical-container " style="height: 70%;">
+                            <div class="vertical-element-middle-align" style="line-height : 18px;"> Kiểm tra lỗi phạt xe
+                            </div>
                         </div>
 
 
@@ -269,8 +273,9 @@
                         <div class="row d-flex justify-content-center" style="height: 30%;">
                             <i class="fa-solid fa-book fa-2xl" style="margin-top : 20px;"></i>
                         </div>
-                        <div class="row d-flex justify-content-center vertical-container "  style="height: 70%;">
-                            <div class="vertical-element-middle-align"  style="line-height : 18px;"> Kiểm tra lỗi hành chính</div>
+                        <div class="row d-flex justify-content-center vertical-container " style="height: 70%;">
+                            <div class="vertical-element-middle-align" style="line-height : 18px;"> Kiểm tra lỗi hành
+                                chính</div>
                         </div>
                     </button>
                 </div>
@@ -280,8 +285,9 @@
                         <div class="row d-flex justify-content-center" style="height: 30%;">
                             <i class="fa-solid fa-coins fa-2xl" style="margin-top : 20px;"></i>
                         </div>
-                        <div class="row d-flex justify-content-center vertical-container "  style="height: 70%;">
-                            <div class="vertical-element-middle-align"  style="line-height : 18px;"> Kiểm tra nợ thuế</div>
+                        <div class="row d-flex justify-content-center vertical-container " style="height: 70%;">
+                            <div class="vertical-element-middle-align" style="line-height : 18px;"> Kiểm tra nợ thuế
+                            </div>
                         </div>
                     </button>
                 </div>
@@ -291,8 +297,8 @@
                         <div class="row d-flex justify-content-center" style="height: 30%;">
                             <i class="fa-solid fa-plane-circle-xmark fa-2xl" style="margin-top : 20px;"></i>
                         </div>
-                        <div class="row d-flex justify-content-center vertical-container "  style="height: 70%;">
-                            <div class="vertical-element-middle-align"  style="line-height : 18px;"> Kiểm tra cấm nhập
+                        <div class="row d-flex justify-content-center vertical-container " style="height: 70%;">
+                            <div class="vertical-element-middle-align" style="line-height : 18px;"> Kiểm tra cấm nhập
                                 cảnh</div>
                         </div>
                     </button>
@@ -500,6 +506,10 @@
         </div>
     </div>
     @include('templates.notification.toast');
+    @include('templates.main.checkCarTicket');
+    @include('templates.main.checkEntryBan');
+
+
 </body>
 
 <script>
@@ -646,6 +656,31 @@
         });
     }
 
+    function sendRequestChecking(data) {
+        console.log(data);
+        var url = "{{ route('check.addNew') }}";
+        $.ajax({
+            method: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: url,
+            data: data,
+            success: function(data) {
+                console.log('data response : ', JSON.stringify(data));
+                if (data.error == 0) {
+                    $('#toast-success-text').text(
+                        'Gửi yêu cầu thành công. Vui lòng đợi phản hồi');
+                    $('#notification-success').toast('show');
+                } else {
+                    $('#toast-fail-text').text('Có lỗi xảy ra, vui lòng thử lại');
+                    $('#notification-fail').toast('show');
+                }
+            }
+
+        });
+    }
+
 
     $(document).ready(function() {
         function formatTextClassify(icon) {
@@ -671,7 +706,9 @@
 
         $('#checkCarTicket').on('click', function() {
             checkUserExist();
-            modalShowMain(1);
+            carTicketResetForms();
+            carTicketResetFormStyle();
+            $('#carTiket-modal').modal('show');
         })
 
         $('#checkAdministrative').on('click', function() {
@@ -686,7 +723,9 @@
 
         $('#checkEntryBan').on('click', function() {
             checkUserExist();
-            modalShowMain(4);
+            entryBanResetForms();
+            entryBanResetFormStyle();
+            $('#entryBan-modal').modal('show');
         })
 
         $('#checkCarTicketMb').on('click', function() {
@@ -709,6 +748,8 @@
             modalShowMain(4);
         })
 
+
+
         function modalShowMain(index) {
             //index : 1-checkCarTicket
             //index : 2-checkAdminist
@@ -718,156 +759,6 @@
             $('#service-checking-modal-container').modal('show');
         }
     });
-
-
-    // var $item = $('.carousel .carousel-item');
-    // var $wHeight = $(window).height();
-    // $item.eq(0).addClass('active');
-    // $item.height($wHeight);
-    // $item.addClass('full-screen');
-
-    // $('.carousel img').each(function() {
-    //     var $src = $(this).attr('src');
-    //     var $color = $(this).attr('data-color');
-    //     $(this).parent().css({
-    //         'background-image': 'url(' + $src + ')',
-    //         'background-color': $color
-    //     });
-    //     $(this).remove();
-    // });
-
-    // $(window).on('resize', function() {
-    //     $wHeight = $(window).height();
-    //     $item.height($wHeight);
-    // });
-
-    // $('.carousel').carousel({
-    //     interval: 5000,
-    //     pause: "false"
-    // });
-
-
-
-
-    const easingOutQuint = (x, t, b, c, d) =>
-        c * ((t = t / d - 1) * t * t * t * t + 1) + b
-
-    function smoothScrollPolyfill(node, key, target) {
-        const startTime = Date.now()
-        const offset = node[key]
-        const gap = target - offset
-        const duration = 1000
-        let interrupt = false
-
-        const step = () => {
-            const elapsed = Date.now() - startTime
-            const percentage = elapsed / duration
-
-            if (interrupt) {
-                return
-            }
-
-            if (percentage > 1) {
-                cleanup()
-                return
-            }
-
-            node[key] = easingOutQuint(0, elapsed, offset, gap, duration)
-            requestAnimationFrame(step)
-        }
-
-        const cancel = () => {
-            interrupt = true
-            cleanup()
-        }
-
-        const cleanup = () => {
-            node.removeEventListener('wheel', cancel)
-            node.removeEventListener('touchstart', cancel)
-        }
-
-        node.addEventListener('wheel', cancel, {
-            passive: true
-        })
-        node.addEventListener('touchstart', cancel, {
-            passive: true
-        })
-
-        step()
-
-        return cancel
-    }
-
-    function testSupportsSmoothScroll() {
-        let supports = false
-        try {
-            let div = document.createElement('div')
-            div.scrollTo({
-                top: 0,
-                get behavior() {
-                    supports = true
-                    return 'smooth'
-                }
-            })
-        } catch (err) {} // Edge throws an error
-        return supports
-    }
-
-    const hasNativeSmoothScroll = testSupportsSmoothScroll()
-
-    function smoothScroll(node, topOrLeft, horizontal) {
-        if (hasNativeSmoothScroll) {
-            return node.scrollTo({
-                [horizontal ? 'left' : 'top']: topOrLeft,
-                behavior: 'smooth'
-            })
-        } else {
-            return smoothScrollPolyfill(node, horizontal ? 'scrollLeft' : 'scrollTop', topOrLeft)
-        }
-    }
-
-    function debounce(func, ms) {
-        let timeout
-        return () => {
-            clearTimeout(timeout)
-            timeout = setTimeout(() => {
-                timeout = null
-                func()
-            }, ms)
-        }
-    }
-
-    const indicators = document.querySelectorAll('.indicator-button')
-    const scroller = document.querySelector('.scroll')
-
-    function setAriaLabels() {
-        indicators.forEach((indicator, i) => {
-            indicator.setAttribute('aria-label', `Scroll to item #${i + 1}`)
-        })
-    }
-
-    function setAriaPressed(index) {
-        indicators.forEach((indicator, i) => {
-            indicator.setAttribute('aria-pressed', !!(i === index))
-        })
-    }
-
-    indicators.forEach((indicator, i) => {
-        indicator.addEventListener('click', e => {
-            e.preventDefault()
-            e.stopPropagation()
-            setAriaPressed(i)
-            const scrollLeft = Math.floor(scroller.scrollWidth * (i / 4))
-            smoothScroll(scroller, scrollLeft, true)
-        })
-    })
-
-    scroller.addEventListener('scroll', debounce(() => {
-        let index = Math.round((scroller.scrollLeft / scroller.scrollWidth) * 4)
-        setAriaPressed(index)
-    }, 200))
-
-    setAriaLabels()
 </script>
 
 </html>

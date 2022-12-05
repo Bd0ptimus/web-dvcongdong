@@ -48,6 +48,15 @@
                     </span>
                 </a>
             </li>
+
+            <li class="nav-item nav-item-container">
+                <a href="#" class="nav-link" aria-current="page" id="sidebarServiceChecking">
+                    <i class="fa-solid fa-file-circle-exclamation"></i>
+                    <span>
+                        Dịch vụ kiểm tra
+                    </span>
+                </a>
+            </li>
         @endif
         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
             <li class="nav-item nav-item-container">
@@ -75,14 +84,7 @@
                 </a>
             </li>
         @endif
-        <li class="nav-item nav-item-container">
-            <a href="#" class="nav-link" aria-current="page" id="sidebarServiceChecking">
-                <i class="fa-solid fa-file-circle-exclamation"></i>
-                <span>
-                    Dịch vụ kiểm tra
-                </span>
-            </a>
-        </li>
+
 
         @if (Admin::user() == null)
             <li class="nav-item nav-item-container">
@@ -279,6 +281,11 @@
                     <i class="fa-solid fa-users"></i>
                 </a>
             </li>
+            <li class="nav-item d-flex justify-content-center">
+                <a href="#" class="nav-link nav-icon-item" aria-current="page">
+                    <i class="fa-solid fa-file-circle-exclamation"></i>
+                </a>
+            </li>
         @endif
         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
             <li class="nav-item d-flex justify-content-center">
@@ -299,11 +306,7 @@
                 </a>
             </li>
         @endif
-        <li class="nav-item d-flex justify-content-center">
-            <a href="#" class="nav-link nav-icon-item" aria-current="page">
-                <i class="fa-solid fa-file-circle-exclamation"></i>
-            </a>
-        </li>
+
 
 
         @if (Admin::user() == null)

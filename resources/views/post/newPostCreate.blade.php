@@ -27,7 +27,8 @@
                 </div>
                 <div class="row" style="margin : 30px 0px;">
                     <form id="newPostForm" class="login100-form validate-form" name="login"
-                        action="{{ route('post.freeUpload',['classify'=>$classify, 'classifyType'=>$classifyType]) }}" method="post" enctype="multipart/form-data"> @csrf
+                        action="{{ route('post.freeUpload', ['classify' => $classify, 'classifyType' => $classifyType]) }}"
+                        method="post" enctype="multipart/form-data"> @csrf
                         {{-- <input type="text" class="data-field" name="classify" value="{{ $classify }}"
                             style="display:none;" />
                         <input type="text" class="data-field" name="classifyType" value="{{ $classifyType }}"
@@ -44,8 +45,8 @@
                                     <h5 class="row">
                                         <span class="form-text">Thành phố </span>
                                     </h5>
-                                    <select class="main-filter-classify classify-type-select"
-                                        name="createPostCity" id="createPost-city-select">
+                                    <select class="main-filter-classify classify-type-select" name="createPostCity"
+                                        id="createPost-city-select">
                                         <option value="0">Tất cả</option>
                                         @foreach ($cities as $city)
                                             <option value="{{ $city->id }}">{{ $city->city }}</option>
@@ -87,7 +88,7 @@
                                 </div>
                             @endif
 
-                            @if ($classify == SERVICE)
+                            {{-- @if ($classify == SERVICE)
                                 <div class="row d-flex justify-content-start" id="service-form-sec">
                                     <div class="filter-section">
                                         <h5 class="row">
@@ -98,35 +99,13 @@
                                     </div>
 
                                 </div>
-                            @endif
+                            @endif --}}
 
-                            @if ($classify == JOB)
-                                <div class="row d-flex justify-content-start" id="job-form-sec">
-                                    <div class="filter-section">
-                                        <h5 class="row">
-                                            <span class="form-text">Nơi làm việc</span>
-                                        </h5>
-                                        <input type="text" class="data-field" name="jobAddress"
-                                            id="createPost-job-city" />
-                                    </div>
 
-                                </div>
-                            @endif
 
-                            @if ($classify == CAR_TRADE)
-                                <div class="row d-flex justify-content-start" id="carTrade-form-sec">
-                                    <div class="filter-section">
-                                        <h5 class="row">
-                                            <span class="form-text">Địa chỉ bán xe</span>
-                                        </h5>
-                                        <input type="text" class="data-field" name="carTradeAddress"
-                                            id="createPost-carTrade-city" />
-                                    </div>
-                                </div>
-                            @endif
 
                             @if ($classify == GARMENT)
-                                <div class="row d-flex justify-content-start"  id="garment-form-sec">
+                                <div class="row d-flex justify-content-start" id="garment-form-sec">
                                     <div class="filter-section">
                                         <h5 class="row">
                                             <span class="form-text">Thông tin</span>
@@ -138,7 +117,7 @@
                             @endif
 
                             @if ($classify == MOM_BABY)
-                                <div class="row d-flex justify-content-start"  id="momBaby-form-sec">
+                                <div class="row d-flex justify-content-start" id="momBaby-form-sec">
                                     <div class="filter-section">
                                         <h5 class="row">
                                             <span class="form-text">Thông tin</span>
@@ -149,8 +128,8 @@
                                 </div>
                             @endif
 
-                            @if($classify == RESTAURANT)
-                                <div class="row d-flex justify-content-start"  id="restaurant-form-sec">
+                            @if ($classify == RESTAURANT)
+                                <div class="row d-flex justify-content-start" id="restaurant-form-sec">
                                     <div class="filter-section">
                                         <h5 class="row">
                                             <span class="form-text">Địa chỉ nhà hàng</span>
@@ -158,11 +137,20 @@
                                         <input type="text" class="data-field" name="restaurantAddress"
                                             id="createPost-restaurant-address" />
                                     </div>
+
+                                    <div class="filter-section">
+                                        <h5 class="row">
+                                            <span class="form-text">Hoá đơn trung bình (&#8381)</span>
+                                        </h5>
+                                        <input type="number" class="data-field" name="restaurantAverageBill"
+                                            id="createPost-restaurant-bill"/>
+
+                                    </div>
                                 </div>
                             @endif
 
-                            @if($classify ==AD )
-                                <div class="row d-flex justify-content-start"  id="ad-form-sec">
+                            @if ($classify == AD)
+                                <div class="row d-flex justify-content-start" id="ad-form-sec">
                                     <div class="filter-section">
                                         <h5 class="row">
                                             <span class="form-text">Thông tin quảng cáo</span>
@@ -190,6 +178,39 @@
                                         id="createPost-description"></textarea>
                                 </div>
                             </div>
+                            @if ($classify == JOB)
+                                <div class="row d-flex justify-content-start" id="job-form-sec">
+                                    <div class="filter-section">
+                                        <h5 class="row">
+                                            <span class="form-text">Nơi làm việc</span>
+                                        </h5>
+                                        <input type="text" class="data-field" name="jobAddress"
+                                            id="createPost-job-city" />
+                                    </div>
+
+                                    <div class="filter-section">
+                                        <h5 class="row">
+                                            <span class="form-text">Lương (&#8381)</span>
+                                        </h5>
+                                        <input type="number" class="data-field" name="jobSalary"
+                                            id="createPost-job-salary"/>
+
+                                    </div>
+                                </div>
+                            @endif
+
+
+                            @if ($classify == CAR_TRADE)
+                                <div class="row d-flex justify-content-start" id="carTrade-form-sec">
+                                    <div class="filter-section">
+                                        <h5 class="row">
+                                            <span class="form-text">Địa chỉ bán xe</span>
+                                        </h5>
+                                        <input type="text" class="data-field" name="carTradeAddress"
+                                            id="createPost-carTrade-city" />
+                                    </div>
+                                </div>
+                            @endif
 
                             <div class="row d-flex justify-content-start">
                                 <div class="important-field">
@@ -197,18 +218,13 @@
                                         <span class="form-text">Hình ảnh</span>
                                     </h5>
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        {{-- <div class="col-md-5">
                                             <div class="row form-text"><span>Logo/Ảnh đại diện</span></div>
                                             <div class="row d-flex justify-content-center">
                                                 <div class="upload-btn-wrapper">
                                                     <button class="normal-button" disabled><i
                                                             class="fa-solid fa-upload"></i>
                                                         Upload Logo/ Ảnh đại diện</button>
-                                                    {{-- <input type="file" wire:model="photoUpload" accept=".jpg, .jpeg, .png, .mov" />
-                                                    <div wire:loading wire:target="photoUpload">
-                                                        <!--Upload image loading screen-->
-                                                        @include('layouts.loadingModalWithLivewire')
-                                                    </div> --}}
                                                     <input type="file" name="logoUpload"
                                                         placeholder="Choose image" id="logoUpload"
                                                         class="normal-button" style="width:250px;">
@@ -221,10 +237,10 @@
                                                 id="logoUpload-preview-sec">
 
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-md-7">
-                                            <div class="row form-text"><span>Ảnh mô tả</span></div>
+                                            <div class="row form-text"><span>Ảnh mô tả  @if($classify == RESTAURANT) <span class="text-danger">(*)</span> @endif</span></div>
                                             <div class="row d-flex justify-content-center">
                                                 <div class="upload-btn-wrapper">
                                                     <button class="normal-button" disabled><i
@@ -271,8 +287,16 @@
 
                                 <div class="filter-section">
                                     <h5 class="row">
-                                        <span class="form-text">Số điện thoại liên hệ <span
-                                                class="text-danger">(*)</span></span>
+                                        <span class="form-text">Số điện thoại liên hệ 1</span>
+                                    </h5>
+                                    <input type="text" class="data-field"
+                                        value="{{ Admin::user()->phone_number }}" disabled />
+                                </div>
+
+
+                                <div class="filter-section">
+                                    <h5 class="row">
+                                        <span class="form-text">Số điện thoại liên hệ 2</span>
                                     </h5>
                                     <input type="text" id="contactPhone" class="data-field" name="contactPhone"
                                         value="" style="margin:10px 0px; width:100%;" />
@@ -429,57 +453,57 @@
 
 
         //RealEstate part
-        if($('#realEstate-form-sec').length){
+        if ($('#realEstate-form-sec').length) {
             console.log('real estate Existed');
-            if(isNaN($('#createPost-realEstate-price').val())){
+            if (isNaN($('#createPost-realEstate-price').val())) {
                 $('#createPost-warning').append('<li class="warning-text">Giá bất động sản phải là số</li>');
                 haveError = true;
             }
-            if(isNaN($('#createPost-realEstate-square').val())){
+            if (isNaN($('#createPost-realEstate-square').val())) {
                 $('#createPost-warning').append('<li class="warning-text">Diện tích bất động sản phải là số</li>');
                 haveError = true;
             }
-            if(isNaN($('#createPost-realEstate-numberRoom').val())){
+            if (isNaN($('#createPost-realEstate-numberRoom').val())) {
                 $('#createPost-warning').append('<li class="warning-text">Số phòng bất động sản phải là số</li>');
                 haveError = true;
             }
         }
 
         //Service
-        if($('#service-form-sec').length){
-            if($('#createPost-service-content').val()==""){
-                $('#createPost-warning').append('<li class="warning-text">Nội dung của dịch vụ không được để trống</li>');
+        if ($('#service-form-sec').length) {
+            if ($('#createPost-service-content').val() == "") {
+                $('#createPost-warning').append(
+                    '<li class="warning-text">Nội dung của dịch vụ không được để trống</li>');
                 haveError = true;
             }
         }
 
 
         //JOB
-        if($('#job-form-sec').length){
-        }
+        if ($('#job-form-sec').length) {}
 
         //CAR_TRADE
-        if($('#carTrade-form-sec').length){
-        }
+        if ($('#carTrade-form-sec').length) {}
 
 
         //GARMENT
-        if($('#garment-form-sec').length){
-        }
+        if ($('#garment-form-sec').length) {}
 
 
         //MOM_BABY
-        if($('#momBaby-form-sec').length){
-        }
+        if ($('#momBaby-form-sec').length) {}
 
 
         //RESTAURANT
-        if($('#restaurant-form-sec').length){
+        if ($('#restaurant-form-sec').length) {
+            if(desPhotoExist.items.length == 0){
+                $('#createPost-warning').append('<li class="warning-text">Bắt buộc phải có ảnh mô tả</li>');
+                haveError = true;
+            }
         }
 
         //AD
-        if($('#ad-form-sec').length){
-        }
+        if ($('#ad-form-sec').length) {}
 
 
 
@@ -496,10 +520,8 @@
         }
 
         // console.log('check phone : ', phoneInput.getNumber());
-        if (phoneInput.getNumber() == "") {
-            $('#createPost-warning').append('<li class="warning-text">Cần phải nhập số điện thoại liên hệ</li>');
-            haveError = true;
-        } else {
+        if (phoneInput.getNumber() != "") {
+
             if (phoneInput.getNumber().indexOf("+") == -1) {
                 $('#createPost-warning').append(
                     '<li class="warning-text">Số điện thoại không hợp lệ (sai định dạng, quá ngắn hoặc quá dài)</li>'
@@ -517,6 +539,7 @@
     }
 
     $(document).ready(function() {
+
 
         $('#createPost-btn').on('click', function() {
             validateCreatePostForm();

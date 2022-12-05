@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CitiesController;
+
 use App\Http\Controllers\TestClawler;
 
 use App\Http\Controllers\Notification\SMSNotificationController;
@@ -34,6 +36,8 @@ require_once 'components/warning/warning.php';
 
 Route::any('/', [ HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index']);
+Route::get('/get-cities', [CitiesController::class, 'index'])->name('getCities');
+
 
 // Route::get('/', function(){return view('main'); })->name('main');
 

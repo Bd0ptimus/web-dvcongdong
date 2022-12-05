@@ -13,6 +13,7 @@ class job extends Model
 
     protected $fillable = [
         'address_working',
+        'salary',
     ];
     public function post(){
         return $this->morphOne(post::class, 'posts_classify');

@@ -89,3 +89,7 @@ const USD_RUB_EXCHANGE_URL = "https://www.investing.com/currencies/usd-rub";
 const USD_VND_EXCHANGE_URL = "https://www.investing.com/currencies/usd-vnd";
 const BTC_USD_EXCHANGE_URL = "https://www.investing.com/crypto/bitcoin/btc-usd";
 const ETH_USD_EXCHANGE_URL = "https://www.investing.com/crypto/ethereum";
+
+
+//Web cookie time valid
+const COOKIE_TIME_VALID = 43200;

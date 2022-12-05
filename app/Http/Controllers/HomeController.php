@@ -63,7 +63,7 @@ class HomeController extends Controller
         try{
             $response = $this->homeService->newFeedLoading($numberStep, $params);
         }catch(Exception $e){
-            response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+            return response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
         }
         return response()->json(['error' => 0, 'msg' => 'Lấy ảnh thành công', 'data'=>$response]);
     }

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use App\Services\AuthService;
+use App\Admin;
 class LoginController extends Controller
 {
     /*
@@ -58,6 +59,7 @@ class LoginController extends Controller
                         }
                         Auth::guard('web')->attempt(['username'=>$request->username,'password'=>$request->password], $request->remember);
                         // dd(Admin::user()->inRoles([ROLE_ADMIN]));
+                        // dd(Admin::user());
                         return redirect()->route('home');
                     }
                     return redirect()->back()->withErrors($validator->errors()->add('password', 'Mật khẩu không đúng'))->withInput($request->all());

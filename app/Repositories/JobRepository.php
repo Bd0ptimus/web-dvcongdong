@@ -25,6 +25,7 @@ class JobRepository extends BaseRepository
     public function jobPostCreate($request){
         $job = new job([
             'address_working'=>$request->jobAddress??null,
+            'salary'=>$request->jobSalary??null,
         ]);
         $job->save();
         return $job;

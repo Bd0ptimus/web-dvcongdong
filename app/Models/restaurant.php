@@ -11,7 +11,8 @@ class restaurant extends Model
     protected $table="restaurants";
 
     protected $fillable = [
-        'restaurant_address'
+        'restaurant_address',
+        'average_bill',
     ];
     public function post(){
         return $this->morphOne(post::class, 'posts_classify');

@@ -16,8 +16,6 @@
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
 <script type="text/javascript">
-
-
     function checkUserExist() {
         var userId = '<?= Admin::user() !== null ? Admin::user()->id : null ?>';
         if (userId == '') {
@@ -118,8 +116,34 @@
         });
     }
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    $(document).ready(function() {
+        var citiesCookies =  '<?=Cookie::get('nguoiviettainga-cities')?>';
+        if (citiesCookies == '') {
+            $.ajax({
+                method: 'get',
+                url: '{{route('getCities')}}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(data) {
+                    if(data.data.cookies_existed == false){
+                        data.data.cities.forEach(function(e){
+                            $('#citySelectionSearch').append(`<option value="${e.id}">${e.city}</option>`);
+                        })
+                    }
+                }
+
+            });
+        }
+    });
 </script>
-@extends('templates.main.mainCheckingService')
+{{-- @extends('templates.main.mainCheckingService') --}}
 
 
 <!-- Styles -->
