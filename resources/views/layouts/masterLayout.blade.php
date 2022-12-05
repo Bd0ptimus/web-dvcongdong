@@ -122,6 +122,10 @@
         if (parts.length === 2) return parts.pop().split(';').shift();
     }
 
+    function accessPost(postLink){
+        window.location.href = postLink;
+    }
+
     $(document).ready(function() {
         var citiesCookies =  '<?=Cookie::get('nguoiviettainga-cities')?>';
         if (citiesCookies == '') {

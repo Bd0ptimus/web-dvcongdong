@@ -14,7 +14,6 @@
         width:95%;
         /* float:right; */
         left:5%;
-
     }
 
     .newfeed-content-sec{
@@ -543,6 +542,7 @@
 }
 
 .newFeed-content-small-sec2{
+    cursor:pointer;
     margin: 10px 20px;
     height:auto;
     padding:0px;

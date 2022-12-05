@@ -20,7 +20,7 @@ class PostsController extends Controller
     PostService $postService){
         // dd($request->route()->parameter('userId'));
         $userId = $request->route()->parameter('userId');
-        $this->middleware('user.auth');
+        $this->middleware('user.auth')->except(['mainPost']);
         $this->middleware("mypost.permission:$userId")->only(['myPostIndex']);
         $this->classifyService = $classifyService;
         $this->postService = $postService;
@@ -104,6 +104,11 @@ class PostsController extends Controller
             return response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
         }
         return response()->json(['error' => 0, 'msg' => 'Xóa my post thành công', 'data' => $data ]);
+    }
+
+    public function mainPost(Request $request, $postId){
+        $post = $this->postService->takePostById($postId);
+        return view('post.mainPost',['post'=> $post]);
     }
 
 }

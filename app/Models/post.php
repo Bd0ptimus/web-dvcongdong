@@ -30,6 +30,7 @@ class post extends Model
         'contact_phone_number',
         'contact_email',
         'description',
+        'access_times',
     ];
 
     public function user(){

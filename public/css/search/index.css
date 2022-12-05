@@ -11,12 +11,25 @@
         margin-right: 10px;
     }
 
+    .input-select-data{
+        width : 50%;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
     #searchFilterSection{
         display: flex;
     }
 
     #searchKeyWord{
         margin: 10px 10px;
+    }
+    .mbselect{
+        width:100%;
+    }
+    .selections-container{
+        display:none;
+        width:50%;
     }
 }
 
@@ -33,11 +46,23 @@
         margin-right: 10px;
 
     }
+    .input-select-data{
+        width : 50%;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
     #searchFilterSection{
         display: flex;
     }
     #searchKeyWord{
         margin: 10px 10px;
+    }
+    .mbselect{
+        width:100%;
+    }
+    .selections-container{
+        display:none;
+        width:50%;
     }
 }
 
@@ -59,6 +84,14 @@
     #searchKeyWord{
         margin: 10px 10px;
     }
+    .mbselect{
+        width:50%;
+    }
+    .selections-container{
+        display:block;
+        width:100%;
+
+    }
 }
 
 
@@ -73,6 +106,21 @@
         display: block;
     }
     #searchKeyWord{
-        margin: 10px 0px;
+        margin: 2.5px 0px;
     }
+
+    .select2-container{
+        margin: 2.5px 0px;
+    }
+
+    .mbselect{
+        width:50%;
+    }
+
+    .selections-container{
+        display:block;
+        width:100%;
+
+    }
+
 }

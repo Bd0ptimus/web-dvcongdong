@@ -9,7 +9,7 @@
 <link href="{{ asset('css/post/newPostCreate.css?v=') . time() }}" rel="stylesheet">
 
 <body>
-    <div class="project-content-section ">
+    <div class="project-content-section d-flex justify-content-center">
         <div class="row newPost-main d-flex justify-content-center">
             <div class="row newPost-header-sec" style="width: 100%; padding:20px 0px;">
                 <h3 class="newPost-header newPost-text">
@@ -285,22 +285,33 @@
                                         disabled />
                                 </div>
 
-                                <div class="filter-section">
-                                    <h5 class="row">
-                                        <span class="form-text">Số điện thoại liên hệ 1</span>
-                                    </h5>
-                                    <input type="text" class="data-field"
-                                        value="{{ Admin::user()->phone_number }}" disabled />
-                                </div>
+                                @if(isset(Admin::user()->phone_number))
+                                    <div class="filter-section">
+                                        <h5 class="row">
+                                            <span class="form-text">Số điện thoại liên hệ 1</span>
+                                        </h5>
+                                        <input type="text" class="data-field"
+                                            value="{{ Admin::user()->phone_number }}" disabled />
+                                    </div>
 
 
-                                <div class="filter-section">
-                                    <h5 class="row">
-                                        <span class="form-text">Số điện thoại liên hệ 2</span>
-                                    </h5>
-                                    <input type="text" id="contactPhone" class="data-field" name="contactPhone"
-                                        value="" style="margin:10px 0px; width:100%;" />
-                                </div>
+                                    <div class="filter-section">
+                                        <h5 class="row">
+                                            <span class="form-text">Số điện thoại liên hệ 2</span>
+                                        </h5>
+                                        <input type="text" id="contactPhone" class="data-field" name="contactPhone"
+                                            value="" style="margin:10px 0px; width:100%;" />
+                                    </div>
+                                @else
+                                    <div class="filter-section">
+                                        <h5 class="row">
+                                            <span class="form-text">Số điện thoại liên hệ<span class="text-danger">(*)</span></span>
+                                        </h5>
+                                        <input type="text" id="contactPhone" class="data-field" name="contactPhone"
+                                            value="" style="margin:10px 0px; width:100%;" />
+                                    </div>
+                                @endif
+
                                 <div class="filter-section">
                                     <h5 class="row">
                                         <span class="form-text">Địa chỉ người liên hệ</span>
@@ -520,15 +531,34 @@
         }
 
         // console.log('check phone : ', phoneInput.getNumber());
-        if (phoneInput.getNumber() != "") {
-
-            if (phoneInput.getNumber().indexOf("+") == -1) {
+        var userPhone = '<?=Admin::user()->phone_number?>';
+        console.log('userPhone : ', userPhone);
+        if(userPhone == ''){
+            if (phoneInput.getNumber() == "") {
                 $('#createPost-warning').append(
-                    '<li class="warning-text">Số điện thoại không hợp lệ (sai định dạng, quá ngắn hoặc quá dài)</li>'
+                    '<li class="warning-text">Số điện thoại là bắt buộc</li>'
                 );
                 haveError = true;
+            }else{
+                if (phoneInput.getNumber().indexOf("+") == -1) {
+                    $('#createPost-warning').append(
+                            '<li class="warning-text">Số điện thoại không hợp lệ (sai định dạng, quá ngắn hoặc quá dài)</li>'
+                    );
+                    haveError = true;
+                }
+            }
+        }else{
+            if (phoneInput.getNumber() != "") {
+                if (phoneInput.getNumber().indexOf("+") == -1) {
+                    $('#createPost-warning').append(
+                        '<li class="warning-text">Số điện thoại không hợp lệ (sai định dạng, quá ngắn hoặc quá dài)</li>'
+                    );
+                    haveError = true;
+                }
             }
         }
+
+
 
         if (!haveError) {
             $('#contactPhone').val(phoneInput.getNumber());

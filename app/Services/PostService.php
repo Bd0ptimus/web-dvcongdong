@@ -375,4 +375,13 @@ class PostService
         }
         return $response;
     }
+
+    public function takePostById($postId){
+        $post = $this->postRepo->findById($postId);
+        $post->update([
+            'access_times' => isset($post->access_times)?$post->access_times+1:1,
+        ]);
+        return $post;
+
+    }
 }

@@ -59,6 +59,7 @@ class PostRepository extends BaseRepository
             'exist_to' =>  date("Y-m-d", strtotime($dateTo)),
             'contact_address' => $request->contactAddress ?? '',
             'contact_phone_number' => $request->contactPhone,
+            'access_times'=>0,
         ]);
 
         $classifyRelation->post()->save($post);

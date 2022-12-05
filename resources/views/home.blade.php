@@ -308,83 +308,6 @@
 
 
         <div class="row my-5 newfeed-sec" id="home-newFeed-sec">
-            {{-- <div class="row d-block justify-content-center newfeed-container2">
-                <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
-                    <div class="newFeed-avatar-sec d-flex justify-content-start">
-                        <div class="newFeed-avatar-container d-flex justify-content-center">
-                            <img class="newFeed-avatar" src={{ asset('storage/avatar-sample/ava1.jpg') }}>
-                        </div>
-                    </div>
-
-                    <div class="newFeed-posterinfo-sec d-block justify-content-center">
-                        <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">Tên người dùng
-                        </p>
-                        <p class="newFeed-posterinfo-text">
-                            <span>2 ngày trước</span>
-                            <span><i class="fa-solid fa-location-dot"></i>   moscow</span>
-                            <span class="newFeed-post-hashtag">
-                                Nhà đất
-                            </span>
-                        </p>
-                    </div>
-                </div>
-
-                <div style="padding:0px;" class="d-flex justify-content-center">
-                    <div class="swiper mySwiper">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide ">
-                                <img class="newFeed-image2" src={{ asset('storage/test/test1.jpg') }}>
-                            </div>
-                            <div class="swiper-slide ">
-                                <img class="newFeed-image2" src={{ asset('storage/test/test2.jpg') }}>
-                            </div>
-                            <div class="swiper-slide ">
-                                <img class="newFeed-image2" src={{ asset('storage/test/test3.jpg') }}>
-                            </div>
-                        </div>
-                        <div class="swiper-pagination"></div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-
-                </div>
-                <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
-                    <div class="newFeed-detail-icon">
-                        <span class="fa fa-star rating-star-checked"></span>
-                        <span class="fa fa-star rating-star-checked"></span>
-                        <span class="fa fa-star rating-star-checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                    </div>
-
-                    <div class="newFeed-detail-icon">
-                        <span> Đánh giá</span>
-                    </div>
-
-                    <div class="newFeed-detail-icon">
-                        <span> 4 lượt truy cập</span>
-                    </div>
-                </div>
-
-                <div class="row newFeed-content-small-sec2 ">
-                    <div class="row newFeed-info-title-sec2">
-                        <p class="newFeed-info-title2">Australian Citizenship Test
-                            Revision at LCViet Australia - 98% Successful Rate</p>
-                    </div>
-                    <div class="row newFeed-info-text-sec2">
-                        <p class="newFeed-info-text2">AUSTRALIAN
-                            CITIZENSHIP.
-
-                            Call 0452 511 577 (Ms. Esther) We are please to boast a 98% SUCCESSFUL
-                            RATE</p>
-                    </div>
-                    <hr />
-                </div>
-
-                <div class="row newFeed-interact-sec2 d-flex justify-content-center">
-                    <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2"></i>
-                </div>
-            </div> --}}
 
             @foreach ($posts as $post)
                 @php
@@ -414,7 +337,7 @@
                             $postTimes = $postTimes . ' giờ trước';
                         }
                     } elseif ($postTimes > 30) {
-                        $postTimes = date('m/d/Y', strtotime($createdAt));
+                        $postTimes = date('d/m/Y', strtotime($createdAt));
                     } else {
                         $postTimes = $postTimes . ' ngày trước';
                     }
@@ -475,7 +398,7 @@
                         </div>
                     </div>
 
-                    <div class="row newFeed-content-small-sec2 ">
+                    <div class="row newFeed-content-small-sec2 " onclick="accessPost('{{route('post.mainPost',['postId' => $post->id])}}')">
                         <div class="row newFeed-info-title-sec2">
                             <p class="newFeed-info-title2">{{ $post->title }}</p>
                         </div>
@@ -633,7 +556,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="row newFeed-content-small-sec2 ">
+                                                            <div class="row newFeed-content-small-sec2" onclick="accessPost('${e.postLink}')">
                                                                 <div class="row newFeed-info-title-sec2">
                                                                     <p class="newFeed-info-title2">${e.title}</p>
                                                                 </div>

@@ -63,6 +63,7 @@ Route::group(['prefix' => 'post', 'as'=>'post.'], function($route){
     $route->group(['prefix' => 'mypost', 'as'=>'myPost.'], function ($route){
         $route->get('/{userId}',[PostsController::class, 'myPostIndex'])->name('index');
         $route->post('/loading',[PostsController::class, 'myPostLoadMore'])->name('loading');
-
     });
+
+    $route->get('/open/{postId}',[PostsController::class, 'mainPost'])->name('mainPost');
 });

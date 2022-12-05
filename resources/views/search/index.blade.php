@@ -26,26 +26,31 @@
                                 id="Filter_Keyword" name="homeFilterKeyWord" placeholder="Từ khóa" type="text"
                                 style="height: 46px; width:100%" value="{{$keywordChoosen}}">
                         </div>
-                        <div class="form-group input-data">
-                            <select class="search-filter-classify" name="homeFilterClassify">
-                                <option value="0">Tất cả</option>
-                                @foreach ($classifies as $classify)
-                                    <option value="{{ $classify->id }}" @if($classify->id == $classifyChoosen) selected @endif>{{ $classify->classify_name }}
-                                    </option>
-                                @endforeach
 
-                            </select>
-                        </div>
-                        <div class="form-group input-data">
-                            <select class="search-filter-position" name="homeFilterPosition">
-                                <option value="0">Toàn Nga</option>
-                                @foreach ($cities as $city)
-                                    <option value="{{ $city->id }}" @if($city->id == $positionChoosen) selected @endif>{{ $city->city }}</option>
-                                @endforeach
 
-                            </select>
+                        <div class="selections-container d-flex justify-content-center">
+                            <div class="form-group input-select-data mbselect" >
+                                <select class="search-filter-classify" name="homeFilterClassify">
+                                    <option value="0">Tất cả</option>
+                                    @foreach ($classifies as $classify)
+                                        <option value="{{ $classify->id }}" @if($classify->id == $classifyChoosen) selected @endif>{{ $classify->classify_name }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            <div class="form-group input-select-data mbselect" >
+                                <select class="search-filter-position" name="homeFilterPosition">
+                                    <option value="0">Toàn Nga</option>
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}" @if($city->id == $positionChoosen) selected @endif>{{ $city->city }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
                         </div>
-                        <br>
+
+
                         <div class="search-submit input-data vertical-container" style=" height : 48px; margin: 10px 0px;">
                             <button
                                 class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn bg-white"
@@ -149,7 +154,7 @@
                         </div>
                     </div>
 
-                    <div class="row newFeed-content-small-sec2 ">
+                    <div class="row newFeed-content-small-sec2 " onclick="accessPost('{{route('post.mainPost',['postId' => $post->id])}}')">
                         <div class="row newFeed-info-title-sec2">
                             <p class="newFeed-info-title2">{{ $post->title }}</p>
                         </div>
@@ -325,7 +330,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="row newFeed-content-small-sec2 ">
+                                                            <div class="row newFeed-content-small-sec2 " onclick="accessPost('${e.postLink}')">
                                                                 <div class="row newFeed-info-title-sec2">
                                                                     <p class="newFeed-info-title2">${e.title}</p>
                                                                 </div>

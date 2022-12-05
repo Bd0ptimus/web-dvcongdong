@@ -46,7 +46,7 @@
                         <div class="col-ms-6" style="width : 60%;">
                             <h6 class="mt-2">Ngày sinh</h6>
                             <input maxlength="55" id="checkEntry-dob" name='checkEntry-dob' type="date"
-                                class="form-control" value="" />
+                                class="form-control" value="" required/>
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@
                         <div class="col-ms-6" style="width : 60%;">
                             <h6 class="mt-2">Ngày hết hạn hộ chiếu</h6>
                             <input maxlength="55" id="checkEntry-passportExpiredDate"
-                                name='checkEntry-passportExpiredDate' type="date" class="form-control" />
+                                name='checkEntry-passportExpiredDate' type="date" class="form-control" required/>
                         </div>
                     </div>
                 </form>

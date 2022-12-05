@@ -5,7 +5,7 @@
 <link href="{{ asset('css/post/chooseTopic.css?v=') . time() }}" rel="stylesheet">
 
 <body>
-    <div class="project-content-section ">
+    <div class="project-content-section d-flex justify-content-center">
         <div class="row chooseTopic-main d-flex justify-content-center">
             <div class="row chooseTopic-header-sec" style="width: 100%; padding:20px 0px;">
                 <h3 class="chooseTopic-header chooseTopic-text">
