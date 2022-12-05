@@ -27,12 +27,12 @@
         <div class="searchingForm-mb">
             <form action="{{ route('search.homeSearch') }}"
                 method="post"> @csrf
-                <select class="citySelect-mb" name="homeFilterPosition">
+                <select class="citySelect-mb" name="homeFilterPosition" id="citySelectionSearch-mb">
                     <option value="0">Toàn Nga</option>
-                    @if (isset($cities))
-                        @foreach ($cities as $city)
-                            <option value="{{ $city->id }}">
-                                {{ $city->city }}</option>
+                    @if(Cookie::get('nguoiviettainga-cities') !== null)
+                        @foreach (json_decode(Cookie::get('nguoiviettainga-cities'),true) as $city)
+                            <option value="{{ $city['id'] }}">
+                            {{ $city['city'] }}</option>
                         @endforeach
                     @endif
                 </select>
@@ -51,7 +51,7 @@
         <div class="searching-sec-pc-tb d-flex justify-content-center">
             <form class="searchingForm-pc-tb" action="{{ route('search.homeSearch') }}"
                 method="post"> @csrf
-                <select class="citySelect-pc-tb" name="homeFilterPosition" id="citySelectionSearch">
+                <select class="citySelect-pc-tb" name="homeFilterPosition" id="citySelectionSearch-pc-tb">
                     <option value="0">Toàn Nga</option>
                     @if(Cookie::get('nguoiviettainga-cities') !== null)
                         @foreach (json_decode(Cookie::get('nguoiviettainga-cities'),true) as $city)

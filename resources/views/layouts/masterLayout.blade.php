@@ -134,7 +134,7 @@
                 success: function(data) {
                     if(data.data.cookies_existed == false){
                         data.data.cities.forEach(function(e){
-                            $('#citySelectionSearch').append(`<option value="${e.id}">${e.city}</option>`);
+                            $('#citySelectionSearch-pc-tb').append(`<option value="${e.id}">${e.city}</option>`);
                         })
                     }
                 }
