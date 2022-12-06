@@ -25,7 +25,7 @@ class ServiceController extends Controller
         $params['position']=0;
         $params['classifyType'] = $classifyType;
         $posts = $this->postService->searchPosts($params,0);
-        $header = 'Dịch vụ, '. classify_types::where('id',$classifyType)->first()->type_name;
+        $header = 'Dịch vụ '. classify_types::where('id',$classifyType)->first()->type_name;
         // dd($posts);
         return view('post.categories.services.index',[
             'posts' => $posts,

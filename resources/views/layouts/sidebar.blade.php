@@ -20,7 +20,7 @@
 
     {{-- <span class="fs-4 mb-close-btn"><i class="fa-regular fa-circle-xmark fa-xl" onclick="mbCloseSidebar()"
             style="float:right; width: 20px; height:20px;"></i></span> --}}
-    <ul class="nav nav-pills flex-column mb-2">
+    <ul class="nav nav-pills flex-column mb-1">
         @if (Admin::user() == !null)
             <li class="nav-item nav-item-container">
                 <a href="" class="nav-link" aria-current="page">
@@ -50,7 +50,7 @@
             </li>
 
             <li class="nav-item nav-item-container">
-                <a href="#" class="nav-link" aria-current="page" id="sidebarServiceChecking">
+                <a href="{{route('admin.checkingInfo.index')}}" class="nav-link" aria-current="page" id="sidebarServiceChecking">
                     <i class="fa-solid fa-file-circle-exclamation"></i>
                     <span>
                         Dịch vụ kiểm tra
@@ -127,7 +127,7 @@
 
     </ul>
     <hr>
-    <ul class="nav nav-pills flex-column mb-2">
+    <ul class="nav nav-pills flex-column mb-1">
         <li class="nav-item nav-item-container">
             <a href="{{ route('home') }}" class="nav-link" aria-current="page">
                 <i class="fa-solid fa-house-chimney sidebar-icon"></i>
@@ -144,7 +144,7 @@
                 </span>
             </a>
         </li>
-        <li class="nav-item nav-item-container">
+        {{-- <li class="nav-item nav-item-container">
             <a href="#" class="nav-link submenu" onclick="submenuActive('service-submenu')">
                 <i class="fa-solid fa-hand-holding-dollar sidebar-icon"></i>
                 <span>
@@ -152,8 +152,41 @@
                 </span>
                 <i class="fa-solid fa-caret-right" style="float : right;"></i>
             </a>
+        </li> --}}
+        <li class="nav-item nav-item-container">
+            <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_DOCUMENT]) }}"  class="nav-link ">
+                <i class="fa-solid fa-file sidebar-icon"></i>
+                <span>
+                    DỊCH VỤ GIẤY TỜ
+                </span>
+            </a>
         </li>
-        <div id="service-submenu" class="submenu-nav-item" style="display:none;">
+        <li class="nav-item nav-item-container">
+            <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_MEDICAL]) }}"  class="nav-link ">
+                <i class="fa-solid fa-kit-medical sidebar-icon"></i>
+                <span>
+                    DỊCH VỤ Y TẾ
+                </span>
+            </a>
+        </li>
+        <li class="nav-item nav-item-container">
+            <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_EDU]) }}"  class="nav-link ">
+                <i class="fa-solid fa-school sidebar-icon"></i>
+                <span>
+                    DỊCH VỤ GIÁO DỤC
+                </span>
+            </a>
+        </li>
+        <li class="nav-item nav-item-container">
+            <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_TRAVEL]) }}"  class="nav-link ">
+                <i class="fa-solid fa-plane sidebar-icon"></i>
+                <span>
+                    DU LỊCH
+                </span>
+            </a>
+        </li>
+
+        {{-- <div id="service-submenu" class="submenu-nav-item" style="display:none;">
             <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_DOCUMENT]) }}"  class="submenu-nav-link ">
                 Giấy tờ
             </a>
@@ -173,7 +206,7 @@
             <a href="{{ route('post.postCategory.service.index',['classifyId'=>SERVICE_ELECTRONIC]) }}" class="submenu-nav-link">
                 Điện tử
             </a>
-        </div>
+        </div> --}}
         <li class="nav-item nav-item-container">
             <a  href="{{ route('post.postCategory.job.index') }}" class="nav-link">
                 <i class="fa-solid fa-briefcase sidebar-icon"></i>
@@ -343,11 +376,36 @@
                 <i class="fa-solid fa-building"></i>
             </a>
         </li>
+
         <li class="nav-item d-flex justify-content-center">
+            <a href="#" class="nav-link nav-icon-item">
+                <i class="fa-solid fa-file"></i>
+            </a>
+        </li>
+
+        <li class="nav-item d-flex justify-content-center">
+            <a href="#" class="nav-link nav-icon-item">
+                <i class="fa-solid fa-kit-medical"></i>
+            </a>
+        </li>
+
+        <li class="nav-item d-flex justify-content-center">
+            <a href="#" class="nav-link nav-icon-item">
+                <i class="fa-solid fa-school"></i>
+            </a>
+        </li>
+
+        <li class="nav-item d-flex justify-content-center">
+            <a href="#" class="nav-link nav-icon-item">
+                <i class="fa-solid fa-plane "></i>
+            </a>
+        </li>
+
+        {{-- <li class="nav-item d-flex justify-content-center">
             <a href="#" class="nav-link nav-icon-item">
                 <i class="fa-solid fa-hand-holding-dollar "></i>
             </a>
-        </li>
+        </li> --}}
 
         <li class="nav-item d-flex justify-content-center">
             <a href="#" class="nav-link nav-icon-item">
