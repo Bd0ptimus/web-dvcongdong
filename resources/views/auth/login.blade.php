@@ -52,6 +52,8 @@
                             </div>
                         </div>
 
+
+
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary normal-button">
@@ -63,6 +65,17 @@
                                         Quên mật khẩu?
                                     </a>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 d-flex justify-content-center" >
+                            <h5 style="width:auto;">Đăng nhập thông qua </h5>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="d-flex justify-content-center">
+                                <a class="parties3-logo-link" href={{route('auth.google.googleLogin')}}><img class="parties3-logo-login" src="{{asset('storage/logo/logo-google-1.png')}}"></a>
+                                <a class="parties3-logo-link" href={{route('auth.facebook.facebookLogin')}}><img class="parties3-logo-login" src="{{asset('storage/logo/logo-facebook.png')}}"></a>
+                                <a class="parties3-logo-link"><img class="parties3-logo-login" src="{{asset('storage/logo/logo-vk.png')}}"></a>
                             </div>
                         </div>
                     </form>

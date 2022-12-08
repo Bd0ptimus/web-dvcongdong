@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -57,6 +58,16 @@ class AttachmentService
             $this->postAttachmentRepo->addNewAttachment($postId, $data);
         }
         // return $data;
+    }
+
+    public function takeDownloadPicByUrl($url){
+        $content = file_get_contents($url);
+        $timePoint = $this->generateName();
+        $name = $timePoint.'.jpg';
+        Storage::put('public/post_attachments/'.$name, $content);
+        $data['name']= $timePoint;
+        $data['avatar']= 'storage/post_attachments/'.$name;
+        return $data;
     }
 
 

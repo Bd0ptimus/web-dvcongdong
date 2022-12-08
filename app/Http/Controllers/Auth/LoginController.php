@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use App\Services\AuthService;
+use App\Services\AttachmentService;
 use App\Admin;
+
+use Socialite;
 class LoginController extends Controller
 {
     /*
@@ -33,14 +36,16 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
     protected $authService;
+    protected $attachmentService;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(AuthService $authService)
+    public function __construct(AuthService $authService, AttachmentService $attachmentService)
     {
         $this->authService = $authService;
+        $this->attachmentService = $attachmentService;
         // $this->middleware('guest')->except('logout');
     }
 
@@ -69,5 +74,80 @@ class LoginController extends Controller
             }
         }
         return view('auth.login');
+    }
+
+    public function googleLogin(Request $request){
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googleLoginedCallback(Request $request){
+        try {
+            $user = Socialite::driver('google')->user();
+        } catch (\Exception $e) {
+            return redirect('auth/login');
+        }
+
+        $userOverLap = User::where('email', $user->email)->first();
+
+        if($userOverLap){
+            if($userOverLap->third_party_type == GOOGLE){
+                Auth::login($userOverLap);
+            }else{
+                return view('warnings.accountExistedInDifferentType',['user'=>$userOverLap]);
+            }
+        }else{
+            $data = $this->attachmentService->takeDownloadPicByUrl($user->avatar);
+            // dd($data);
+            $newUser= User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'user_avatar' => $data['avatar'],
+                'user_role' => ROLE_USER,
+                'username' =>  $data['name'],
+                'password' => Hash::make($data['name']),
+                'third_party_type' => GOOGLE,
+                'active' => USER_ACTIVATED,
+            ]);
+            Auth::login($newUser);
+        }
+        return redirect()->route('home');
+    }
+
+
+    public function facebookLogin(Request $request){
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function facebookLoginCallback(Request $request){
+        try {
+            $user = Socialite::driver('facebook')->user();
+        } catch (\Exception $e) {
+            return redirect('auth/login');
+        }
+
+        $userOverLap = User::where('email', $user->email)->first();
+
+        if($userOverLap){
+            if($userOverLap->third_party_type == FACEBOOK){
+                Auth::login($userOverLap);
+            }else{
+                return view('warnings.accountExistedInDifferentType',['user'=>$userOverLap]);
+            }
+        }else{
+            $data = $this->attachmentService->takeDownloadPicByUrl($user->avatar);
+            // dd($data);
+            $newUser= User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'user_avatar' => $data['avatar'],
+                'user_role' => ROLE_USER,
+                'username' =>  $data['name'],
+                'password' => Hash::make($data['name']),
+                'third_party_type' => FACEBOOK,
+                'active' => USER_ACTIVATED,
+            ]);
+            Auth::login($newUser);
+        }
+        return redirect()->route('home');
     }
 }

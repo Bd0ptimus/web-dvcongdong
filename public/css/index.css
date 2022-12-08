@@ -849,3 +849,14 @@ div.swiper-button-prev {
 
 /*---End Carousel type 3----*/
 /*-----End Carousel-----*/
+
+
+.parties3-logo-login{
+    height: 30px;
+    width : 30px;
+}
+
+.parties3-logo-link{
+    cursor: pointer;
+    margin: 0px 10px;
+}

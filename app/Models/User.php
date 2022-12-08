@@ -28,8 +28,12 @@ class User extends Authenticatable
         'username',
         'user_role',
         'active',
-        'phone_number'
+        'phone_number',
+        'third_party_type',
+        'user_avatar',
     ];
+    protected $guard = 'web';
+
 
     /**
      * The attributes that should be hidden for serialization.

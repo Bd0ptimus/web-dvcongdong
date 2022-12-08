@@ -93,3 +93,9 @@ const ETH_USD_EXCHANGE_URL = "https://www.investing.com/crypto/ethereum";
 
 //Web cookie time valid
 const COOKIE_TIME_VALID = 43200;
+
+//Third party types
+const SYSTEM = 0;
+const GOOGLE = 1;
+const FACEBOOK = 2;
+const VK = 3;
