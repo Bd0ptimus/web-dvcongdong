@@ -41,6 +41,7 @@ class HomeController extends Controller
         $params['city'] = $cityChoosing;
         $dataForHome=$this->homeService->loadAllForHomePage();
         $posts = $this->postService->loadForNewFeed(0,$params);
+        $mostAccessPosts = $this->postService->takeMostAccessPost();
         // dd($request->cookie('nguoiviettainga-position'));
 
         // dd($posts[0]->posts_classify);
@@ -49,6 +50,7 @@ class HomeController extends Controller
             'cities'=>$dataForHome['cities'],
             'isHome'=>true,
             'posts' =>$posts,
+            'mostAccessPosts'=>$mostAccessPosts,
             'cityChoosen' =>$cityChoosing,
             'currencyExchange' =>$dataForHome['exchange'],
         ]);

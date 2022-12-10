@@ -85,6 +85,20 @@ class PostRepository extends BaseRepository
     }
 
 
+    public function takeMostAccessPosts(){
+        $now = Carbon::now()->toDateString();
+        $query = $this->model->newQuery();
+
+        $query = $query->where('exist_from', '<=', $now)
+            ->where('exist_to', '>=', $now);
+        $query = $query->orderBy('access_times', 'DESC');
+
+        $query = $query->take(NUMBER_POST_MOST_ACCESSED)->get();
+
+        return  $query;
+    }
+
+
     public function findPostsWithCondition($filterData, $numPage = 0)
     {
         $query = $this->model;

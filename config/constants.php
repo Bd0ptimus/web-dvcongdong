@@ -14,6 +14,8 @@ const ROLE_USER=3;
 
 //new feed step
 const NEW_FEED_LOAD_STEP=5;
+const NUMBER_POST_MOST_ACCESSED = 5;
+
 //Post attachment
 const POST_LOGO = 1;
 const POST_DESCRIPTION_PHOTO = 2;

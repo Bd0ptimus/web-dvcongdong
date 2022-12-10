@@ -152,4 +152,72 @@ class LoginController extends Controller
         }
         return redirect()->route('home');
     }
+
+
+
+
+    public function vkLogin(Request $request){
+        $data=[
+            env('VK_CLIENT_ID'),
+            env('VK_CLIENT_SECRET'),
+            route('auth.vk.vkLoginCallback')
+        ];
+        // dd($data);
+        $url = 'https://oauth.vk.com/authorize';
+        $data = ['client_id' => env('VK_CLIENT_ID'),
+                'client_secret'=>env('VK_CLIENT_SECRET'),
+                'response_type' => 'code',
+                'redirect_uri'=>route('auth.vk.vkLoginCallback')];
+
+        // use key 'http' even if you send the request to https://...
+        $options = array(
+            'http' => array(
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+        $context  = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        if ($result === FALSE) { /* Handle error */ }
+
+        dd($result);
+
+        // return Socialite::driver('vk')->redirect();
+    }
+
+    public function vkLoginCallback(Request $request){
+        dd($request);
+        try {
+            $user = Socialite::driver('vk')->user();
+        } catch (\Exception $e) {
+            Log::debug('error in take vk user : ' . $e);
+            return redirect('auth/login');
+        }
+        dd($user);
+        $userOverLap = User::where('email', $user->email)->first();
+
+        if($userOverLap){
+            if($userOverLap->third_party_type == VK){
+                Auth::login($userOverLap);
+            }else{
+                return view('warnings.accountExistedInDifferentType',['user'=>$userOverLap]);
+            }
+        }else{
+            $data = $this->attachmentService->takeDownloadPicByUrl($user->avatar);
+            // dd($data);
+            $newUser= User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'user_avatar' => $data['avatar'],
+                'user_role' => ROLE_USER,
+                'username' =>  $data['name'],
+                'password' => Hash::make($data['name']),
+                'third_party_type' => VK,
+                'active' => USER_ACTIVATED,
+            ]);
+            Auth::login($newUser);
+        }
+        return redirect()->route('home');
+    }
 }

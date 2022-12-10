@@ -194,6 +194,10 @@ class PostService
         return $this->postRepo->loadPostsForNewFeed($numPage, $params);
     }
 
+    public function takeMostAccessPost(){
+        return $this->postRepo->takeMostAccessPosts();
+    }
+
     public function searchPosts($filterData, $numberStep=0){
         return $this->postRepo->findPostsWithCondition($filterData, $numberStep);
     }

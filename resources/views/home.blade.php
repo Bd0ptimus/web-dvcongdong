@@ -305,132 +305,267 @@
                 </div>
             </div>
         @endif
+        <div class="d-flex justify-content-center">
+            <div class="homePage-side d-block justify-content-center px-3 py-4" id="mostAccess-side">
+                <h4 class="text-center homeSide-header" id="mostAccess-post-header">Bài viết phổ biến</h4>
+                <div class="homeSide-scroll row d-block justify-content-center px-3 mostAccess-post-sec-unscroll"
+                    id="mostAccess-posts-sec">
+                    @foreach ($mostAccessPosts as $post)
+                        @php
+                            $avatarPath = 'storage/avatar-sample/ava1.jpg';
+                            if ($post->user->user_avatar != null) {
+                                $avatarPath = $post->user->user_avatar;
+                            }
 
+                            $postAddress = 'Toàn Nga';
+                            if (isset($post->city)) {
+                                $postAddress = $post->city->city;
+                            }
 
-        <div class="row my-5 newfeed-sec" id="home-newFeed-sec">
+                            $postClassify = CLASSIFY_SLUG[$post->posts_classify_type];
+                            if ($post->posts_classify_type == SERVICE_SLUG) {
+                                $postClassify = $postClassify . ', ' . SERVICE_TYPE_SLUG[$post->posts_classify->services_type_type];
+                            }
 
-            @foreach ($posts as $post)
-                @php
-                    $avatarPath = 'storage/avatar-sample/ava1.jpg';
-                    if ($post->user->user_avatar != null) {
-                        $avatarPath = $post->user->user_avatar;
-                    }
+                            $now = \Carbon\Carbon::now();
+                            $createdAt = \Carbon\Carbon::parse($post->created_at);
+                            $postTimes = $createdAt->diffInDays($now);
+                            if ($postTimes == 0) {
+                                $postTimes = $createdAt->diffInHours($now);
+                                if ($postTimes == 0) {
+                                    $postTimes = 'gần đây';
+                                } else {
+                                    $postTimes = $postTimes . ' giờ trước';
+                                }
+                            } elseif ($postTimes > 30) {
+                                $postTimes = date('d/m/Y', strtotime($createdAt));
+                            } else {
+                                $postTimes = $postTimes . ' ngày trước';
+                            }
 
-                    $postAddress = 'Toàn Nga';
-                    if (isset($post->city)) {
-                        $postAddress = $post->city->city;
-                    }
-
-                    $postClassify = CLASSIFY_SLUG[$post->posts_classify_type];
-                    if ($post->posts_classify_type == SERVICE_SLUG) {
-                        $postClassify = $postClassify . ', ' . SERVICE_TYPE_SLUG[$post->posts_classify->services_type_type];
-                    }
-
-                    $now = \Carbon\Carbon::now();
-                    $createdAt = \Carbon\Carbon::parse($post->created_at);
-                    $postTimes = $createdAt->diffInDays($now);
-                    if ($postTimes == 0) {
-                        $postTimes = $createdAt->diffInHours($now);
-                        if ($postTimes == 0) {
-                            $postTimes = 'gần đây';
-                        } else {
-                            $postTimes = $postTimes . ' giờ trước';
-                        }
-                    } elseif ($postTimes > 30) {
-                        $postTimes = date('d/m/Y', strtotime($createdAt));
-                    } else {
-                        $postTimes = $postTimes . ' ngày trước';
-                    }
-
-                @endphp
-                <div class="row d-block justify-content-center newfeed-container2">
-                    <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
-                        <div class="newFeed-avatar-sec d-flex justify-content-start">
-                            <div class="newFeed-avatar-container d-flex justify-content-center">
-                                <img class="newFeed-avatar" src={{ asset($avatarPath) }}>
-                            </div>
-                        </div>
-
-                        <div class="newFeed-posterinfo-sec d-block justify-content-center">
-                            <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">
-                                {{ $post->user->name }}
-                            </p>
-                            <p class="newFeed-posterinfo-text">
-                                <span>{{ $postTimes }}</span>
-                                <span><i class="fa-solid fa-location-dot"></i> {{ $postAddress }}</span>
-                                <span class="newFeed-post-hashtag">
-                                    {{ $postClassify }}
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    @if (sizeof($post->post_attachments) != 0)
-                        <div style="padding:0px;" class="d-flex justify-content-center">
-                            <div class="swiper mySwiper">
-                                <div class="swiper-wrapper">
-                                    @foreach ($post->post_attachments as $key => $attachment)
-                                        <div class="swiper-slide ">
-                                            <img class="newFeed-image2" src={{ $attachment->attachment_path }}>
-                                        </div>
-                                    @endforeach
+                        @endphp
+                        <div class="row d-block justify-content-center newfeed-container2">
+                            <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
+                                <div class="newFeed-avatar-sec d-flex justify-content-start">
+                                    <div class="newFeed-avatar-container d-flex justify-content-center">
+                                        <img class="newFeed-avatar" src={{ asset($avatarPath) }}>
+                                    </div>
                                 </div>
-                                <div class="swiper-pagination"></div>
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
+
+                                <div class="newFeed-posterinfo-sec d-block justify-content-center">
+                                    <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">
+                                        {{ $post->user->name }}
+                                    </p>
+                                    <p class="newFeed-posterinfo-text">
+                                        <span>{{ $postTimes }}</span>
+                                        <span><i class="fa-solid fa-location-dot"></i> {{ $postAddress }}</span>
+                                        <span class="newFeed-post-hashtag">
+                                            {{ $postClassify }}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            @if (sizeof($post->post_attachments) != 0)
+                                <div style="padding:0px;" class="d-flex justify-content-center">
+                                    <div class="swiper mySwiper">
+                                        <div class="swiper-wrapper">
+                                            @foreach ($post->post_attachments as $key => $attachment)
+                                                <div class="swiper-slide ">
+                                                    <img class="newFeed-image2"
+                                                        src={{ $attachment->attachment_path }}>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="swiper-pagination"></div>
+                                        <div class="swiper-button-next"></div>
+                                        <div class="swiper-button-prev"></div>
+                                    </div>
+
+                                </div>
+                            @endif
+                            <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
+                                <div class="newFeed-detail-icon">
+                                    @for ($i = 1; $i < 6; $i++)
+                                        <span
+                                            class="fa fa-star @if ($i <= $post->rating_score) rating-star-checked @endif"></span>
+                                    @endfor
+                                </div>
+
+                                <div class="newFeed-detail-icon">
+                                    <span> {{ $post->access_times }} lượt truy cập</span>
+                                </div>
+                            </div>
+
+                            <div class="row newFeed-content-small-sec2 "
+                                onclick="accessPost('{{ route('post.mainPost', ['postId' => $post->id]) }}')">
+                                <div class="row newFeed-info-title-sec2">
+                                    <p class="newFeed-info-title2">{{ $post->title }}</p>
+                                </div>
+                                <div class="row newFeed-info-text-sec2">
+                                    <p class="newFeed-info-text2">{!! nl2br($post->description) !!}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+            </div>
+
+            <div class="row my-5 newfeed-sec" id="home-newFeed-sec">
+                @foreach ($posts as $post)
+                    @php
+                        $avatarPath = 'storage/avatar-sample/ava1.jpg';
+                        if ($post->user->user_avatar != null) {
+                            $avatarPath = $post->user->user_avatar;
+                        }
+
+                        $postAddress = 'Toàn Nga';
+                        if (isset($post->city)) {
+                            $postAddress = $post->city->city;
+                        }
+
+                        $postClassify = CLASSIFY_SLUG[$post->posts_classify_type];
+                        if ($post->posts_classify_type == SERVICE_SLUG) {
+                            $postClassify = $postClassify . ', ' . SERVICE_TYPE_SLUG[$post->posts_classify->services_type_type];
+                        }
+
+                        $now = \Carbon\Carbon::now();
+                        $createdAt = \Carbon\Carbon::parse($post->created_at);
+                        $postTimes = $createdAt->diffInDays($now);
+                        if ($postTimes == 0) {
+                            $postTimes = $createdAt->diffInHours($now);
+                            if ($postTimes == 0) {
+                                $postTimes = 'gần đây';
+                            } else {
+                                $postTimes = $postTimes . ' giờ trước';
+                            }
+                        } elseif ($postTimes > 30) {
+                            $postTimes = date('d/m/Y', strtotime($createdAt));
+                        } else {
+                            $postTimes = $postTimes . ' ngày trước';
+                        }
+
+                    @endphp
+                    <div class="row d-block justify-content-center newfeed-container2">
+                        <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
+                            <div class="newFeed-avatar-sec d-flex justify-content-start">
+                                <div class="newFeed-avatar-container d-flex justify-content-center">
+                                    <img class="newFeed-avatar" src={{ asset($avatarPath) }}>
+                                </div>
+                            </div>
+
+                            <div class="newFeed-posterinfo-sec d-block justify-content-center">
+                                <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">
+                                    {{ $post->user->name }}
+                                </p>
+                                <p class="newFeed-posterinfo-text">
+                                    <span>{{ $postTimes }}</span>
+                                    <span><i class="fa-solid fa-location-dot"></i> {{ $postAddress }}</span>
+                                    <span class="newFeed-post-hashtag">
+                                        {{ $postClassify }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        @if (sizeof($post->post_attachments) != 0)
+                            <div style="padding:0px;" class="d-flex justify-content-center">
+                                <div class="swiper mySwiper">
+                                    <div class="swiper-wrapper">
+                                        @foreach ($post->post_attachments as $key => $attachment)
+                                            <div class="swiper-slide ">
+                                                <img class="newFeed-image2" src={{ $attachment->attachment_path }}>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+
+                            </div>
+                        @endif
+                        <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
+                            <div class="newFeed-detail-icon">
+                                @for ($i = 1; $i < 6; $i++)
+                                    <span
+                                        class="fa fa-star @if ($i <= $post->rating_score) rating-star-checked @endif"></span>
+                                @endfor
+                            </div>
+
+                            <div class="newFeed-detail-icon">
+                                <span> Đánh giá</span>
+                            </div>
+
+                            <div class="newFeed-detail-icon">
+                                <span> {{ $post->access_times }} lượt truy cập</span>
+                            </div>
+                        </div>
+
+                        <div class="row newFeed-content-small-sec2 "
+                            onclick="accessPost('{{ route('post.mainPost', ['postId' => $post->id]) }}')">
+                            <div class="row newFeed-info-title-sec2">
+                                <p class="newFeed-info-title2">{{ $post->title }}</p>
+                            </div>
+                            <div class="row newFeed-info-text-sec2">
+                                <p class="newFeed-info-text2">{!! nl2br($post->description) !!}</p>
                             </div>
 
                         </div>
-                    @endif
-                    <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
-                        <div class="newFeed-detail-icon">
-                            @for ($i = 1; $i < 6; $i++)
-                                <span
-                                    class="fa fa-star @if ($i <= $post->rating_score) rating-star-checked @endif"></span>
-                            @endfor
-                        </div>
 
-                        <div class="newFeed-detail-icon">
-                            <span> Đánh giá</span>
-                        </div>
-
-                        <div class="newFeed-detail-icon">
-                            <span> {{ $post->access_times }} lượt truy cập</span>
-                        </div>
+                        @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
+                            <hr />
+                            <div class="row newFeed-interact-sec2 d-flex justify-content-center"
+                                id="newFeed-post-{{ $post->id }}">
+                                @if ($post->checkPostLiked(Admin::user()->id, $post->id))
+                                    <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2"
+                                        onclick="unlikePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
+                                @else
+                                    <i class="fa-regular fa-heart fa-xl interact-icon2"
+                                        onclick="likePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
+                                @endif
+                            </div>
+                        @endif
                     </div>
+                @endforeach
+            </div>
 
-                    <div class="row newFeed-content-small-sec2 " onclick="accessPost('{{route('post.mainPost',['postId' => $post->id])}}')">
-                        <div class="row newFeed-info-title-sec2">
-                            <p class="newFeed-info-title2">{{ $post->title }}</p>
-                        </div>
-                        <div class="row newFeed-info-text-sec2">
-                            <p class="newFeed-info-text2">{!! nl2br($post->description) !!}</p>
-                        </div>
+            <div class="homePage-side d-block justify-content-center px-3 py-4">
+                <h4 class="text-center homeSide-header" id="ad-post-header">Quảng cáo</h4>
+                <div class="homeSide-scroll row d-block justify-content-center px-3 mostAccess-post-sec-unscroll"
+                    id="ad-posts-sec">
+                    @foreach ($mostAccessPosts as $post)
+                        @if (sizeof($post->post_attachments) != 0)
+                            <div style="padding:0px;height : 200px;" class="d-flex justify-content-center" >
+                                <div class="swiper mySwiper">
+                                    <div class="swiper-wrapper">
+                                        @foreach ($post->post_attachments as $key => $attachment)
+                                            <div class="swiper-slide ">
+                                                <img class="newFeed-image2" src={{ $attachment->attachment_path }}>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
 
-                    </div>
-
-                    @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
-                        <hr />
-                        <div class="row newFeed-interact-sec2 d-flex justify-content-center"
-                            id="newFeed-post-{{ $post->id }}">
-                            @if ($post->checkPostLiked(Admin::user()->id, $post->id))
-                                <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2"
-                                    onclick="unlikePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
-                            @else
-                                <i class="fa-regular fa-heart fa-xl interact-icon2"
-                                    onclick="likePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
-                            @endif
-                        </div>
-                    @endif
+                            </div>
+                        @endif
+                        <br><br>
+                    @endforeach
                 </div>
-            @endforeach
-
-
-
+            </div>
         </div>
+
+
     </div>
     @include('templates.notification.toast');
     @include('templates.main.checkCarTicket');
     @include('templates.main.checkEntryBan');
+    @include('templates.main.checkTaxDebt');
+    @include('templates.main.checkAdminis');
+
 
 
 </body>
@@ -468,6 +603,31 @@
                 newFeedLoadMoreData();
             }
             console.log("Bottom of page");
+        }
+
+        var mostAccessPos = $('#mostAccess-side').offset().top - $(window).scrollTop();
+        console.log('test : ', mostAccessPos);
+        if (mostAccessPos <= 70) {
+            console.log('abc');
+            $('#mostAccess-post-header').addClass('mostAccess-post-header-scroll');
+            $('#mostAccess-posts-sec').addClass('mostAccess-post-sec-scroll');
+            $('#mostAccess-posts-sec').removeClass('mostAccess-post-sec-unscroll');
+
+
+            $('#ad-post-header').addClass('mostAccess-post-header-scroll');
+            $('#ad-posts-sec').addClass('mostAccess-post-sec-scroll');
+            $('#ad-posts-sec').removeClass('mostAccess-post-sec-unscroll');
+        } else {
+            $('#mostAccess-post-header').removeClass('mostAccess-post-header-scroll');
+            $('#mostAccess-posts-sec').addClass('mostAccess-post-sec-scroll');
+            $('#mostAccess-posts-sec').removeClass('mostAccess-post-sec-unscroll');
+
+            $('#ad-post-header').removeClass('mostAccess-post-header-scroll');
+            $('#ad-posts-sec').addClass('mostAccess-post-sec-scroll');
+            $('#ad-posts-sec').removeClass('mostAccess-post-sec-unscroll');
+
+
+
         }
     };
 
@@ -606,6 +766,8 @@
 
 
     $(document).ready(function() {
+
+
         function formatTextClassify(icon) {
             return $('<span><i class="fa-solid fa-bars"></i>     ' + icon.text + '</span>');
         };
@@ -636,12 +798,17 @@
 
         $('#checkAdministrative').on('click', function() {
             checkUserExist();
-            modalShowMain(2);
+            adminisResetForms();
+            adminisResetFormStyle();
+            $('#adminis-modal').modal('show');
         })
 
         $('#checkTaxdebt').on('click', function() {
             checkUserExist();
-            modalShowMain(3);
+            taxDebtResetForms();
+            taxDebtResetFormStyle();
+            $('#taxDebt-modal').modal('show');
+
         })
 
         $('#checkEntryBan').on('click', function() {

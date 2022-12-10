@@ -22,5 +22,11 @@ Route::group(['prefix' => 'auth', 'as'=>'auth.'], function($route){
 
     });
 
+    $route->group(['prefix'=>'vk', 'as' => 'vk.'], function($route){
+        $route->get('/login', [LoginController::class, 'vkLogin'])->name('vkLogin');
+        $route->get('/login-callback', [LoginController::class, 'vkLoginCallback'])->name('vkLoginCallback');
+
+    });
+
 
 });

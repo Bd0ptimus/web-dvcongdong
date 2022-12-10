@@ -1,14 +1,14 @@
 @php
     use App\Admin;
 @endphp
-<div class="modal fade clearfix px-5" id="entryBan-modal" tabindex="-1" role="dialog"
-    aria-labelledby="serviceCheckingModalContainer" aria-hidden="true" style="padding:0px;">
+<div class="modal fade clearfix px-5" id="adminis-modal" tabindex="-1" role="dialog"
+    aria-labelledby="adminisModalContainer" aria-hidden="true" style="padding:0px;">
     <div class="modal-dialog modal-dialog-centered " role="document"
         style="max-width: 1000px; width: 100%; margin : auto;">
         <div class="modal-content">
             <div class="modal-header">
-                Kiểm tra cấm nhập cảnh
-                <span id="entryBan-modal-close" class="fs-4"><i class="fa-regular fa-circle-xmark"
+                Kiểm tra nợ thuế
+                <span id="adminis-modal-close" class="fs-4"><i class="fa-regular fa-circle-xmark"
                         style="float:right; width: 20px; height:20px; margin-right:5px;"></i></span>
 
             </div>
@@ -16,50 +16,36 @@
 
             <div class="modal-body">
 
-                <form id="modalBodyEntryBan" class="serviceCheckingModalBody" method="POST" action=""> @csrf
+                <form id="adminisEntryBan" class="adminisModalBody" method="POST" action=""> @csrf
                     <div class="row my-1">
                         <div class="col-xs-4 h-100 m-0" style="display:block; justify-content: center;">
                             <h6 class="mt-2">Họ tên - Tiếng Nga</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="25" id="checkEntry-nameRussian" name='checkEntry-nameRussian'
+                            <input maxlength="25" id="adminis-nameRussian" name='adminis-nameRussian'
                                 type="text" class="form-control h-100" value="" required />
                         </div>
                     </div>
                     <div class="row my-1">
-                        <div class="col-xs-4 h-100 m-0">
-                            <h6 class="mt-2">Họ tên - Tiếng Việt không dấu</h6>
+                        <div class="col-xs-4 h-100 m-0" style="display:block; justify-content: center;">
+                            <h6 class="mt-2">Ngày sinh</h6>
                         </div>
                         <div class="col-xs-7 h-100 m-0">
-                            <input maxlength="55" id="checkEntry-nameLatin" name='checkEntry-nameLatin' type="text"
-                                class="form-control h-100" value="" required />
-                        </div>
-                    </div>
-                    <div class="row my-1">
-                        <div class="col-ms-6" style="width : 40%;">
-                            <h6 class="mt-2">Giới tính</h6>
-                            <select class="select-btn" name="checkEntry-gender">
-                                <option value="1" selected>Nam</option>
-                                <option value="2">Nữ</option>
-                            </select>
-                        </div>
-                        <div class="col-ms-6" style="width : 60%;">
-                            <h6 class="mt-2">Ngày sinh</h6>
-                            <input maxlength="55" id="checkEntry-dob" name='checkEntry-dob' type="date"
-                                class="form-control" value="" required/>
+                            <input maxlength="25" id="adminis-dob" name='adminis-dob'
+                                type="date" class="form-control h-100" value="" required />
                         </div>
                     </div>
 
                     <div class="row my-1">
                         <div class="col-ms-6" style="width : 40%;">
                             <h6 class="mt-2">Số hộ chiếu</h6>
-                            <input maxlength="55" id="checkEntry-passportSeries" name='checkEntry-passportSeries'
+                            <input maxlength="55" id="adminis-passportSeries" name='adminis-passportSeries'
                                 type="text" class="form-control" value="" required />
                         </div>
                         <div class="col-ms-6" style="width : 60%;">
                             <h6 class="mt-2">Ngày hết hạn hộ chiếu</h6>
-                            <input maxlength="55" id="checkEntry-passportExpiredDate"
-                                name='checkEntry-passportExpiredDate' type="date" class="form-control" required/>
+                            <input maxlength="55" id="adminis-passportExpiredDate"
+                                name='adminis-passportExpiredDate' type="date" class="form-control" required/>
                         </div>
                     </div>
                 </form>
@@ -78,18 +64,18 @@
             </div>
 
             <div class="modal-footer d-flex justify-content-center">
-                <button id="entryBanCheckingServiceBtn" type="button" class="btn modal-btn">Xác nhận</button>
+                <button id="adminisCheckingServiceBtn" type="button" class="btn modal-btn">Xác nhận</button>
             </div>
         </div>
     </div>
     <style>
-        #entryBanCheckingServiceBtn {
+        #adminisCheckingServiceBtn {
             background-color: #1d8daf;
             color: white;
             border: solid 1px #1d8daf;
         }
 
-        #entryBanCheckingServiceBtn:hover {
+        #adminisCheckingServiceBtn:hover {
             border: solid 2px #1d8daf;
             transition: 0.5s;
             background-color: white;
@@ -155,65 +141,57 @@
     </style>
 </div>
 <script type="text/javascript">
-    function entryBanResetFormStyle() {
+    function adminisResetFormStyle() {
         var setupBorderColor = "rgba(0, 0, 0, 0.175)";
-        $('#checkEntry-nameRussian').css('border-color', setupBorderColor);
-        $('#checkEntry-nameLatin').css('border-color', setupBorderColor);
-        $('#checkEntry-dob').css('border-color', setupBorderColor);
-        $('#checkEntry-passportSeries').css('border-color', setupBorderColor);
-        $('#checkEntry-passportExpiredDate').css('border-color', setupBorderColor);
+        $('#adminis-nameRussian').css('border-color', setupBorderColor);
+        $('#adminis-dob').css('border-color', setupBorderColor);
+        $('#adminis-passportSeries').css('border-color', setupBorderColor);
+        $('#adminis-passportExpiredDate').css('border-color', setupBorderColor);
 
 
     }
 
-    function entryBanResetForms() {
-        $('#checkEntry-nameRussian').val("");
-        $('#checkEntry-nameLatin').val("");
-        $('#checkEntry-dob').val("");
-        $('#checkEntry-passportSeries').val("");
-        $('#checkEntry-passportExpiredDate').val("");
+    function adminisResetForms() {
+        $('#adminis-nameRussian').val("");
+        $('#adminis-dob').val("");
+        $('#adminis-passportSeries').val("");
+        $('#adminis-passportExpiredDate').val("");
     }
 
     $(document).ready(function() {
-        $('#entryBan-modal-close').on('click', function() {
-            $('#entryBan-modal').modal('hide');
+        $('#adminis-modal-close').on('click', function() {
+            $('#adminis-modal').modal('hide');
         })
 
-        $('#entryBanCheckingServiceBtn').on('click', function() {
-            entryBanResetFormStyle();
+        $('#adminisCheckingServiceBtn').on('click', function() {
+            adminisResetFormStyle();
             var haveError = false;
             var data = {};
-            if ($('#checkEntry-nameRussian').val() == "") {
-                $('#checkEntry-nameRussian').css('border-color', 'red');
+            if ($('#adminis-nameRussian').val() == "") {
+                $('#adminis-nameRussian').css('border-color', 'red');
                 haveError = true;
             }
-            if ($('#checkEntry-nameLatin').val() == "") {
-                $('#checkEntry-nameLatin').css('border-color', 'red');
+            if ($('#adminis-dob').val() == "") {
+                $('#adminis-dob').css('border-color', 'red');
                 haveError = true;
             }
-            if ($('#checkEntry-dob').val() == "") {
-                $('#checkEntry-dob').css('border-color', 'red');
+            if ($('#adminis-passportSeries').val() == "") {
+                $('#adminis-passportSeries').css('border-color', 'red');
                 haveError = true;
             }
-            if ($('#checkEntry-passportSeries').val() == "") {
-                $('#checkEntry-passportSeries').css('border-color', 'red');
-                haveError = true;
-            }
-            if ($('#checkEntry-passportExpiredDate').val() == "") {
-                $('#checkEntry-passportExpiredDate').css('border-color', 'red');
+            if ($('#adminis-passportExpiredDate').val() == "") {
+                $('#adminis-passportExpiredDate').css('border-color', 'red');
                 haveError = true;
             }
 
             if (!haveError) {
                 data = {
                     userId: '<?= Admin::user() !== null ? Admin::user()->id : '' ?>',
-                    checkingType: <?= ENTRY_BAN_TYPE ?>,
-                    nameRussian: $('#checkEntry-nameRussian').val(),
-                    nameLatin: $('#checkEntry-nameLatin').val(),
-                    dob: $('#checkEntry-dob').val(),
-                    passportSeries: $('#checkEntry-passportSeries').val(),
-                    passportExpiredDate: $('#checkEntry-passportExpiredDate').val(),
-                    responseRequire: $('#checkingResponse').val(),
+                    checkingType: <?= ADMINISTRATIVE_TYPE ?>,
+                    nameRussian: $('#adminis-nameRussian').val(),
+                    dob: $('#adminis-dob').val(),
+                    passportSeries: $('#adminis-passportSeries').val(),
+                    passportExpiredDate: $('#adminis-passportExpiredDate').val(),
                 };
             }
             if (!haveError) {
