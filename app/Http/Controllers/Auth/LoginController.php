@@ -124,7 +124,7 @@ class LoginController extends Controller
         } catch (\Exception $e) {
             return redirect('auth/login');
         }
-        // dd($user);
+        dd($user);
         $userOverLap = User::where('email', $user->email)->first();
 
         if($userOverLap){
