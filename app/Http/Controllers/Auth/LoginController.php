@@ -119,13 +119,12 @@ class LoginController extends Controller
     }
 
     public function facebookLoginCallback(Request $request){
-        dd('abc');
         try {
             $user = Socialite::driver('facebook')->user();
         } catch (\Exception $e) {
             return redirect('auth/login');
         }
-
+        // dd($user);
         $userOverLap = User::where('email', $user->email)->first();
 
         if($userOverLap){
