@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use App\Services\AuthService;
@@ -122,6 +123,7 @@ class LoginController extends Controller
         try {
             $user = Socialite::driver('facebook')->user();
         } catch (\Exception $e) {
+            Log::debug('error in take facebook user : ' . $e);
             return redirect('auth/login');
         }
         dd($user);
