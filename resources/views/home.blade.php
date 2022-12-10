@@ -307,7 +307,7 @@
         @endif
         <div class="d-flex justify-content-center">
             <div class="homePage-side justify-content-center px-3 py-4" id="mostAccess-side">
-                <h4 class="text-center homeSide-header" id="mostAccess-post-header">Bài viết phổ biến</h4>
+                <h4 class="text-center homeSide-header" id="mostAccess-post-header">Bài viết được chú ý</h4>
                 <div class="homeSide-scroll row d-block justify-content-center px-3 mostAccess-post-sec-unscroll"
                     id="mostAccess-posts-sec">
                     @foreach ($mostAccessPosts as $post)
@@ -602,13 +602,13 @@
                 allowLoad = false;
                 newFeedLoadMoreData();
             }
-            console.log("Bottom of page");
+            // console.log("Bottom of page");
         }
 
         var mostAccessPos = $('#mostAccess-side').offset().top - $(window).scrollTop();
-        console.log('test : ', mostAccessPos);
+        // console.log('test : ', mostAccessPos);
         if (mostAccessPos <= 70) {
-            console.log('abc');
+            // console.log('abc');
             $('#mostAccess-post-header').addClass('mostAccess-post-header-scroll');
             $('#mostAccess-posts-sec').addClass('mostAccess-post-sec-scroll');
             $('#mostAccess-posts-sec').removeClass('mostAccess-post-sec-unscroll');
