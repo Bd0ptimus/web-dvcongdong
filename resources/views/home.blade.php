@@ -306,7 +306,7 @@
             </div>
         @endif
         <div class="d-flex justify-content-center">
-            <div class="homePage-side d-block justify-content-center px-3 py-4" id="mostAccess-side">
+            <div class="homePage-side justify-content-center px-3 py-4" id="mostAccess-side">
                 <h4 class="text-center homeSide-header" id="mostAccess-post-header">Bài viết phổ biến</h4>
                 <div class="homeSide-scroll row d-block justify-content-center px-3 mostAccess-post-sec-unscroll"
                     id="mostAccess-posts-sec">
@@ -530,7 +530,7 @@
                 @endforeach
             </div>
 
-            <div class="homePage-side d-block justify-content-center px-3 py-4">
+            <div class="homePage-side justify-content-center px-3 py-4">
                 <h4 class="text-center homeSide-header" id="ad-post-header">Quảng cáo</h4>
                 <div class="homeSide-scroll row d-block justify-content-center px-3 mostAccess-post-sec-unscroll"
                     id="ad-posts-sec">
