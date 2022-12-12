@@ -647,7 +647,7 @@
 
                         </div>
 
-                        @if ((Admin::user() !== null) & Admin::user()->isRole(ROLE_USER))
+                        @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
 
                             <div class="row w-100 mx-0 my-1 d-block justify-content-center">
                                 <h6 style="font-weight:600;">Viết đánh giá của bạn</h6>
