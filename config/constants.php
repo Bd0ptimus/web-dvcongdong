@@ -101,3 +101,8 @@ const SYSTEM = 0;
 const GOOGLE = 1;
 const FACEBOOK = 2;
 const VK = 3;
+
+//POST COMMENT
+const COMMENT_ACCEPTED = 1;
+const COMMENT_PENDING=0;
+const COMMENT_REJECTED = 2;

@@ -10,6 +10,7 @@ use App\Http\Controllers\CarTradeController;
 use App\Http\Controllers\RestaurantsController;
 use App\Http\Controllers\ClassifyAdsController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\PostCommentController;
 
 
 
@@ -66,4 +67,7 @@ Route::group(['prefix' => 'post', 'as'=>'post.'], function($route){
     });
 
     $route->get('/open/{postId}',[PostsController::class, 'mainPost'])->name('mainPost');
+    $route->group(['prefix' => 'comment', 'as'=>'comment.'], function ($route){
+        $route->post('/upload-comment',[PostCommentController::class, 'addNewComment'])->name('uploadComment');
+    });
 });

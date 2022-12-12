@@ -25,6 +25,8 @@ use App\Services\ClassifyAdsService;
 use App\Services\WebServicesService;
 use App\Repositories\UserRepository;
 use App\Repositories\PostAttachmentRepository;
+use App\Repositories\PostCommentRepository;
+
 
 
 
@@ -53,6 +55,7 @@ class PostService
     protected $webServicesService;
     protected $userRepo;
     protected $postAttachmentRepo;
+    protected $postCommentRepo;
 
     public function __construct(
         PostRepository $postRepo,
@@ -68,7 +71,8 @@ class PostService
         ClassifyAdsService $classifyAdsService,
         WebServicesService $webServicesService,
         UserRepository $userRepo,
-        PostAttachmentRepository $postAttachmentRepo
+        PostAttachmentRepository $postAttachmentRepo,
+        PostCommentRepository $postCommentRepo
     ) {
         $this->postRepo = $postRepo;
         $this->classifyService = $classifyService;
@@ -84,6 +88,7 @@ class PostService
         $this->webServicesService = $webServicesService;
         $this->userRepo = $userRepo;
         $this->postAttachmentRepo = $postAttachmentRepo;
+        $this->postCommentRepo = $postCommentRepo;
     }
 
     public function takeAllForCreatePost($classifyChoosen, $classifyTypeChoosen = null)
@@ -341,6 +346,7 @@ class PostService
                         $this->webServicesService->deleteService($post->posts_classify_id);
                         $this->postRepo->deleteById($postId);
                         $this->postAttachmentRepo->deletePostAttachmentsByPostId($postId);
+                        $this->postCommentRepo->deleteWithPostId($postId);
                         break;
                     case (JOB):
                         $postRelation = $this->jobService->findPostJobById($post->posts_classify_id);

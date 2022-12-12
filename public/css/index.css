@@ -277,6 +277,7 @@
     background-color:#1d8daf;
     color:white;
     cursor:pointer;
+    margin : 5px;
 }
 
 .normal-button:hover{
@@ -344,9 +345,9 @@
     display: flex;
     justify-content: center;
     overflow: hidden;
-    border: solid 1px #1d8daf;
     border-radius: 10px;
     position: relative;
+    margin:5px;
 }
 
 .previewImage-delete-icon{
@@ -527,6 +528,10 @@
 .rating-star-checked{
     color:orange;
 }
+
+.form-warning{
+    border : solid 1px red;
+}
 /*New feed v2*/
 #home-newFeed-sec{
     background-color: #f8fafc;
@@ -613,6 +618,41 @@
     width: 21.6px;
     height : 21.6px;
     padding:0px;
+}
+
+.comment-sec{
+    border-radius: 5px;
+    background-color: rgba(0,0,0,0.05);
+}
+
+.comment-avatar-sec{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+    margin:0px;
+    padding:0px;
+}
+
+.comment-avatar{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+    padding:0px;
+    object-fit: cover;
+}
+
+.comment-writer-name-sec{
+    width: calc(100% - 60px - 130px);
+    padding : 0px;
+}
+
+.comment-writer-rating{
+    width : 110px;
+    padding : 0px;
+}
+
+.icon-global{
+    cursor: pointer;
 }
 
 /*-------end post-------*/
@@ -851,6 +891,7 @@ div.swiper-button-prev {
 /*-----End Carousel-----*/
 
 
+/*-----3 parties login-----*/
 .parties3-logo-login{
     height: 30px;
     width : 30px;

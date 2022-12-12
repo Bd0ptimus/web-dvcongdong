@@ -5,6 +5,8 @@ namespace App\Repositories;
 use Carbon\Carbon;
 use App\Repositories\BaseRepository;
 use App\Repositories\PostAttachmentRepository;
+use App\Repositories\PostCommentRepository;
+
 use Illuminate\Support\Facades\Log;
 
 
@@ -22,15 +24,19 @@ class PostRepository extends BaseRepository
 {
     protected $model;
     protected $postAttachmentRepo;
+    protected $postCommentRepo;
     /**
      * BaseRepository constructor.
      *
      * @param Model $model
      */
-    public function __construct(post $model,PostAttachmentRepository $postAttachmentRepo)
+    public function __construct(post $model,
+    PostAttachmentRepository $postAttachmentRepo,
+    PostCommentRepository $postCommentRepo)
     {
         $this->model = $model;
         $this->postAttachmentRepo = $postAttachmentRepo;
+        $this->postCommentRepo = $postCommentRepo;
     }
     /**
      * @return string
@@ -171,5 +177,6 @@ class PostRepository extends BaseRepository
         // exit;
         $relation->post()->delete();
         $this->postAttachmentRepo->deletePostAttachmentsByPostId($postId);
+        $this->postCommentRepo->deleteWithPostId($postId);
     }
 }

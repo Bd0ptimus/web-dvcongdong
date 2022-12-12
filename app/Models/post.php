@@ -12,6 +12,7 @@ use App\Models\classify;
 use App\Models\city;
 use App\Models\post_attachment;
 use App\Models\post_interaction;
+use App\Models\post_comment;
 class post extends Model
 {
     protected $table="posts";
@@ -64,6 +65,10 @@ class post extends Model
             return $return;
         }
         return false;
+    }
+
+    public function postComments(){
+        return $this->hasMany(post_comment::class, 'post_id', 'id');
     }
 
 }

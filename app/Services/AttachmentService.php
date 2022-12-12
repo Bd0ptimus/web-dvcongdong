@@ -24,7 +24,7 @@ class AttachmentService
         $this->postAttachmentRepo = $postAttachmentRepo;
     }
 
-    private function generateName(){
+    public function generateName(){
         // $length = 50;
         // $characters = '0123456789abcdefghijklmnopqrstuvwxyzQWERTYUIOPASDFGHJKLZXCVBNM';
         // $string = "";
