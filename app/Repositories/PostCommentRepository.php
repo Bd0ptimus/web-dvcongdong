@@ -53,21 +53,21 @@ class PostCommentRepository extends BaseRepository
         DB::beginTransaction();
         try{
             $newComment = $this->model->create([
-                'post_id'=>$params['postId'],
+                'post_id'=>$postId,
                 'writer_id'=>$params['userId'],
                 'comments' => $params['postCommentText'],
                 'star' => $params['rating'],
                 'comment_accept'=>COMMENT_PENDING,
             ]);
 
-            if(isset($params['images'])){
+            if(!empty($params['images'])){
                 for ($x = 0; $x < sizeof($params['images']); $x++)
                 {
-                    $path = $params['images'][$x]->store('public/post_attachments');
-                    $name = $this->attachmentService->generateName();
+                    $name = $this->attachmentService->generateName().'.jpg';
+                    $path = $params['images'][$x]->storeAs('public/post_attachments/',$name);
 
                     $insert[$x]['post_comment_id'] =  $newComment->id;
-                    $insert[$x]['attachment_path'] = $path;
+                    $insert[$x]['attachment_path'] = POST_IMAGE_DIR.$name;
                 }
 
                 post_comment_attachment::insert($insert);
@@ -77,6 +77,18 @@ class PostCommentRepository extends BaseRepository
             DB::rollBack();
             Log::debug('error in save new comment : '. $e);
         }
+    }
+
+    public function countNumberRecord($postId){
+        return count($this->model->where('post_id', $postId)->where('comment_accept', COMMENT_ACCEPTED)->get());
+    }
+
+    public function loadPostCommentWithStep($postId, $step){
+        $query = $this->model->newQuery();
+        $query = $query->where('post_id', $postId)->where('comment_accept', COMMENT_ACCEPTED)->with(['postCommentAttachments','user']);
+        $query = $query->orderBy('created_at', 'DESC');
+        $query = $query->skip(NUMBER_COMMENT_IN_STEP*$step)->take(NUMBER_COMMENT_IN_STEP)->get();
+        return $query;
     }
 
 }

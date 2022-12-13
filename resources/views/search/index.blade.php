@@ -20,30 +20,36 @@
             <div id="searchFilterSection" class="row justify-content-center" style="width: 100%; padding:15px 0px;">
                 <form id="frm-search-job" action="{{ route('search.homeSearch') }}" method="POST">@csrf
                     <div class="" id="searchFilter">
-                        <div id="searchKeyWord" class="form-group input-data vertical-container d-flex justify-content-center" style="height : 48px;">
+                        <div id="searchKeyWord"
+                            class="form-group input-data vertical-container d-flex justify-content-center"
+                            style="height : 48px;">
                             <input autocomplete="off"
                                 class="form-control form-control-input-text ui-autocomplete-input vertical-element-middle-align"
                                 id="Filter_Keyword" name="homeFilterKeyWord" placeholder="Từ khóa" type="text"
-                                style="height: 46px; width:100%" value="{{$keywordChoosen}}">
+                                style="height: 46px; width:100%" value="{{ $keywordChoosen }}">
                         </div>
 
 
                         <div class="selections-container d-flex justify-content-center">
-                            <div class="form-group input-select-data mbselect" >
+                            <div class="form-group input-select-data mbselect">
                                 <select class="search-filter-classify" name="homeFilterClassify">
                                     <option value="0">Tất cả</option>
                                     @foreach ($classifies as $classify)
-                                        <option value="{{ $classify->id }}" @if($classify->id == $classifyChoosen) selected @endif>{{ $classify->classify_name }}
+                                        <option value="{{ $classify->id }}"
+                                            @if ($classify->id == $classifyChoosen) selected @endif>
+                                            {{ $classify->classify_name }}
                                         </option>
                                     @endforeach
 
                                 </select>
                             </div>
-                            <div class="form-group input-select-data mbselect" >
+                            <div class="form-group input-select-data mbselect">
                                 <select class="search-filter-position" name="homeFilterPosition">
                                     <option value="0">Toàn Nga</option>
                                     @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}" @if($city->id == $positionChoosen) selected @endif>{{ $city->city }}</option>
+                                        <option value="{{ $city->id }}"
+                                            @if ($city->id == $positionChoosen) selected @endif>{{ $city->city }}
+                                        </option>
                                     @endforeach
 
                                 </select>
@@ -51,7 +57,8 @@
                         </div>
 
 
-                        <div class="search-submit input-data vertical-container" style=" height : 48px; margin: 10px 0px;">
+                        <div class="search-submit input-data vertical-container"
+                            style=" height : 48px; margin: 10px 0px;">
                             <button
                                 class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn bg-white"
                                 type="submit" style="height: 46px; margin:auto; padding : 0px; width: 100%;">
@@ -69,8 +76,8 @@
             @foreach ($posts as $post)
                 @php
                     $avatarPath = 'storage/avatar-sample/ava1.jpg';
-                    if($post->user->user_avatar != null){
-                        $avatarPath=$post->user->user_avatar ;
+                    if ($post->user->user_avatar != null) {
+                        $avatarPath = $post->user->user_avatar;
                     }
 
                     $postAddress = 'Toàn Nga';
@@ -110,13 +117,13 @@
 
                         <div class="newFeed-posterinfo-sec d-block justify-content-center">
                             <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">
-                                {{$post->user->name}}
+                                {{ $post->user->name }}
                             </p>
                             <p class="newFeed-posterinfo-text">
                                 <span>{{ $postTimes }}</span>
-                                <span><i class="fa-solid fa-location-dot"></i>    {{ $postAddress }}</span>
+                                <span><i class="fa-solid fa-location-dot"></i> {{ $postAddress }}</span>
                                 <span class="newFeed-post-hashtag">
-                                    {{$postClassify}}
+                                    {{ $postClassify }}
                                 </span>
                             </p>
                         </div>
@@ -140,21 +147,24 @@
                     @endif
                     <div class="row newFeed-content-small-sec2 d-flex justify-content-between">
                         <div class="newFeed-detail-icon">
-                            @for($i=1; $i<6;$i++)
-                                <span class="fa fa-star @if($i<=$post->rating_score)rating-star-checked @endif"></span>
+                            @for ($i = 1; $i < 6; $i++)
+                                <span
+                                    class="fa fa-star @if ($i <= $post->rating_score) rating-star-checked @endif"></span>
                             @endfor
                         </div>
 
                         <div class="newFeed-detail-icon">
-                            <span> Đánh giá</span>
+                            <span id="newFeed-commentBtn-post-{{ $post->id }}"
+                                onclick="openCommentSection({{ $post->id }})"> Đánh giá</span>
                         </div>
 
                         <div class="newFeed-detail-icon">
-                            <span> {{$post->access_times}} lượt truy cập</span>
+                            <span> {{ $post->access_times }} lượt truy cập</span>
                         </div>
                     </div>
 
-                    <div class="row newFeed-content-small-sec2 " onclick="accessPost('{{route('post.mainPost',['postId' => $post->id])}}')">
+                    <div class="row newFeed-content-small-sec2 "
+                        onclick="accessPost('{{ route('post.mainPost', ['postId' => $post->id]) }}')">
                         <div class="row newFeed-info-title-sec2">
                             <p class="newFeed-info-title2">{{ $post->title }}</p>
                         </div>
@@ -177,12 +187,83 @@
                             @endif
                         </div>
                     @endif
+                    <hr />
+                    <div id="commentSec-post-{{ $post->id }}" class="row justify-content-center mx-0 my-0"
+                        style="display:none;">
+                        <div class="row d-block justify-content-center mx-0 my-2" id="postComment-{{ $post->id }}">
+                        </div>
+
+                        <p style="display:none;" id="postComment-loadMore-forPost-{{ $post->id }}"
+                            class="loadmore-cmt-btn">Xem thêm đánh giá</p>
+
+                        @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER) && Admin::user()->id != $post->user->id)
+                            <div class="row w-100 mx-0 my-1 d-block justify-content-center">
+                                <h6 style="font-weight:600;">Viết đánh giá của bạn</h6>
+                                <div class="row w-100 mx-0 d-flex justify-content-center">
+                                    <div class="row" style="width:100%;">
+                                        <textarea id="post-{{ $post->id }}-commnentRating-comment" class="form-control"
+                                            style="min-height : 50px; height: 60px;" value="">
+                                        </textarea>
+                                    </div>
+
+                                    <div class="row d-flex justify-content-center my-2 "
+                                        style="width:100%; height:30px;">
+                                        <i class="icon-global fa-solid fa-star fa-xl"
+                                            id="post-{{ $post->id }}-commnentRating-1"
+                                            onclick="commentRatingEvent({{ $post->id }}, 1)"
+                                            style="width:auto; padding:0px; padding-top:12px;"></i>
+                                        <i class="icon-global fa-solid  fa-star fa-xl"
+                                            id="post-{{ $post->id }}-commnentRating-2"
+                                            onclick="commentRatingEvent({{ $post->id }}, 2)"
+                                            style="width:auto; padding:0px;padding-top:12px;"></i>
+                                        <i class="icon-global fa-solid  fa-star fa-xl "
+                                            id="post-{{ $post->id }}-commnentRating-3"
+                                            onclick="commentRatingEvent({{ $post->id }}, 3)"
+                                            style="width:auto; padding:0px; padding-top:12px;"></i>
+                                        <i class="icon-global fa-solid  fa-star fa-xl"
+                                            id="post-{{ $post->id }}-commnentRating-4"
+                                            onclick="commentRatingEvent({{ $post->id }}, 4)"
+                                            style="width:auto; padding:0px; padding-top:12px;"></i>
+                                        <i class="icon-global fa-solid  fa-star fa-xl"
+                                            id="post-{{ $post->id }}-commnentRating-5"
+                                            onclick="commentRatingEvent({{ $post->id }}, 5)"
+                                            style="width:auto; padding:0px; padding-top:12px;"></i>
+                                    </div>
+                                    <p style="display:none;" id="post-{{ $post->id }}-commnentRating-val">
+                                    </p>
+                                </div>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="upload-btn-wrapper">
+                                        <button class="normal-button" disabled><i class="fa-solid fa-upload"></i>
+                                            Upload ảnh mô tả</button>
+                                        <input type="file" multiple="multiple"
+                                            name="post{{ $post->id }}CommentImg[]" placeholder="Choose image"
+                                            id="post-{{ $post->id }}-commentImg" class="normal-button"
+                                            style="width:170px;" onchange="commentUploadImage({{ $post->id }})">
+                                    </div>
+                                </div>
+                                <div class="row d-flex justify-content-center">
+                                    <span class="text-danger"
+                                        id="post-{{ $post->id }}-commentImg-warning"></span>
+                                </div>
+                                <div class="row d-flex justify-content-center"
+                                    id="post-{{ $post->id }}-commentImg-preview-sec">
+                                </div>
+                                <div class="row w-100 mx-0 d-flex justify-content-start">
+                                    <button class="normal-button" onclick="postSendComment({{ $post->id }})">Gửi
+                                        đánh giá</button>
+                                </div>
+                            </div>
+                        @endif
+
+                    </div>
                 </div>
             @endforeach
 
         </div>
     </div>
     @include('templates.main.mainCheckingService')
+    @include('templates.notification.toast');
 
 </body>
 
@@ -235,8 +316,8 @@
     window.onscroll = function(ev) {
         if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
             // you're at the bottom of the page
-            if(allowLoad){
-                allowLoad=false;
+            if (allowLoad) {
+                allowLoad = false;
                 newFeedLoadMoreData();
             }
             console.log("Bottom of page");
@@ -248,19 +329,19 @@
             method: 'post',
             url: '{{ route('search.searchResultLoading') }}',
             data: {
-                keyword :'<?=$keywordChoosen?>',
-                classify :<?=$classifyChoosen?>,
-                position :<?=$positionChoosen?>,
+                keyword: '<?= $keywordChoosen ?>',
+                classify: <?= $classifyChoosen ?>,
+                position: <?= $positionChoosen ?>,
                 numberStep: numberLoadingStep,
                 userId: {{ Admin::user() !== null ? Admin::user()->id : 0 }},
                 _token: '{{ csrf_token() }}',
             },
             success: function(data) {
                 console.log('data response in search loadmore: ', JSON.stringify(data));
-                console.log('step: ',numberLoadingStep);
+                console.log('step: ', numberLoadingStep);
 
                 if (data['error'] == 0) {
-                    console.log('Data length : ',data.data.length);
+                    console.log('Data length : ', data.data.length);
                     data.data.forEach(function(e) {
                         var likeIcon = '';
                         if (e.isUser) {
@@ -283,6 +364,73 @@
                                 images = images + `<div class="swiper-slide ">
                                                         <img class="newFeed-image2" src="${e.images[i]}">
                                                     </div>`;
+                            }
+                        }
+
+                        var isUser =  {{ Admin::user() !== null ? Admin::user()->isRole(ROLE_USER) : 0 }};
+                        var writeCommentSec = '';
+                        if(isUser==1){
+                            var userId = {{ Admin::user() !== null?Admin::user()->id:0}};
+                            if(userId!=0 && userId != e.ownerId){
+                                writeCommentSec = `<div class="row w-100 mx-0 my-1 d-block justify-content-center">
+                                                                        <h6 style="font-weight:600;">Viết đánh giá của bạn</h6>
+                                                                        <div class="row w-100 mx-0 d-flex justify-content-center">
+                                                                            <div class="row" style="width:100%;">
+                                                                                <textarea id="post-${e.id}-commnentRating-comment" class="form-control"
+                                                                                    style="min-height : 50px; height: 60px;" value="">
+                                                                            </textarea>
+                                                                            </div>
+
+                                                                            <div class="row d-flex justify-content-center my-2 "
+                                                                                style="width:100%; height:30px;">
+                                                                                <i class="icon-global fa-solid fa-star fa-xl"
+                                                                                    id="post-${e.id}-commnentRating-1"
+                                                                                    onclick="commentRatingEvent(${e.id}, 1)"
+                                                                                    style="width:auto; padding:0px; padding-top:12px;"></i>
+                                                                                <i class="icon-global fa-solid  fa-star fa-xl"
+                                                                                    id="post-${e.id}-commnentRating-2"
+                                                                                    onclick="commentRatingEvent(${e.id}, 2)"
+                                                                                    style="width:auto; padding:0px;padding-top:12px;"></i>
+                                                                                <i class="icon-global fa-solid  fa-star fa-xl "
+                                                                                    id="post-${e.id}-commnentRating-3"
+                                                                                    onclick="commentRatingEvent(${e.id}, 3)"
+                                                                                    style="width:auto; padding:0px; padding-top:12px;"></i>
+                                                                                <i class="icon-global fa-solid  fa-star fa-xl"
+                                                                                    id="post-${e.id}-commnentRating-4"
+                                                                                    onclick="commentRatingEvent(${e.id}, 4)"
+                                                                                    style="width:auto; padding:0px; padding-top:12px;"></i>
+                                                                                <i class="icon-global fa-solid  fa-star fa-xl"
+                                                                                    id="post-${e.id}-commnentRating-5"
+                                                                                    onclick="commentRatingEvent(${e.id}, 5)"
+                                                                                    style="width:auto; padding:0px; padding-top:12px;"></i>
+                                                                            </div>
+                                                                            <p style="display:none;" id="post-${e.id}-commnentRating-val">
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="row d-flex justify-content-center">
+                                                                            <div class="upload-btn-wrapper">
+                                                                                <button class="normal-button" disabled><i class="fa-solid fa-upload"></i>
+                                                                                    Upload ảnh mô tả</button>
+                                                                                <input type="file" multiple="multiple"
+                                                                                    name="post${e.id}CommentImg[]" placeholder="Choose image"
+                                                                                    id="post-${e.id}-commentImg" class="normal-button"
+                                                                                    style="width:170px;"
+                                                                                    onchange="commentUploadImage(${e.id})">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row d-flex justify-content-center">
+                                                                            <span class="text-danger"
+                                                                                id="post-${e.id}-commentImg-warning"></span>
+                                                                        </div>
+                                                                        <div class="row d-flex justify-content-center"
+                                                                            id="post-${e.id}-commentImg-preview-sec">
+                                                                        </div>
+                                                                        <div class="row w-100 mx-0 d-flex justify-content-start">
+                                                                            <button class="normal-button"
+                                                                                onclick="postSendComment(${e.id})">Gửi
+                                                                                đánh giá</button>
+                                                                        </div>
+                                                                    </div>`;
                             }
                         }
                         $('#search-newFeed-sec').append(`<div class="row d-block justify-content-center newfeed-container2">
@@ -322,7 +470,7 @@
                                                                 </div>
 
                                                                 <div class="newFeed-detail-icon">
-                                                                    <span> Đánh giá</span>
+                                                                    <span id="newFeed-commentBtn-post-${e.id}" onclick="openCommentSection(${e.id})"> Đánh giá</span>
                                                                 </div>
 
                                                                 <div class="newFeed-detail-icon">
@@ -340,14 +488,24 @@
                                                             </div>
 
                                                             ${likeIcon}
+                                                            <hr />
+                                                            <div id="commentSec-post-${e.id}" class="row justify-content-center mx-0 my-0" style="display:none;">
+                                                                <div class="row d-block justify-content-center mx-0 my-2"
+                                                                    id="postComment-${e.id}">
+                                                                </div>
+
+                                                                <p style="display:none;" id="postComment-loadMore-forPost-${e.id}" class="loadmore-cmt-btn">Xem thêm đánh giá</p>
+
+                                                                ${writeCommentSec}
+                                                            </div>
                                                         </div>`);
                     })
-                    if(data.data.length> 0){
+                    if (data.data.length > 0) {
                         numberLoadingStep++;
                         swiperReload()
                     }
                 }
-                allowLoad=true;
+                allowLoad = true;
             }
 
         });

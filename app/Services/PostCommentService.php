@@ -36,4 +36,95 @@ class PostCommentService
         $this->postCommentRepo->addNewPostComment($postId, $params);
     }
 
+    public function loadPostComment($postId, $step){
+        $comments = $this->postCommentRepo->loadPostCommentWithStep($postId, $step);
+
+        $commentInterfaceSec = [];
+        foreach ($comments as $comment){
+            $writerAva = asset($comment->user->user_avatar);
+            $writerName= $comment->user->name;
+
+            $now = \Carbon\Carbon::now();
+            $createdAt = \Carbon\Carbon::parse($comment->created_at);
+            $commentDay = $createdAt->diffInDays($now);
+            if ($commentDay == 0) {
+                $commentDay = $createdAt->diffInHours($now);
+                if ($commentDay == 0) {
+                    $commentDay = 'gần đây';
+                } else {
+                    $commentDay = $commentDay . ' giờ trước';
+                }
+            } elseif ($commentDay > 30) {
+                $commentDay = date('d/m/Y', strtotime($createdAt));
+            } else {
+                $commentDay = $commentDay . ' ngày trước';
+            }
+
+            $ratingStar = '';
+            for($i=1; $i<=5; $i++){
+                if($i<=$comment->star){
+                    $ratingStar = $ratingStar.' <span class="fa fa-star rating-star-checked"
+                    style="width:auto; padding:0px; margin:0px;"></span>';
+                }else{
+                    $ratingStar = $ratingStar.' <span class="fa fa-star"
+                    style="width:auto; padding:0px; margin:0px;"></span>';
+                }
+            }
+
+            $commentImage='';
+            foreach($comment->postCommentAttachments as $attachment){
+                $url= asset($attachment->attachment_path);
+                $onclick = "watchImageModal('{$url}')";
+                $commentImage= $commentImage."<div class='preview-image-sec'>
+                                                    <img class='upload-image' onclick={$onclick} src='{$url}' alt='logo upload'>
+                                                </div>";
+            }
+
+            $commentSec = "<div class='row w-100 mx-0 comment-sec my-1'>
+                            <div class='row m-1 d-flex justify-content-start'>
+                                <div class='row comment-avatar-sec'>
+                                    <img class='comment-avatar' src=".$writerAva.">
+                                </div>
+                                <div class='row mx-2 comment-writer-name-sec vertical-container'>
+                                    <p class='vertical-element-middle-align'
+                                        style='font-size : 14px; font-weight : 900;'>
+                                        ".$writerName."
+                                        <br>
+                                        <span style='font-size:12px;'><i class='fa-solid fa-clock'></i>".$commentDay."</span>
+                                    </p>
+                                </div>
+
+                                <div class='row mx-2 comment-writer-rating vertical-container'>
+                                    <div class='vertical-element-middle-align'>
+                                       ".$ratingStar."
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='row m-1 d-flex justify-content-start'>
+                                <p class='newFeed-info-text2' style='margin-left:60px; font-size : 10px;'>
+                                    ".nl2br($comment->comments)."</p>
+                            </div>
+
+                            <div class='row m-1 d-flex justify-content-center'>
+                                ".$commentImage."
+                            </div>
+                        </div>";
+
+            array_push($commentInterfaceSec,$commentSec );
+        }
+
+        $response['commentsInterface'] = $commentInterfaceSec;
+        $totalNumberRecord = $this->postCommentRepo->countNumberRecord($postId);
+        $maxNumberRecordFollowStep = ($step+1)*NUMBER_COMMENT_IN_STEP;
+        if($maxNumberRecordFollowStep <$totalNumberRecord){
+            $response['hasNextComments'] = true;
+            $response['nextStep'] = $step+1;
+
+        }else{
+            $response['hasNextComments'] = false;
+        }
+        return $response;
+    }
+
 }

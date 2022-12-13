@@ -109,7 +109,7 @@
                             </div>
 
                             <div class="newFeed-detail-icon">
-                                <span> Đánh giá</span>
+                                <span id="newFeed-commentBtn-post-{{$post->id}}" onclick="openCommentSection({{ $post->id }})"> Đánh giá</span>
                             </div>
 
                             <div class="newFeed-detail-icon">
@@ -154,6 +154,15 @@
                                 </div>
                             </div>
                         @endif
+                        <hr />
+                        <div id="commentSec-post-{{$post->id}}" class="row justify-content-center mx-0 my-0" style="display:none;">
+                            <div class="row d-block justify-content-center mx-0 my-2"
+                                id="postComment-{{ $post->id }}">
+                            </div>
+
+                            <p style="display:none;" id="postComment-loadMore-forPost-{{$post->id}}" class="loadmore-cmt-btn">Xem thêm đánh giá</p>
+
+                        </div>
                     </div>
                 @endforeach
 
@@ -382,7 +391,7 @@
                                                                 </div>
 
                                                                 <div class="newFeed-detail-icon">
-                                                                    <span> Đánh giá</span>
+                                                                    <span id="newFeed-commentBtn-post-${e.id}" onclick="openCommentSection(${e.id})"> Đánh giá</span>
                                                                 </div>
 
                                                                 <div class="newFeed-detail-icon">
@@ -400,6 +409,15 @@
                                                             </div>
 
                                                             ${interactBtns}
+                                                            <hr />
+                                                            <div id="commentSec-post-${e.id}" class="row justify-content-center mx-0 my-0" style="display:none;">
+                                                                <div class="row d-block justify-content-center mx-0 my-2"
+                                                                    id="postComment-${e.id}">
+                                                                </div>
+
+                                                                <p style="display:none;" id="postComment-loadMore-forPost-${e.id}" class="loadmore-cmt-btn">Xem thêm đánh giá</p>
+
+                                                            </div>
                                                         </div>`);
                     })
                     if (data.data.length > 0) {

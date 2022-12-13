@@ -15,6 +15,7 @@ const ROLE_USER=3;
 //new feed step
 const NEW_FEED_LOAD_STEP=5;
 const NUMBER_POST_MOST_ACCESSED = 5;
+const NUMBER_COMMENT_IN_STEP = 5;
 
 //Post attachment
 const POST_LOGO = 1;
@@ -106,3 +107,7 @@ const VK = 3;
 const COMMENT_ACCEPTED = 1;
 const COMMENT_PENDING=0;
 const COMMENT_REJECTED = 2;
+
+
+//Post Image Path
+const POST_IMAGE_DIR = 'storage/post_attachments/';

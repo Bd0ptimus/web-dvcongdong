@@ -69,5 +69,8 @@ Route::group(['prefix' => 'post', 'as'=>'post.'], function($route){
     $route->get('/open/{postId}',[PostsController::class, 'mainPost'])->name('mainPost');
     $route->group(['prefix' => 'comment', 'as'=>'comment.'], function ($route){
         $route->post('/upload-comment',[PostCommentController::class, 'addNewComment'])->name('uploadComment');
+        $route->get('/load-comment',[PostCommentController::class, 'loadComment'])->name('loadComment');
+        $route->get('/load-comment-test/{postId}/{step}',[PostCommentController::class, 'loadCommentTest'])->name('loadCommentTest');
+
     });
 });

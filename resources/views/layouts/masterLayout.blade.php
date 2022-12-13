@@ -273,16 +273,86 @@
             dataType: 'json',
             success: function(data) {
                 console.log('data response : ', JSON.stringify(data));
-                // if (data.permission_allow == 0) {
-                //     window.location.href = '{{ route('home') }}'
-                // } else {
-                //     if (data.error == 0) {
-                //         $(`#${contentId}`).remove();
-                //     }
-                // }
+                if(data.error == 0){
+                    reloadCommentSec(postId);
+                    $('#toast-success-text').text(
+                        'Gửi đánh giá thành công!');
+                    $('#notification-success').toast('show');
+                }else{
+                    $('#toast-fail-text').text('Có lỗi xảy ra, vui lòng thử lại');
+                    $('#notification-fail').toast('show');
+                }
             }
 
         });
+    }
+
+    function reloadCommentSec(postId){
+        $(`#post-${postId}-commnentRating-val`).text('');
+        $(`#post-${postId}-commnentRating-comment`).val('');
+        for(var i=1; i<=5; i++){
+            $(`#post-${postId}-commnentRating-${i}`).removeClass('rating-star-checked');
+        }
+        $(`#post-${postId}-commentImg-preview-sec`).empty();
+        $(`#post-${postId}-commentImg-warning`).text('');
+
+    }
+
+    function watchImageModal(url){
+        $('#imgShow-modal-img').attr('src',url)
+        $('#imgShow-modal').modal('show');
+    }
+
+
+    function loadCommentOfPost(postId, step){
+        console.log('load loadCommentOfPost');
+        var url = "{{ route('post.comment.loadComment') }}";
+        $.ajax({
+            method: 'get',
+            url: url,
+            data: {
+                postId: postId,
+                step:step,
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(data) {
+                console.log('data response : ', JSON.stringify(data));
+                if(data.error == 0){
+                    data.data.commentsInterface.forEach(function(comment){
+                        $(`#postComment-${postId}`).append(comment);
+                    });
+                    if(data.data.hasNextComments==true){
+                        loadMoreBtnControl( postId, data.data.nextStep);
+                    }else{
+                        $(`#postComment-loadMore-forPost-${postId}`).removeClass('d-block');
+                    }
+                }
+            }
+
+        });
+    }
+
+    function loadMoreBtnControl( postId, nextStep){
+        $(`#postComment-loadMore-forPost-${postId}`).attr('onclick', `loadCommentOfPost(${postId}, ${nextStep})`);
+        $(`#postComment-loadMore-forPost-${postId}`).addClass('d-block');
+    }
+
+    function openCommentSection(postId){
+        console.log('in openCommentSection');
+        if($(`#commentSec-post-${postId}`).css('display') == 'block'){
+            console.log('inblock');
+            $(`#commentSec-post-${postId}`).css('display', 'none');
+            $(`#postComment-${postId}`).empty();
+            reloadCommentSec(postId);
+            $(`#newFeed-commentBtn-post-${postId}`).removeClass('text-bold');
+
+        }else{
+            console.log('outblock');
+
+            $(`#commentSec-post-${postId}`).css('display', 'block');
+            $(`#newFeed-commentBtn-post-${postId}`).addClass('text-bold');
+            loadCommentOfPost(postId, 0);
+        }
     }
 
     $(document).ready(function() {
@@ -306,7 +376,7 @@
         }
     });
 </script>
-{{-- @extends('templates.main.mainCheckingService') --}}
+@extends('templates.imageShow')
 
 
 <!-- Styles -->

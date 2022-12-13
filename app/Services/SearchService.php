@@ -95,6 +95,7 @@ class SearchService
             $postData['postLink'] = route('post.mainPost',['postId' => $post->id]);
 
             $postData['ownerName']  = $post->user->name;
+            $postData['ownerId'] = $post->user->id;
 
             $postData['times'] = $postTimes;
 

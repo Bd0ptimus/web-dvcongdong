@@ -20,7 +20,7 @@ class PostCommentController extends Controller
         $params['postCommentText']=$request->postCommentText ;
         $params['userId']=$request->userId ;
         $params['rating']=$request->postRating;
-
+        $params['images']=[];
         if($request->TotalFiles>0){
             for ($x = 0; $x < $request->TotalFiles; $x++)
            {
@@ -37,5 +37,29 @@ class PostCommentController extends Controller
             response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
         }
         return response()->json(['error' => 0, 'msg' => 'comment thành công']);
+    }
+
+    public function loadComment(Request $request){
+        $postId = request('postId');
+        $step = request('step');
+        $data = [];
+        $data = $this->postCommentService->loadPostComment($postId, $step);
+        try{
+            $data = $this->postCommentService->loadPostComment($postId, $step);
+        }catch(\Exception $e){
+            response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+        }
+        return response()->json(['error' => 0, 'msg' => 'load comment thành công', 'data'=>$data]);
+    }
+
+    public function loadCommentTest(Request $request, $postId, $step){
+        $data = [];
+        $data = $this->postCommentService->loadPostComment($postId, $step);
+        try{
+            $data = $this->postCommentService->loadPostComment($postId, $step);
+        }catch(\Exception $e){
+            response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+        }
+        return response()->json(['error' => 0, 'msg' => 'load comment thành công', 'data'=>$data]);
     }
 }

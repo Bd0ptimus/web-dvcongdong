@@ -334,6 +334,12 @@
     height : 40px;
     border : 0px;
 }
+
+.loadmore-cmt-btn{
+    color:#1d8daf;
+    text-decoration: underline;
+    cursor:pointer;
+}
 /*-------end app button-------*/
 
 
@@ -348,6 +354,7 @@
     border-radius: 10px;
     position: relative;
     margin:5px;
+    cursor:pointer;
 }
 
 .previewImage-delete-icon{
@@ -367,7 +374,16 @@
     height: 100%;
     width: auto;
     object-fit: cover;
+
 }
+
+.text-bold{
+    background-color: rgba(102,102,102,.7);
+    border-radius : 2px;
+    color:white;
+    padding : 1px;
+}
+
 /*--------End Preview image-------*/
 
 /*--------Waring-------*/
