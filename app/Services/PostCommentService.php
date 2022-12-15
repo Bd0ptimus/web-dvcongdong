@@ -17,6 +17,7 @@ use App\Services\ClassifyService;
 
 //repo
 use App\Repositories\PostCommentRepository;
+use App\Repositories\PostRepository;
 
 
 
@@ -27,8 +28,10 @@ class PostCommentService
 {
 
     protected $postCommentRepo;
-    public function __construct(PostCommentRepository $postCommentRepo){
+    protected $postRepo;
+    public function __construct(PostCommentRepository $postCommentRepo,PostRepository $postRepo){
         $this->postCommentRepo = $postCommentRepo;
+        $this->postRepo = $postRepo;
     }
 
     public function addPostComment($postId, $params){
@@ -125,6 +128,46 @@ class PostCommentService
             $response['hasNextComments'] = false;
         }
         return $response;
+    }
+
+
+    public function takeCommentForCmtManager(){
+        $response['cmtsPending'] = $this->postCommentRepo->takeCmtByAcceptedStatus(COMMENT_PENDING);
+        $response['cmtsAccepted'] = $this->postCommentRepo->takeCmtByAcceptedStatus(COMMENT_ACCEPTED);
+        $response['cmtsRejected'] = $this->postCommentRepo->takeCmtByAcceptedStatus(COMMENT_REJECTED);
+        return $response;
+    }
+
+    private function handlePostRating($postComments, $post){
+        if(count($postComments) == 0){
+            $this->postRepo->update($post->id, [
+                'rating_score'=>0,
+                'number_comment_accept' => 0,
+            ]);
+        }else{
+            $totalStar = 0;
+            $validCmtHaveStar = count($postComments);
+            foreach($postComments as $comment){
+                if(isset($comment->star)){
+                    $totalStar = $totalStar  + $comment->star;
+                }else{
+                    $validCmtHaveStar --;
+                }
+            }
+
+            $postRating =round( $totalStar/$validCmtHaveStar ,0);
+            $this->postRepo->update($post->id, [
+                'rating_score'=>$postRating,
+                'number_comment_accept' => count($postComments),
+            ]);
+        }
+
+    }
+
+    public function changeCmtStatus($commentId, $status){
+        $post = $this->postRepo->findPostByCommentId($commentId);
+        $postComments = $this->postCommentRepo->changeCmtStatus($commentId, $status, $post->id);
+        $this->handlePostRating($postComments,$post);
     }
 
 }

@@ -11,7 +11,7 @@
 
 <body>
     <div class="project-content-section d-flex justify-content-center">
-        <div class="row newPost-main d-flex justify-content-center" style="width: 80%; padding:0px; margin-bottom:50px;">
+        <div class="row mainPost-main d-flex justify-content-center" style=" padding:0px; margin-bottom:50px;">
             <div class="row newPost-header-sec" style="width: 100%; padding:20px 0px;">
                 <h3 class="newPost-header newPost-text">
                     {{ $post->title }}
@@ -55,7 +55,7 @@
             <div class="row d-flex justify-content-center" style="width: 100%; padding:15px 0px;">
                 <div class="row d-flex justify-content-center">
                     @if (sizeof($post->post_attachments) != 0)
-                        <div style="padding:0px; width: 60%;" class="d-flex justify-content-center">
+                        <div style="padding:0px; width: 100%;" class="d-flex justify-content-center">
                             <div class="swiper mySwiper">
                                 <div class="swiper-wrapper">
                                     @foreach ($post->post_attachments as $key => $attachment)
@@ -71,6 +71,19 @@
 
                         </div>
                     @endif
+                </div>
+
+                <div class="row newFeed-content-small-sec2 d-flex justify-content-around w-100">
+                    <div class="newFeed-detail-icon">
+                        @for ($i = 1; $i < 6; $i++)
+                            <span
+                                class="fa fa-star @if ($i <= $post->rating_score) rating-star-checked @endif"></span>
+                        @endfor
+                    </div>
+
+                    <div class="newFeed-detail-icon">
+                        <span> {{ $post->access_times }} lượt truy cập</span>
+                    </div>
                 </div>
 
                 <div class="row d-flex justify-content-center mainPost-content-section">
@@ -93,52 +106,126 @@
                             <div class="avatar-sec">
                                 <img class="mainPost-avatar" src={{ asset($avatarPath) }}>
                             </div>
-                            <div class ="userInfo-sec d-block justify-content-center" style="margin:0px;">
-                                <h5 style="font-weight : 600;">{{$post->user->name}}</h5>
+                            <div class="userInfo-sec d-block justify-content-center" style="margin:0px;">
+                                <h5 style="font-weight : 600;">{{ $post->user->name }}</h5>
                                 <div class="userInfo-text">
-                                    <i class="fa-solid fa-clock"></i> {{$postTimes}}
+                                    <i class="fa-solid fa-clock"></i> {{ $postTimes }}
                                 </div>
                                 <div class="userInfo-text">
-                                    <i class="fa-solid fa-location-dot"></i> {{$postAddress}}
+                                    <i class="fa-solid fa-location-dot"></i> {{ $postAddress }}
                                 </div>
                                 <div class="userInfo-text">
-                                    Ngày hết hạn :  {{date('d/m/Y', strtotime($post->exist_to))}}
+                                    Ngày hết hạn : {{ date('d/m/Y', strtotime($post->exist_to)) }}
                                 </div>
                             </div>
                         </div>
-                        <div class="mainPost-contact-sec" >
-                            @if(isset($post->user->phone_number))
+                        <div class="mainPost-contact-sec">
+                            @if (isset($post->user->phone_number))
                                 <div class="d-flex justify-content-center">
-                                    <div  class="contactInfo-sec">
-                                        <i class="fa-solid fa-phone"></i> {{$post->user->phone_number}}
+                                    <div class="contactInfo-sec">
+                                        <i class="fa-solid fa-phone"></i> {{ $post->user->phone_number }}
                                     </div>
                                 </div>
-                                @if($post->contact_phone_number)
+                                @if ($post->contact_phone_number)
                                     <div class="d-flex justify-content-center">
-                                        <div  class="contactInfo-sec">
-                                            <i class="fa-solid fa-phone"></i> {{$post->contact_phone_number}}
+                                        <div class="contactInfo-sec">
+                                            <i class="fa-solid fa-phone"></i> {{ $post->contact_phone_number }}
                                         </div>
                                     </div>
                                 @endif
                             @else
                                 <div class="d-flex justify-content-center">
-                                    <div  class="contactInfo-sec">
-                                        <i class="fa-solid fa-phone"></i> {{$post->contact_phone_number}}
+                                    <div class="contactInfo-sec">
+                                        <i class="fa-solid fa-phone"></i> {{ $post->contact_phone_number }}
                                     </div>
                                 </div>
                             @endif
 
                             <div class="d-flex justify-content-center">
-                                <div  class="contactInfo-sec">
-                                    <i class="fa-solid fa-envelope"></i> {{$post->user->email}}
+                                <div class="contactInfo-sec">
+                                    <i class="fa-solid fa-envelope"></i> {{ $post->user->email }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <h6 style="font-weight:600;">Đánh giá</h6>
+                <div class="row d-block justify-content-center mx-0 my-2" id="postComment-{{ $post->id }}">
+                </div>
+
+
+                <p style="display:none;" id="postComment-loadMore-forPost-{{ $post->id }}"
+                    class="loadmore-cmt-btn">Xem thêm đánh giá</p>
+                <div class="row w-100 mx-0 my-1 justify-content-center" style="display:none;"
+                    id="postComment-noMoreComt-{{ $post->id }}">
+                    <p class="newFeed-detail-icon">Không có thêm đánh giá nào!</p>
+                </div>
+                @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER) && Admin::user()->id != $post->user->id)
+                    <div class="row w-100 mx-0 my-5 d-block justify-content-center">
+                        <h6 style="font-weight:600;">Viết đánh giá của bạn</h6>
+                        <div class="row w-100 mx-0 d-flex justify-content-center">
+
+                            <div class="row d-flex justify-content-center my-2 " style="width:100%; height:30px;">
+                                <i class="icon-global fa-solid fa-star fa-xl"
+                                    id="post-{{ $post->id }}-commnentRating-1"
+                                    onclick="commentRatingEvent({{ $post->id }}, 1)"
+                                    style="width:auto; padding:0px; padding-top:12px;"></i>
+                                <i class="icon-global fa-solid  fa-star fa-xl"
+                                    id="post-{{ $post->id }}-commnentRating-2"
+                                    onclick="commentRatingEvent({{ $post->id }}, 2)"
+                                    style="width:auto; padding:0px;padding-top:12px;"></i>
+                                <i class="icon-global fa-solid  fa-star fa-xl "
+                                    id="post-{{ $post->id }}-commnentRating-3"
+                                    onclick="commentRatingEvent({{ $post->id }}, 3)"
+                                    style="width:auto; padding:0px; padding-top:12px;"></i>
+                                <i class="icon-global fa-solid  fa-star fa-xl"
+                                    id="post-{{ $post->id }}-commnentRating-4"
+                                    onclick="commentRatingEvent({{ $post->id }}, 4)"
+                                    style="width:auto; padding:0px; padding-top:12px;"></i>
+                                <i class="icon-global fa-solid  fa-star fa-xl"
+                                    id="post-{{ $post->id }}-commnentRating-5"
+                                    onclick="commentRatingEvent({{ $post->id }}, 5)"
+                                    style="width:auto; padding:0px; padding-top:12px;"></i>
+                            </div>
+
+                            <div style="width:100%; position:relative; height:60px;">
+                                <textarea id="post-{{ $post->id }}-commnentRating-comment" class="form-control"
+                                    style="min-height : 50px; height: 60px; position: absolute; top:0px; left:0px; resize: none; overflow:auto;"
+                                    value="">
+                                            </textarea>
+
+                                <div class="row d-flex justify-content-center"
+                                    style=" position: absolute; bottom:5px; right:20px;">
+                                    <div class="comment-btn-sec">
+                                        <button class="comment-picbtn" disabled><i
+                                                class="fa-solid fa-image"></i></button>
+                                        <input type="file" multiple="multiple"
+                                            name="post{{ $post->id }}CommentImg[]" placeholder="Choose image"
+                                            id="post-{{ $post->id }}-commentImg" class="comment-picbtn"
+                                            style="width:30px;" onchange="commentUploadImage({{ $post->id }})">
+                                    </div>
+                                    <button class="comment-sendCmtBtn"
+                                        onclick="postSendComment({{ $post->id }})"><i
+                                            class="fa-solid fa-paper-plane"></i></button>
+                                </div>
+
+                            </div>
+                            <p style="display:none;" id="post-{{ $post->id }}-commnentRating-val">
+                            </p>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <span class="text-danger" id="post-{{ $post->id }}-commentImg-warning"></span>
+                        </div>
+                        <div class="row d-flex justify-content-center"
+                            id="post-{{ $post->id }}-commentImg-preview-sec">
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
+    @include('templates.notification.toast');
+
 </body>
 <script>
     var numberLoadingStep = 1;
@@ -150,6 +237,10 @@
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
         },
+    });
+
+    $(document).ready(function(){
+        loadCommentOfPost({{$post->id}},0);
     });
 </script>
 

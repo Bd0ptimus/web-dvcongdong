@@ -151,6 +151,9 @@ class WebServicesService
                     $postData['rating'] =$postData['rating'].'<span class="fa fa-star"></span>';
                 }
             }
+            $postData['postLink'] = route('post.mainPost',['postId' => $post->id]);
+            $postData['ownerName']  = $post->user->name;
+            $postData['ownerId'] = $post->user->id;
             $postData['ownerName']  = $post->user->name;
             $postData['times'] = $postTimes;
 

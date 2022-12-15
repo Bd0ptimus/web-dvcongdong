@@ -10,6 +10,7 @@ class PostCommentController extends Controller
 {
     protected $postCommentService;
     public function __construct(PostCommentService $postCommentService){
+        $this->middleware('admin.permission')->only(['adminIndex', 'adminCommentInteract']);
         $this->postCommentService = $postCommentService;
     }
     public function addNewComment(Request $request){
@@ -61,5 +62,20 @@ class PostCommentController extends Controller
             response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
         }
         return response()->json(['error' => 0, 'msg' => 'load comment thành công', 'data'=>$data]);
+    }
+
+    public function adminIndex(Request $request){
+        $data = $this->postCommentService->takeCommentForCmtManager();
+        return view('post.admin.comment.commentManager', [
+            'cmtsPending'=>$data['cmtsPending'],
+            'cmtsAccepted'=>$data['cmtsAccepted'],
+            'cmtsRejected'=>$data['cmtsRejected'],
+
+        ]);
+    }
+
+    public function adminCommentInteract(Request $request, $commentId, $status){
+        $this->postCommentService->changeCmtStatus($commentId, $status);
+        return redirect()->back();
     }
 }

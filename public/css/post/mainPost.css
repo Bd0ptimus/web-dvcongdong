@@ -29,14 +29,25 @@
 .contactInfo-sec{
     background-color: #1d8daf;
     color:white;
-    font-weight: bold;
     width : auto;
-    padding : 10px;
+    padding : 4px;
     border-radius : 10px;
     margin:5px 0px;
+    font-size:12px;
+    cursor:pointer;
 }
 
+.mainPost-main{
+    max-width: 1500px;
+    margin:30px 30px;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+}
 
+.mainPost-contact-sec{
+    margin : 10px 0px;
+}
 
 @media screen and (min-width : 1020px) and (max-width: 10000px){
     .mainPost-contact-info{
@@ -50,6 +61,10 @@
     .userInfo-text{
         font-weight: 600;
         margin : 5px 10px;
+    }
+
+    .mainPost-main{
+        width:60%;
     }
 }
 
@@ -66,6 +81,9 @@
         font-weight: 600;
         margin : 5px 10px;
     }
+    .mainPost-main{
+        width:65%;
+    }
 }
 
 
@@ -80,6 +98,9 @@
     .userInfo-text{
         font-weight: 600;
         margin : 5px 10px;
+    }
+    .mainPost-main{
+        width:80%;
     }
 }
 
@@ -100,4 +121,7 @@
         margin : 5px 10px;
     }
 
+    .mainPost-main{
+        width:95%;
+    }
 }

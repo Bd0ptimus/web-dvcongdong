@@ -32,6 +32,8 @@ class post extends Model
         'contact_email',
         'description',
         'access_times',
+        'number_comment_accept',
+        'rating_score',
     ];
 
     public function user(){

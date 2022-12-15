@@ -17,7 +17,7 @@ class AdminAccessPermission
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Admin::user() !==null && !Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN])){
+        if(Admin::user() !==null && !Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN]) ||(Admin::user() ==null)){
             return response()->view('warnings.notPermissionToAccessPage');
         }
         return $next($request);

@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AccountManagerController;
 use App\Http\Controllers\CheckingInfoServiceController;
-
-
+use App\Http\Controllers\PostCommentController;
 
 Route::group(['prefix' => 'admin', 'as'=>'admin.'], function($route){
     $route->group(['prefix'=>'account', 'as'=>'account.'], function($route){
@@ -21,6 +20,12 @@ Route::group(['prefix' => 'admin', 'as'=>'admin.'], function($route){
         $route->post('/entryban-update-result',[CheckingInfoServiceController::class , 'entryBanResultUpdate'])->name('entryBanResultUpdate');
         $route->post('/remove-requirement',[CheckingInfoServiceController::class , 'removeRequirement'])->name('removeRequirement');
         $route->post('/remove-result',[CheckingInfoServiceController::class , 'removeResult'])->name('removeResult');
+    });
+
+    $route->group(['prefix'=>'comment-manager', 'as'=>'commentManager.'], function($route){
+        $route->get('/', [PostCommentController::class , 'adminIndex'])->name('index');
+        $route->get('/comment-interact/{commentId}/{status}', [PostCommentController::class , 'adminCommentInteract'])->name('adminCommentInteract');
+
     });
 
 });

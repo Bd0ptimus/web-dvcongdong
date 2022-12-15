@@ -117,7 +117,7 @@
                             </div>
                         </div>
 
-                        <div class="row newFeed-content-small-sec2 ">
+                        <div class="row newFeed-content-small-sec2 " onclick="accessPost('{{ route('post.mainPost', ['postId' => $post->id]) }}')">
                             <div class="row newFeed-info-title-sec2">
                                 <p class="newFeed-info-title2">{{ $post->title }}</p>
                             </div>
@@ -167,84 +167,6 @@
                         </div>
                     </div>
                 @endforeach
-
-                {{-- @foreach ($posts as $post)
-                    <div class="row newfeed-container d-flex justify-content-center" id="myPost-{{ $post->id }}">
-                        <div class="row newfeed-content-sec">
-                            <div class="newfeed-image-sec  newFeed-image-sec">
-                                @php
-                                    $imgPath = 'storage/template/post/none-pic-logo.jpg';
-                                    foreach ($post->post_attachments as $attachment) {
-                                        if ($attachment->attachment_type == POST_DESCRIPTION_PHOTO) {
-                                            $imgPath = $attachment->attachment_path;
-                                            break;
-                                        }
-                                    }
-
-                                    $postAddress = 'Toàn Nga';
-                                    if (isset($post->city)) {
-                                        $postAddress = $post->city->city;
-                                    }
-
-                                    $postClassify = CLASSIFY_SLUG[$post->posts_classify_type];
-                                    if ($post->posts_classify_type == SERVICE_SLUG) {
-                                        $postClassify = $postClassify . ', ' . SERVICE_TYPE_SLUG[$post->posts_classify->services_type_type];
-                                    }
-
-                                    $now = \Carbon\Carbon::now();
-                                    $createdAt = \Carbon\Carbon::parse($post->created_at);
-                                    $postTimes = $createdAt->diffInDays($now);
-                                    if ($postTimes == 0) {
-                                        $postTimes = $createdAt->diffInHours($now);
-                                        if ($postTimes == 0) {
-                                            $postTimes = 'gần đây';
-                                        } else {
-                                            $postTimes = $postTimes . ' giờ trước';
-                                        }
-                                    } elseif ($postTimes > 30) {
-                                        $postTimes = date('m/d/Y', strtotime($createdAt));
-                                    } else {
-                                        $postTimes = $postTimes . ' ngày trước';
-                                    }
-
-                                @endphp
-                                <img class="newFeed-image" src={{ asset($imgPath) }}>
-
-                            </div>
-
-                            <div class="newfeed-info-sec d-block justify-content-center">
-                                <div class="row newFeed-interact-sec d-flex justify-content-end">
-                                    <a class="myPost-unlike-btn text-primary"
-                                        onclick="editMyPost({{ $post->id }}, 'myPost-{{ $post->id }}')">Sửa</a>
-                                    <a class="myPost-unlike-btn text-danger"
-                                        onclick="deleteMyPost({{ $post->id }},'myPost-{{ $post->id }}')">Xóa</a>
-                                </div>
-                                <div class="row newFeed-info-title-sec vertical-container">
-                                    <p class="newFeed-info-title vertical-element-middle-align">{{ $post->title }}</p>
-                                </div>
-                                <div class="row newFeed-info-content-sec">
-                                    <div class="row newFeed-info-description-sec vertical-container">
-                                        <p class="newFeed-info-description vertical-element-middle-align">
-                                            {{ $post->description }}</p>
-                                    </div>
-                                    <div class="row newFeed-info-detail-sec">
-                                        <div class="newFeed-detail-icon">
-                                            <i class="fa-solid fa-location-dot"></i><span> {{ $postAddress }}</span>
-                                        </div>
-
-                                        <div class="newFeed-detail-icon">
-                                            <i class="fa-solid fa-bars"></i><span> {{ $postClassify }}</span>
-                                        </div>
-
-                                        <div class="newFeed-detail-icon">
-                                            <i class="fa-solid fa-clock"></i><span> {{ $postTimes }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach --}}
             </div>
         </div>
 
@@ -401,7 +323,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="row newFeed-content-small-sec2 ">
+                                                            <div class="row newFeed-content-small-sec2 "  onclick="accessPost('${e.postLink}')">
                                                                 <div class="row newFeed-info-title-sec2">
                                                                     <p class="newFeed-info-title2">${e.title}</p>
                                                                 </div>
@@ -418,7 +340,7 @@
                                                                 </div>
 
                                                                 <p style="display:none;" id="postComment-loadMore-forPost-${e.id}" class="loadmore-cmt-btn">Xem thêm đánh giá</p>
-                                                                <div class="row w-100 mx-0 my-1 justify-content-center" style="display:none;" id="postComment-noMoreComt-{{$post->id}}">
+                                                                <div class="row w-100 mx-0 my-1 justify-content-center" style="display:none;" id="postComment-noMoreComt-${e.id}">
                                                                     <p class="newFeed-detail-icon">Không có thêm đánh giá nào!</p>
                                                                 </div>
                                                             </div>

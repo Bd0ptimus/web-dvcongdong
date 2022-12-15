@@ -368,9 +368,9 @@
                             }
                         }
 
-                        var isUser =  {{ Admin::user() !== null ? Admin::user()->isRole(ROLE_USER) : 0 }};
+                        var isUser =  '{{ Admin::user() !== null ? Admin::user()->isRole(ROLE_USER) : 0 }}';
                         var writeCommentSec = '';
-                        if(isUser==1){
+                        if(isUser=='1'){
                             var userId = {{ Admin::user() !== null?Admin::user()->id:0}};
                             if(userId!=0 && userId != e.ownerId){
                                 writeCommentSec = `<div class="row w-100 mx-0 my-1 d-block justify-content-center">

@@ -66,6 +66,8 @@ class PostRepository extends BaseRepository
             'contact_address' => $request->contactAddress ?? '',
             'contact_phone_number' => $request->contactPhone,
             'access_times'=>0,
+            'number_comment_accept'=>0,
+            'rating_score'=>0,
         ]);
 
         $classifyRelation->post()->save($post);
@@ -178,5 +180,11 @@ class PostRepository extends BaseRepository
         $relation->post()->delete();
         $this->postAttachmentRepo->deletePostAttachmentsByPostId($postId);
         $this->postCommentRepo->deleteWithPostId($postId);
+    }
+
+    public function findPostByCommentId($commentId){
+        return $this->model->whereHas('postComments', function($query) use ($commentId){
+            $query->where('id', $commentId);
+        })->first();
     }
 }

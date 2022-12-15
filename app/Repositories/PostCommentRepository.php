@@ -91,4 +91,16 @@ class PostCommentRepository extends BaseRepository
         return $query;
     }
 
+    public function takeCmtByAcceptedStatus($status){
+        return $this->model->with(['user', 'post', 'post.post_attachments','post.user','postCommentAttachments'])->where('comment_accept', $status)->get();
+    }
+
+    public function changeCmtStatus($commentId, $status, $postId){
+        $this->model->where('id', $commentId)->update([
+            'comment_accept'=>$status,
+        ]);
+
+        return $this->model->where('post_id', $postId)->where('comment_accept', COMMENT_ACCEPTED)->get();
+    }
+
 }

@@ -57,6 +57,15 @@
                     </span>
                 </a>
             </li>
+
+            <li class="nav-item nav-item-container">
+                <a href="{{route('admin.commentManager.index')}}" class="nav-link" aria-current="page" id="sidebarServiceChecking">
+                    <i class="fa-solid fa-comment"></i>
+                    <span>
+                        Quản lý đánh giá bài viết
+                    </span>
+                </a>
+            </li>
         @endif
         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
             <li class="nav-item nav-item-container">
@@ -313,6 +322,12 @@
             <li class="nav-item d-flex justify-content-center">
                 <a href="#" class="nav-link nav-icon-item" aria-current="page">
                     <i class="fa-solid fa-file-circle-exclamation"></i>
+                </a>
+            </li>
+
+            <li class="nav-item d-flex justify-content-center">
+                <a href="#" class="nav-link nav-icon-item" aria-current="page">
+                    <i class="fa-solid fa-comment"></i>
                 </a>
             </li>
         @endif
