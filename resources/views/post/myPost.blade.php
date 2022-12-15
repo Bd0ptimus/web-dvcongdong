@@ -161,7 +161,9 @@
                             </div>
 
                             <p style="display:none;" id="postComment-loadMore-forPost-{{$post->id}}" class="loadmore-cmt-btn">Xem thêm đánh giá</p>
-
+                            <div class="row w-100 mx-0 my-1 justify-content-center" style="display:none;" id="postComment-noMoreComt-{{$post->id}}">
+                                <p class="newFeed-detail-icon">Không có thêm đánh giá nào!</p>
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -416,7 +418,9 @@
                                                                 </div>
 
                                                                 <p style="display:none;" id="postComment-loadMore-forPost-${e.id}" class="loadmore-cmt-btn">Xem thêm đánh giá</p>
-
+                                                                <div class="row w-100 mx-0 my-1 justify-content-center" style="display:none;" id="postComment-noMoreComt-{{$post->id}}">
+                                                                    <p class="newFeed-detail-icon">Không có thêm đánh giá nào!</p>
+                                                                </div>
                                                             </div>
                                                         </div>`);
                     })

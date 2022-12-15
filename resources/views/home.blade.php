@@ -1,27 +1,3 @@
-{{-- @extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection --}}
-
 <!doctype html>
 <html lang="vi">
 
@@ -35,173 +11,6 @@
 <body style="position:relative;">
 
     <div class="project-content-section">
-        {{-- <div id="img-carousel">
-            @include('layouts.mainBannerSlide')
-            <div id="main-search-pc-tb" class="justify-content-center">
-                <div class="box-search-wrapper" id="main-search-section">
-                    <div class="container" style="display:block; justify-content: center;">
-                        <div class="row main-filter">
-                            <form id="frm-search-job" action="{{ route('search.homeSearch') }}" method="POST">@csrf
-                                <div class="row">
-                                    <div
-                                        class="form-group col-sm-3 input-data vertical-container d-flex justify-content-center">
-                                        <input autocomplete="off"
-                                            class="form-control form-control-input-text ui-autocomplete-input vertical-element-middle-align"
-                                            id="Filter_Keyword" name="homeFilterKeyWord" placeholder="Từ khóa"
-                                            type="text" style="height: 46px; width:90%" value="">
-                                    </div>
-                                    <div class="form-group col-sm-3 input-data">
-                                        <select class="main-filter-classify" name="homeFilterClassify">
-                                            <option value="0">Tất cả</option>
-                                            @foreach ($classifies as $classify)
-                                                <option value="{{ $classify->id }}">{{ $classify->classify_name }}
-                                                </option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-3 input-data">
-                                        <select class="main-filter-position" name="homeFilterPosition">
-                                            <option value="0">Toàn Nga</option>
-                                            @foreach ($cities as $city)
-                                                <option value="{{ $city->id }}">{{ $city->city }}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-3 search-submit vertical-container">
-                                        <button
-                                            class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn"
-                                            type="submit" style="height: 46px; ">
-                                            <i class="fa fa-search"></i><span> Tìm kiếm</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        @if ((Admin::user() !== null && Admin::user()->isRole(ROLE_USER)) || Admin::user() == null)
-                            <div class="row main-filter">
-                                <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
-                                    <button id="checkCarTicket"
-                                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                                        <i class="fa-solid fa-car-on"></i><span> Kiểm tra lỗi phạt xe</span>
-                                    </button>
-                                </div>
-                                <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
-                                    <button id="checkAdministrative"
-                                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                                        <i class="fa-solid fa-book"></i><span> Kiểm tra lỗi hành chính</span>
-                                    </button>
-                                </div>
-                                <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
-                                    <button id="checkTaxdebt"
-                                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                                        <i class="fa-solid fa-coins"></i><span> Kiểm tra nợ thuế</span>
-                                    </button>
-                                </div>
-                                <div class="form-group col-sm-3 vertical-container d-flex justify-content-center">
-                                    <button id="checkEntryBan"
-                                        class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                                        <i class="fa-solid fa-plane-circle-xmark"></i><span> Kiểm tra cấm nhập
-                                            cảnh</span>
-                                    </button>
-                                </div>
-
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="main-search-mb" class="justify-content-center">
-                <form id="frm-search-job" action="{{ route('search.homeSearch') }}" method="POST">@csrf
-                    <div class="row" style="width : 100%; margin:auto;">
-                        <div class="form-group input-data vertical-container d-flex justify-content-center"
-                            style="height : 48px; margin: 10px 0px;">
-                            <input autocomplete="off"
-                                class="form-control form-control-input-text ui-autocomplete-input vertical-element-middle-align"
-                                id="Filter_Keyword" name="homeFilterKeyWord" placeholder="Từ khóa" type="text"
-                                style="height: 46px; width:93%" value="">
-                        </div>
-                    </div>
-                    <div class="row" style="width : 100%; margin:auto;">
-                        <div class="form-group input-data">
-                            <select class="main-filter-classify" name="homeFilterClassify">
-                                <option value="0">Tất cả</option>
-                                @foreach ($classifies as $classify)
-                                    <option value="{{ $classify->id }}">{{ $classify->classify_name }}
-                                    </option>
-                                @endforeach
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row" style="width : 100%; margin:auto;">
-                        <div class="form-group  input-data">
-                            <select class="main-filter-position" name="homeFilterPosition">
-                                <option value="0">Toàn Nga</option>
-                                @foreach ($cities as $city)
-                                    <option value="{{ $city->id }}">{{ $city->city }}</option>
-                                @endforeach
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row" style="width : 100%; margin:auto; height:auto;">
-                        <div class="d-flex justify-content-center search-submit vertical-container"
-                            style="height : 50px;">
-                            <button
-                                class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn"
-                                type="submit" style="height: 46px; ">
-                                <i class="fa fa-search"></i><span> Tìm kiếm</span>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                <div class="row"
-                    style="display:flex; justify-content: center; width:100%; height : 50px; margin:auto;">
-                    <div class="form-group vertical-container d-flex justify-content-center" style="width:25%;">
-                        <button id="checkCarTicketMb"
-                            class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                            <i class="fa-solid fa-car-on"></i>
-                        </button>
-                    </div>
-                    <div class="form-group vertical-container d-flex justify-content-center" style="width:25%;">
-                        <button id="checkAdministrativeMb"
-                            class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                            <i class="fa-solid fa-book"></i>
-                        </button>
-                    </div>
-                    <div class="form-group vertical-container d-flex justify-content-center" style="width:25%;">
-                        <button id="checkTaxdebtMb"
-                            class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                            <i class="fa-solid fa-coins"></i>
-                        </button>
-                    </div>
-                    <div class="form-group vertical-container d-flex justify-content-center" style="width:25%;">
-                        <button id="checkEntryBanMb"
-                            class="form-control btn btn-block btn-topcv-primary btn-border btn-border-thin main-searchBtn vertical-element-middle-align main-service-checking-btn">
-                            <i class="fa-solid fa-plane-circle-xmark"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
-        {{-- <div class="row my-5 d-flex justify-content-between">
-            <div style="width : 50%; height : auto;">
-                <fxwidget-er inverse="false" amount="1" decimals="2" large="false" shadow="true" symbol="true"
-                    flag="true" changes="true" grouping="true" border="false" main-curr="USD" sel-curr="RUB,VND"
-                    background-color="#ffffff" lang="vi" border-radius="0.5"></fxwidget-er>
-                <script async src="https://s.fx-w.io/widgets/exchange-rates/latest.js?vi"></script>
-            </div>
-            <div style="width : 50%; height : auto;">
-                <div id="ww_b40fc5d8a12e7" v='1.3' loc='id' a='{"t":"responsive","lang":"vi","sl_lpl":1,"ids":["wl3996"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"rgba(255,255,255,1)","cl_font":"#000000","cl_cloud":"#d4d4d4","cl_persp":"#2196F3","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"3","el_wfc":3,"cl_odd":"#0000000a"}'>Weather Data Source: <a href="https://weerlabs.nl/weer_moskou/week/" id="ww_b40fc5d8a12e7_u" target="_blank">Moskou weer deze week</a></div><script async src="https://app1.weatherwidget.org/js/?id=ww_b40fc5d8a12e7"></script>
-            </div>
-        </div> --}}
-
         <div class="row d-flex justify-content-center" style="width:100%;">
             <div class="home-currency d-flex justify-content-center">
                 <p class="home-currency-text home-currency-title">USD-RUB : </p>
@@ -534,16 +343,14 @@
                             </div>
 
                             <p style="display:none;" id="postComment-loadMore-forPost-{{$post->id}}" class="loadmore-cmt-btn">Xem thêm đánh giá</p>
+                            <div class="row w-100 mx-0 my-1 justify-content-center" style="display:none;" id="postComment-noMoreComt-{{$post->id}}">
+                                <p class="newFeed-detail-icon">Không có thêm đánh giá nào!</p>
+                            </div>
 
                             @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER) && Admin::user()->id != $post->user->id)
                                 <div class="row w-100 mx-0 my-1 d-block justify-content-center">
                                     <h6 style="font-weight:600;">Viết đánh giá của bạn</h6>
                                     <div class="row w-100 mx-0 d-flex justify-content-center">
-                                        <div class="row" style="width:100%;">
-                                            <textarea id="post-{{ $post->id }}-commnentRating-comment" class="form-control"
-                                                style="min-height : 50px; height: 60px;" value="">
-                                        </textarea>
-                                        </div>
 
                                         <div class="row d-flex justify-content-center my-2 "
                                             style="width:100%; height:30px;">
@@ -568,19 +375,26 @@
                                                 onclick="commentRatingEvent({{ $post->id }}, 5)"
                                                 style="width:auto; padding:0px; padding-top:12px;"></i>
                                         </div>
+
+                                        <div style="width:100%; position:relative; height:60px;">
+                                            <textarea id="post-{{ $post->id }}-commnentRating-comment" class="form-control"
+                                                style="min-height : 50px; height: 60px; position: absolute; top:0px; left:0px; resize: none; overflow:auto;" value="">
+                                            </textarea>
+
+                                            <div class="row d-flex justify-content-center" style=" position: absolute; bottom:5px; right:20px;">
+                                                <div class="comment-btn-sec">
+                                                    <button class="comment-picbtn" disabled><i class="fa-solid fa-image"></i></button>
+                                                    <input type="file" multiple="multiple"
+                                                        name="post{{ $post->id }}CommentImg[]" placeholder="Choose image"
+                                                        id="post-{{ $post->id }}-commentImg" class="comment-picbtn"
+                                                        style="width:30px;" onchange="commentUploadImage({{ $post->id }})">
+                                                </div>
+                                                <button class="comment-sendCmtBtn" onclick="postSendComment({{ $post->id }})"><i class="fa-solid fa-paper-plane"></i></button>
+                                            </div>
+
+                                        </div>
                                         <p style="display:none;" id="post-{{ $post->id }}-commnentRating-val">
                                         </p>
-                                    </div>
-                                    <div class="row d-flex justify-content-center">
-                                        <div class="upload-btn-wrapper">
-                                            <button class="normal-button" disabled><i class="fa-solid fa-upload"></i>
-                                                Upload ảnh mô tả</button>
-                                            <input type="file" multiple="multiple"
-                                                name="post{{ $post->id }}CommentImg[]" placeholder="Choose image"
-                                                id="post-{{ $post->id }}-commentImg" class="normal-button"
-                                                style="width:170px;"
-                                                onchange="commentUploadImage({{ $post->id }})">
-                                        </div>
                                     </div>
                                     <div class="row d-flex justify-content-center">
                                         <span class="text-danger"
@@ -588,11 +402,6 @@
                                     </div>
                                     <div class="row d-flex justify-content-center"
                                         id="post-{{ $post->id }}-commentImg-preview-sec">
-                                    </div>
-                                    <div class="row w-100 mx-0 d-flex justify-content-start">
-                                        <button class="normal-button"
-                                            onclick="postSendComment({{ $post->id }})">Gửi
-                                            đánh giá</button>
                                     </div>
                                 </div>
                             @endif
@@ -668,6 +477,7 @@
     }
 
     window.onscroll = function(ev) {
+
         if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight - 50) {
             // you're at the bottom of the page
             if (allowLoad) {
@@ -752,11 +562,6 @@
                                 writeCommentSec = `<div class="row w-100 mx-0 my-1 d-block justify-content-center">
                                                                         <h6 style="font-weight:600;">Viết đánh giá của bạn</h6>
                                                                         <div class="row w-100 mx-0 d-flex justify-content-center">
-                                                                            <div class="row" style="width:100%;">
-                                                                                <textarea id="post-${e.id}-commnentRating-comment" class="form-control"
-                                                                                    style="min-height : 50px; height: 60px;" value="">
-                                                                            </textarea>
-                                                                            </div>
 
                                                                             <div class="row d-flex justify-content-center my-2 "
                                                                                 style="width:100%; height:30px;">
@@ -781,19 +586,25 @@
                                                                                     onclick="commentRatingEvent(${e.id}, 5)"
                                                                                     style="width:auto; padding:0px; padding-top:12px;"></i>
                                                                             </div>
+                                                                            <div style="width:100%; position:relative; height:60px;">
+                                                                                <textarea id="post-${e.id}-commnentRating-comment" class="form-control"
+                                                                                    style="min-height : 50px; height: 60px; position: absolute; top:0px; left:0px; resize: none; overflow:auto;" value="">
+                                                                                </textarea>
+
+                                                                                <div class="row d-flex justify-content-center" style=" position: absolute; bottom:5px; right:20px;">
+                                                                                    <div class="comment-btn-sec">
+                                                                                        <button class="comment-picbtn" disabled><i class="fa-solid fa-image"></i></button>
+                                                                                        <input type="file" multiple="multiple"
+                                                                                            name="post${e.id}CommentImg[]" placeholder="Choose image"
+                                                                                            id="post-${e.id}-commentImg" class="comment-picbtn"
+                                                                                            style="width:30px;" onchange="commentUploadImage(${e.id})">
+                                                                                    </div>
+                                                                                    <button class="comment-sendCmtBtn" onclick="postSendComment(${e.id})"><i class="fa-solid fa-paper-plane"></i></button>
+                                                                                </div>
+
+                                                                            </div>
                                                                             <p style="display:none;" id="post-${e.id}-commnentRating-val">
                                                                             </p>
-                                                                        </div>
-                                                                        <div class="row d-flex justify-content-center">
-                                                                            <div class="upload-btn-wrapper">
-                                                                                <button class="normal-button" disabled><i class="fa-solid fa-upload"></i>
-                                                                                    Upload ảnh mô tả</button>
-                                                                                <input type="file" multiple="multiple"
-                                                                                    name="post${e.id}CommentImg[]" placeholder="Choose image"
-                                                                                    id="post-${e.id}-commentImg" class="normal-button"
-                                                                                    style="width:170px;"
-                                                                                    onchange="commentUploadImage(${e.id})">
-                                                                            </div>
                                                                         </div>
                                                                         <div class="row d-flex justify-content-center">
                                                                             <span class="text-danger"
@@ -801,11 +612,6 @@
                                                                         </div>
                                                                         <div class="row d-flex justify-content-center"
                                                                             id="post-${e.id}-commentImg-preview-sec">
-                                                                        </div>
-                                                                        <div class="row w-100 mx-0 d-flex justify-content-start">
-                                                                            <button class="normal-button"
-                                                                                onclick="postSendComment(${e.id})">Gửi
-                                                                                đánh giá</button>
                                                                         </div>
                                                                     </div>`;
                             }
@@ -874,6 +680,9 @@
                                                                 </div>
 
                                                                 <p style="display:none;" id="postComment-loadMore-forPost-${e.id}" class="loadmore-cmt-btn">Xem thêm đánh giá</p>
+                                                                <div class="row w-100 mx-0 my-1 justify-content-center" style="display:none;" id="postComment-noMoreComt-${e.id}">
+                                                                    <p class="newFeed-detail-icon">Không có thêm đánh giá nào!</p>
+                                                                </div>
 
                                                                 ${writeCommentSec}
                                                             </div>

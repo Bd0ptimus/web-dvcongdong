@@ -325,6 +325,8 @@
                         loadMoreBtnControl( postId, data.data.nextStep);
                     }else{
                         $(`#postComment-loadMore-forPost-${postId}`).removeClass('d-block');
+                        $(`#postComment-noMoreComt-${postId}`).addClass('d-flex');
+
                     }
                 }
             }
@@ -335,6 +337,8 @@
     function loadMoreBtnControl( postId, nextStep){
         $(`#postComment-loadMore-forPost-${postId}`).attr('onclick', `loadCommentOfPost(${postId}, ${nextStep})`);
         $(`#postComment-loadMore-forPost-${postId}`).addClass('d-block');
+        $(`#postComment-noMoreComt-${postId}`).removeClass('d-flex');
+
     }
 
     function openCommentSection(postId){

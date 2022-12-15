@@ -8,7 +8,7 @@
 <link href="{{ asset('css/post/chooseTopic.css?v=') . time() }}" rel="stylesheet">
 <link href="{{ asset('css/search/index.css?v=') . time() }}" rel="stylesheet">
 
-<body>
+<body style="position:relative;">
     <div class="project-content-section ">
         <div class="row chooseTopic-main d-flex justify-content-center">
             <div class="row chooseTopic-header-sec" style="width: 100%; padding:20px 0px;">
@@ -195,16 +195,14 @@
 
                         <p style="display:none;" id="postComment-loadMore-forPost-{{ $post->id }}"
                             class="loadmore-cmt-btn">Xem thêm đánh giá</p>
+                        <div class="row w-100 mx-0 my-1 justify-content-center" style="display:none;" id="postComment-noMoreComt-{{$post->id}}">
+                            <p class="newFeed-detail-icon">Không có thêm đánh giá nào!</p>
+                        </div>
 
                         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER) && Admin::user()->id != $post->user->id)
                             <div class="row w-100 mx-0 my-1 d-block justify-content-center">
                                 <h6 style="font-weight:600;">Viết đánh giá của bạn</h6>
                                 <div class="row w-100 mx-0 d-flex justify-content-center">
-                                    <div class="row" style="width:100%;">
-                                        <textarea id="post-{{ $post->id }}-commnentRating-comment" class="form-control"
-                                            style="min-height : 50px; height: 60px;" value="">
-                                        </textarea>
-                                    </div>
 
                                     <div class="row d-flex justify-content-center my-2 "
                                         style="width:100%; height:30px;">
@@ -229,18 +227,25 @@
                                             onclick="commentRatingEvent({{ $post->id }}, 5)"
                                             style="width:auto; padding:0px; padding-top:12px;"></i>
                                     </div>
+                                    <div style="width:100%; position:relative; height:60px;">
+                                        <textarea id="post-{{ $post->id }}-commnentRating-comment" class="form-control"
+                                            style="min-height : 50px; height: 60px; position: absolute; top:0px; left:0px; resize: none; overflow:auto;" value="">
+                                        </textarea>
+
+                                        <div class="row d-flex justify-content-center" style=" position: absolute; bottom:5px; right:20px;">
+                                            <div class="comment-btn-sec">
+                                                <button class="comment-picbtn" disabled><i class="fa-solid fa-image"></i></button>
+                                                <input type="file" multiple="multiple"
+                                                    name="post{{ $post->id }}CommentImg[]" placeholder="Choose image"
+                                                    id="post-{{ $post->id }}-commentImg" class="comment-picbtn"
+                                                    style="width:30px;" onchange="commentUploadImage({{ $post->id }})">
+                                            </div>
+                                            <button class="comment-sendCmtBtn" onclick="postSendComment({{ $post->id }})"><i class="fa-solid fa-paper-plane"></i></button>
+                                        </div>
+
+                                    </div>
                                     <p style="display:none;" id="post-{{ $post->id }}-commnentRating-val">
                                     </p>
-                                </div>
-                                <div class="row d-flex justify-content-center">
-                                    <div class="upload-btn-wrapper">
-                                        <button class="normal-button" disabled><i class="fa-solid fa-upload"></i>
-                                            Upload ảnh mô tả</button>
-                                        <input type="file" multiple="multiple"
-                                            name="post{{ $post->id }}CommentImg[]" placeholder="Choose image"
-                                            id="post-{{ $post->id }}-commentImg" class="normal-button"
-                                            style="width:170px;" onchange="commentUploadImage({{ $post->id }})">
-                                    </div>
                                 </div>
                                 <div class="row d-flex justify-content-center">
                                     <span class="text-danger"
@@ -248,10 +253,6 @@
                                 </div>
                                 <div class="row d-flex justify-content-center"
                                     id="post-{{ $post->id }}-commentImg-preview-sec">
-                                </div>
-                                <div class="row w-100 mx-0 d-flex justify-content-start">
-                                    <button class="normal-button" onclick="postSendComment({{ $post->id }})">Gửi
-                                        đánh giá</button>
                                 </div>
                             </div>
                         @endif
@@ -314,7 +315,7 @@
         });
     }
     window.onscroll = function(ev) {
-        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight -50) {
             // you're at the bottom of the page
             if (allowLoad) {
                 allowLoad = false;
@@ -375,11 +376,6 @@
                                 writeCommentSec = `<div class="row w-100 mx-0 my-1 d-block justify-content-center">
                                                                         <h6 style="font-weight:600;">Viết đánh giá của bạn</h6>
                                                                         <div class="row w-100 mx-0 d-flex justify-content-center">
-                                                                            <div class="row" style="width:100%;">
-                                                                                <textarea id="post-${e.id}-commnentRating-comment" class="form-control"
-                                                                                    style="min-height : 50px; height: 60px;" value="">
-                                                                            </textarea>
-                                                                            </div>
 
                                                                             <div class="row d-flex justify-content-center my-2 "
                                                                                 style="width:100%; height:30px;">
@@ -404,19 +400,25 @@
                                                                                     onclick="commentRatingEvent(${e.id}, 5)"
                                                                                     style="width:auto; padding:0px; padding-top:12px;"></i>
                                                                             </div>
+                                                                            <div style="width:100%; position:relative; height:60px;">
+                                                                                <textarea id="post-${e.id}-commnentRating-comment" class="form-control"
+                                                                                    style="min-height : 50px; height: 60px; position: absolute; top:0px; left:0px; resize: none; overflow:auto;" value="">
+                                                                                </textarea>
+
+                                                                                <div class="row d-flex justify-content-center" style=" position: absolute; bottom:5px; right:20px;">
+                                                                                    <div class="comment-btn-sec">
+                                                                                        <button class="comment-picbtn" disabled><i class="fa-solid fa-image"></i></button>
+                                                                                        <input type="file" multiple="multiple"
+                                                                                            name="post${e.id}CommentImg[]" placeholder="Choose image"
+                                                                                            id="post-${e.id}-commentImg" class="comment-picbtn"
+                                                                                            style="width:30px;" onchange="commentUploadImage(${e.id})">
+                                                                                    </div>
+                                                                                    <button class="comment-sendCmtBtn" onclick="postSendComment(${e.id})"><i class="fa-solid fa-paper-plane"></i></button>
+                                                                                </div>
+
+                                                                            </div>
                                                                             <p style="display:none;" id="post-${e.id}-commnentRating-val">
                                                                             </p>
-                                                                        </div>
-                                                                        <div class="row d-flex justify-content-center">
-                                                                            <div class="upload-btn-wrapper">
-                                                                                <button class="normal-button" disabled><i class="fa-solid fa-upload"></i>
-                                                                                    Upload ảnh mô tả</button>
-                                                                                <input type="file" multiple="multiple"
-                                                                                    name="post${e.id}CommentImg[]" placeholder="Choose image"
-                                                                                    id="post-${e.id}-commentImg" class="normal-button"
-                                                                                    style="width:170px;"
-                                                                                    onchange="commentUploadImage(${e.id})">
-                                                                            </div>
                                                                         </div>
                                                                         <div class="row d-flex justify-content-center">
                                                                             <span class="text-danger"
@@ -424,11 +426,6 @@
                                                                         </div>
                                                                         <div class="row d-flex justify-content-center"
                                                                             id="post-${e.id}-commentImg-preview-sec">
-                                                                        </div>
-                                                                        <div class="row w-100 mx-0 d-flex justify-content-start">
-                                                                            <button class="normal-button"
-                                                                                onclick="postSendComment(${e.id})">Gửi
-                                                                                đánh giá</button>
                                                                         </div>
                                                                     </div>`;
                             }
@@ -495,7 +492,9 @@
                                                                 </div>
 
                                                                 <p style="display:none;" id="postComment-loadMore-forPost-${e.id}" class="loadmore-cmt-btn">Xem thêm đánh giá</p>
-
+                                                                <div class="row w-100 mx-0 my-1 justify-content-center" style="display:none;" id="postComment-noMoreComt-${e.id}">
+                                                                    <p class="newFeed-detail-icon">Không có thêm đánh giá nào!</p>
+                                                                </div>
                                                                 ${writeCommentSec}
                                                             </div>
                                                         </div>`);
