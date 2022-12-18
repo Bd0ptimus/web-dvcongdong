@@ -84,9 +84,11 @@ class PostCommentService
             }
 
             $commentSec = "<div class='row w-100 mx-0 comment-sec my-1'>
-                            <div class='row m-1 d-flex justify-content-start'>
-                                <div class='row comment-avatar-sec'>
-                                    <img class='comment-avatar' src=".$writerAva.">
+                            <div class='m-1 d-flex justify-content-start comment-post-sec'>
+                                <div class='vertical-container' style='width:40px;'>
+                                    <div class='row comment-avatar-sec vertical-element-middle-align'>
+                                        <img class='comment-avatar' src=".$writerAva.">
+                                    </div>
                                 </div>
                                 <div class='row mx-2 comment-writer-name-sec vertical-container'>
                                     <p class='vertical-element-middle-align'

@@ -49,6 +49,16 @@
     margin : 10px 0px;
 }
 
+.detail-sec{
+    padding:0px;
+    margin: 2px 4%;
+}
+
+.long-detail-wrap{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+}
 @media screen and (min-width : 1020px) and (max-width: 10000px){
     .mainPost-contact-info{
         display:flex;
@@ -65,6 +75,10 @@
 
     .mainPost-main{
         width:60%;
+    }
+
+    .detail-sec{
+        width:42%;
     }
 }
 
@@ -84,6 +98,9 @@
     .mainPost-main{
         width:65%;
     }
+    .detail-sec{
+        width:42%;
+    }
 }
 
 
@@ -101,6 +118,9 @@
     }
     .mainPost-main{
         width:80%;
+    }
+    .detail-sec{
+        width:42%;
     }
 }
 
@@ -123,5 +143,8 @@
 
     .mainPost-main{
         width:95%;
+    }
+    .detail-sec{
+        width:96%;
     }
 }

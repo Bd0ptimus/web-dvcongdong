@@ -117,7 +117,7 @@
                             </div>
                         </div>
 
-                        <div class="row newFeed-content-small-sec2 ">
+                        <div class="row newFeed-content-small-sec2 " onclick="accessPost('{{ route('post.mainPost', ['postId' => $post->id]) }}')">
                             <div class="row newFeed-info-title-sec2">
                                 <p class="newFeed-info-title2">{{ $post->title }}</p>
                             </div>

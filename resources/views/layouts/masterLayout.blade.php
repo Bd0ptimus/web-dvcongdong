@@ -61,7 +61,7 @@
                 if (data.error == 0) {
                     $(`#${newFeedPostId}`).empty();
                     $(`#${newFeedPostId}`).append(
-                        `<i class="fa-regular fa-heart fa-xl interact-icon2"  onclick="likePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`
+                        `<i class="fa-regular fa-heart fa-xl interact-icon2 icon-align"  onclick="likePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`
                     );
                 }
             }
@@ -84,7 +84,7 @@
                 if (data.error == 0) {
                     $(`#${newFeedPostId}`).empty();
                     $(`#${newFeedPostId}`).append(
-                        `<i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2"  onclick="unlikePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`
+                        `<i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2 icon-align"  onclick="unlikePost(${userId},${postId},'newFeed-post-${postId}' )"></i>`
                     );
 
                 }

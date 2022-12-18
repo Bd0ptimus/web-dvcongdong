@@ -12,7 +12,12 @@
 <body>
     <div class="project-content-section d-flex justify-content-center">
         <div class="row mainPost-main d-flex justify-content-center" style=" padding:0px; margin-bottom:50px;">
-            <div class="row newPost-header-sec" style="width: 100%; padding:20px 0px;">
+            <div class="row newPost-header-sec" style="width: 100%; padding:20px 0px; position:relative;">
+                <div style="height:100%; width:30px; position:absolute; top:0px; left:10px;" class="vertical-container">
+                    <div style="height:30px; width:30px; border:0px; border-radius:50%; cursor:pointer;" class="vertical-element-middle-align" onclick="history.back()">
+                        <i style="color:white; width:100%; height:100%; padding:12px 0px;" class="fa-solid fa-chevron-left fa-2xl"></i>
+                    </div>
+                </div>
                 <h3 class="newPost-header newPost-text">
                     {{ $post->title }}
                 </h3>
@@ -74,12 +79,25 @@
                 </div>
 
                 <div class="row newFeed-content-small-sec2 d-flex justify-content-around w-100">
+
                     <div class="newFeed-detail-icon">
                         @for ($i = 1; $i < 6; $i++)
                             <span
                                 class="fa fa-star @if ($i <= $post->rating_score) rating-star-checked @endif"></span>
                         @endfor
                     </div>
+                    @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
+                        <div class="row newFeed-interact-sec2 d-flex justify-content-center"
+                                        id="newFeed-post-{{ $post->id }}" style="width : 33%; margin:0px;">
+                            @if ($post->checkPostLiked(Admin::user()->id, $post->id))
+                                <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2 icon-align"
+                                onclick="unlikePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
+                            @else
+                                <i class="fa-regular fa-heart fa-xl interact-icon2 icon-align"
+                                    onclick="likePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
+                            @endif
+                        </div>
+                    @endif
 
                     <div class="newFeed-detail-icon">
                         <span> {{ $post->access_times }} lượt truy cập</span>
@@ -95,6 +113,52 @@
                         {!! nl2br($post->description) !!}
                     </div>
                 </div>
+                {!!$postDetail!!}
+                {{-- <div class="row d-flex justify-content-center mainPost-content-section">
+                    <div class="mainPost-content-title">
+                        Chi Tiết
+                    </div>
+                    <br>
+                    {!!$postDetail!!}
+                    <div class="row d-flex justify-content-center" style="width:100%; padding:0px;">
+                        <div class="d-flex justify-content-center detail-sec">
+                            <div style="width:50%;" class="d-flex justify-content-start ">
+                                <p style="font-weight:bold;" >Giá :</p>
+
+                            </div>
+                            <div style="width:50%;" class="d-flex justify-content-start ">
+                                <p class="long-detail-wrap">100000</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center detail-sec">
+                            <div style="width:50%;" class="d-flex justify-content-start">
+                                <p style="font-weight:bold;" >Giá :</p>
+
+                            </div>
+                            <div style="width:50%;" class="d-flex justify-content-start">
+                                <p class="long-detail-wrap">100000</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center detail-sec">
+                            <div style="width:50%;" class="d-flex justify-content-start">
+                                <p style="font-weight:bold;" > Địa chỉ nhà đất :</p>
+
+                            </div>
+                            <div style="width:50%;" class="d-flex justify-content-start">
+                                <p class="long-detail-wrap">Зеленоград, Юности ул, 11</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center detail-sec">
+                            <div style="width:50%;" class="d-flex justify-content-start">
+                                <p style="font-weight:bold;" > Địa chỉ nhà đất :</p>
+
+                            </div>
+                            <div style="width:50%;" class="d-flex justify-content-start">
+                                <p class="long-detail-wrap">Зеленоград, Юности ул, 11</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
 
                 <div class="row d-flex justify-content-center mainPost-content-section">
                     <div class="mainPost-content-title">

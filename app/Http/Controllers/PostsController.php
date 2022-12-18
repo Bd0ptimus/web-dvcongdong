@@ -108,7 +108,7 @@ class PostsController extends Controller
 
     public function mainPost(Request $request, $postId){
         $post = $this->postService->takePostById($postId);
-        return view('post.mainPost',['post'=> $post]);
+        return view('post.mainPost',['post'=> $post['post'], 'postDetail'=>$post['postDetail']]);
     }
 
 }

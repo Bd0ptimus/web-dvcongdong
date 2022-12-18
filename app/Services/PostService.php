@@ -79,12 +79,12 @@ class PostService
         $this->cityService = $cityService;
         $this->realEstateService = $realEstateService;
         $this->attachmentService = $attachmentService;
-        $this->jobService=$jobService;
+        $this->jobService = $jobService;
         $this->carTradeService = $carTradeService;
         $this->garmentService = $garmentService;
         $this->momBabyService = $momBabyService;
         $this->restaurantService = $restaurantService;
-        $this->classifyAdsService= $classifyAdsService;
+        $this->classifyAdsService = $classifyAdsService;
         $this->webServicesService = $webServicesService;
         $this->userRepo = $userRepo;
         $this->postAttachmentRepo = $postAttachmentRepo;
@@ -143,49 +143,49 @@ class PostService
             switch ($classify) {
                 case (REAL_ESTATE):
                     $realEstate = $this->realEstateService->uploadPostRealEstate($request);
-                    $post= $this->postRepo->createNewPostBaseOnClassify($realEstate, $request, REAL_ESTATE);
+                    $post = $this->postRepo->createNewPostBaseOnClassify($realEstate, $request, REAL_ESTATE);
                     // dd($realEstate);
                     break;
                 case (SERVICE):
-                    $serivce = $this->webServicesService->uploadPostService($request,$classifyType);
-                    $post= $this->postRepo->createNewPostBaseOnClassify($serivce, $request, SERVICE);
+                    $serivce = $this->webServicesService->uploadPostService($request, $classifyType);
+                    $post = $this->postRepo->createNewPostBaseOnClassify($serivce, $request, SERVICE);
                     break;
                 case (JOB):
                     $job = $this->jobService->uploadPostJob($request);
-                    $post= $this->postRepo->createNewPostBaseOnClassify($job, $request, JOB);
+                    $post = $this->postRepo->createNewPostBaseOnClassify($job, $request, JOB);
                     break;
                 case (CAR_TRADE):
                     $carTrade = $this->carTradeService->uploadPostCarTrade($request);
-                    $post= $this->postRepo->createNewPostBaseOnClassify($carTrade, $request, CAR_TRADE);
+                    $post = $this->postRepo->createNewPostBaseOnClassify($carTrade, $request, CAR_TRADE);
                     break;
                 case (GARMENT):
                     $garment = $this->garmentService->uploadPostGarment($request);
-                    $post= $this->postRepo->createNewPostBaseOnClassify($garment, $request, GARMENT);
+                    $post = $this->postRepo->createNewPostBaseOnClassify($garment, $request, GARMENT);
                     break;
                 case (MOM_BABY):
                     $mombaby = $this->momBabyService->uploadPostMomBaby($request);
-                    $post= $this->postRepo->createNewPostBaseOnClassify($mombaby, $request, MOM_BABY);
+                    $post = $this->postRepo->createNewPostBaseOnClassify($mombaby, $request, MOM_BABY);
                     break;
                 case (RESTAURANT):
-                    $retaurant =$this->restaurantService->uploadPostRestaurant($request);
-                    $post= $this->postRepo->createNewPostBaseOnClassify($retaurant, $request, RESTAURANT);
+                    $retaurant = $this->restaurantService->uploadPostRestaurant($request);
+                    $post = $this->postRepo->createNewPostBaseOnClassify($retaurant, $request, RESTAURANT);
                     break;
                 case (AD):
-                    $ads =$this->classifyAdsService->uploadPostAds($request);
-                    $post= $this->postRepo->createNewPostBaseOnClassify($ads, $request, AD);
+                    $ads = $this->classifyAdsService->uploadPostAds($request);
+                    $post = $this->postRepo->createNewPostBaseOnClassify($ads, $request, AD);
                     break;
             }
             // dd($realEstate);
-             $this->attachmentService->addNewPostAttachments($post->id,$request);
+            $this->attachmentService->addNewPostAttachments($post->id, $request);
             // dd($request->files);
             DB::commit();
             $data['error'] = 0;
-            $data['confirmText'] = '<p style="width:auto; font-weight:700;">Tin được đăng từ ngày '.date('d/m/Y', strtotime($post->exist_from)).' đến ngày '.date('d/m/Y', strtotime($post->exist_to)).'</p>
-                                    <p style="width:auto; font-weight:700;">Bởi người dùng :</p><p>'.$post->user->name.' </p>
-                                    <p style="width:auto; font-weight:700;">Số điện thoại liên hệ :</p><p>'.$post->contact_phone_number.' </p>
-                                    <p style="width:auto; font-weight:700;">Email liên hệ :</p><p>'.$post->user->email.' </p>
-                                    <p style="width:auto; font-weight:700;">Với tiêu đề : </p><p>'.$post->title.'</p>
-                                    <p style="width:auto; font-weight:700;">Với mô tả: </p><p>'. nl2br($post->description).'</p>';
+            $data['confirmText'] = '<p style="width:auto; font-weight:700;">Tin được đăng từ ngày ' . date('d/m/Y', strtotime($post->exist_from)) . ' đến ngày ' . date('d/m/Y', strtotime($post->exist_to)) . '</p>
+                                    <p style="width:auto; font-weight:700;">Bởi người dùng :</p><p>' . $post->user->name . ' </p>
+                                    <p style="width:auto; font-weight:700;">Số điện thoại liên hệ :</p><p>' . $post->contact_phone_number . ' </p>
+                                    <p style="width:auto; font-weight:700;">Email liên hệ :</p><p>' . $post->user->email . ' </p>
+                                    <p style="width:auto; font-weight:700;">Với tiêu đề : </p><p>' . $post->title . '</p>
+                                    <p style="width:auto; font-weight:700;">Với mô tả: </p><p>' . nl2br($post->description) . '</p>';
             return $data;
         } catch (\Exception $e) {
             Log::debug('processUploadNewPost : ' . $e);
@@ -195,52 +195,57 @@ class PostService
         }
     }
 
-    public function loadForNewFeed($numPage,$params=[]){
+    public function loadForNewFeed($numPage, $params = [])
+    {
         return $this->postRepo->loadPostsForNewFeed($numPage, $params);
     }
 
-    public function takeMostAccessPost(){
+    public function takeMostAccessPost()
+    {
         return $this->postRepo->takeMostAccessPosts();
     }
 
-    public function searchPosts($filterData, $numberStep=0){
+    public function searchPosts($filterData, $numberStep = 0)
+    {
         return $this->postRepo->findPostsWithCondition($filterData, $numberStep);
     }
 
-    public function postLiked($userId){
+    public function postLiked($userId)
+    {
         return $this->postRepo->allPostLiked($userId);
     }
 
-    public function likePost($postId, $userId){
+    public function likePost($postId, $userId)
+    {
         $respone['error'] = 1;
 
-        if(Admin::user()!==null&&Admin::user()->isRole(ROLE_USER)&&$userId == Admin::user()->id){
+        if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER) && $userId == Admin::user()->id) {
             Log::debug('in post service like post');
             DB::beginTransaction();
-            try{
+            try {
                 $this->postRepo->addInteractPost($postId, $userId, LIKE);
                 $respone['error'] = 0;
                 DB::commit();
-            }catch(Exception $e){
+            } catch (Exception $e) {
                 Log::debug('error in likepost : ' . $e);
                 DB::rollBack();
                 $respone['error'] = 1;
             }
-
         }
         return $respone;
     }
 
-    public function unlikePost($postId, $userId){
-        $response['error']=1;
-        if(Admin::user()!==null&&Admin::user()->isRole(ROLE_USER)&&$userId == Admin::user()->id){
+    public function unlikePost($postId, $userId)
+    {
+        $response['error'] = 1;
+        if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER) && $userId == Admin::user()->id) {
 
             DB::beginTransaction();
-            try{
+            try {
                 $this->postRepo->addInteractPost($postId, $userId, NOT_INTERACT);
-             $respone['error'] = 0;
+                $respone['error'] = 0;
                 DB::commit();
-            }catch(Exception $e){
+            } catch (Exception $e) {
                 Log::debug('error in unlikepost : ' . $e);
                 DB::rollBack();
                 $respone['error'] = 1;
@@ -249,20 +254,21 @@ class PostService
         return $respone;
     }
 
-    public function loadMyPost($numPage,$params){
+    public function loadMyPost($numPage, $params)
+    {
         return $this->postRepo->loadAllForMyPost($numPage, $params);
     }
 
-    public function loadMoreMyPost($numPage,$params){
+    public function loadMoreMyPost($numPage, $params)
+    {
         $posts = $this->postRepo->loadAllForMyPost($numPage, $params);
 
         $response = [];
         foreach ($posts as $post) {
             //load img
-            $postData['images']=[];
+            $postData['images'] = [];
             foreach ($post->post_attachments as $attachment) {
-                array_push($postData['images'] ,asset($attachment->attachment_path));
-
+                array_push($postData['images'], asset($attachment->attachment_path));
             }
 
             //address
@@ -298,32 +304,32 @@ class PostService
             }
             $postData['id'] = $post->id;
 
-            if($params['userId'] != 0 && $this->userRepo->isUser($params['userId'])){
+            if ($params['userId'] != 0 && $this->userRepo->isUser($params['userId'])) {
                 $postData['isUser'] = true;
                 $postData['liked'] = $post->checkPostLiked($params['userId'], $post->id);
-            }else{
+            } else {
                 $postData['isUser'] = false;
             }
 
-            $postData['avatar'] = $post->user->user_avatar?asset($post->user->user_avatar):asset('storage/avatar-sample/ava1.jpg');
+            $postData['avatar'] = $post->user->user_avatar ? asset($post->user->user_avatar) : asset('storage/avatar-sample/ava1.jpg');
 
-            $postData['accessTimes'] = $post->access_times??0;
-            $postData['rating']='';
-            for($i=1; $i<6;$i++){
-                if($i<= $post->rating_score){
-                    $postData['rating'] =$postData['rating'].'<span class="fa fa-star rating-star-checked"></span>';
-                }else{
-                    $postData['rating'] =$postData['rating'].'<span class="fa fa-star"></span>';
+            $postData['accessTimes'] = $post->access_times ?? 0;
+            $postData['rating'] = '';
+            for ($i = 1; $i < 6; $i++) {
+                if ($i <= $post->rating_score) {
+                    $postData['rating'] = $postData['rating'] . '<span class="fa fa-star rating-star-checked"></span>';
+                } else {
+                    $postData['rating'] = $postData['rating'] . '<span class="fa fa-star"></span>';
                 }
             }
-            $postData['postLink'] = route('post.mainPost',['postId' => $post->id]);
+            $postData['postLink'] = route('post.mainPost', ['postId' => $post->id]);
 
             $postData['ownerName']  = $post->user->name;
             $postData['ownerId'] = $post->user->id;
 
             $postData['times'] = $postTimes;
 
-            $postData['title']=  $post->title;
+            $postData['title'] =  $post->title;
             $postData['description'] = $post->description;
 
             array_push($response, $postData);
@@ -333,18 +339,19 @@ class PostService
         return $response;
     }
 
-    public function deletePost($postId){
+    public function deletePost($postId)
+    {
         $post = post::where('id', $postId)->first();
-        if(Admin::user()->id != $post->user_id){
+        if (Admin::user()->id != $post->user_id) {
             $response['permission_allow'] = 0;
-        }else{
+        } else {
             $response['permission_allow'] = 1;
             DB::beginTransaction();
-            try{
-                switch($post->classify_id){
+            try {
+                switch ($post->classify_id) {
                     case (REAL_ESTATE):
                         $postRelation = $this->realEstateService->findPostRealEstateById($post->posts_classify_id);
-                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        $this->postRepo->deleteAllPostById($postId, $postRelation);
                         break;
                     case (SERVICE):
                         $this->webServicesService->deleteService($post->posts_classify_id);
@@ -354,48 +361,218 @@ class PostService
                         break;
                     case (JOB):
                         $postRelation = $this->jobService->findPostJobById($post->posts_classify_id);
-                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        $this->postRepo->deleteAllPostById($postId, $postRelation);
                         break;
                     case (CAR_TRADE):
                         $postRelation = $this->carTradeService->findPostCarTradeById($post->posts_classify_id);
-                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        $this->postRepo->deleteAllPostById($postId, $postRelation);
                         break;
                     case (GARMENT):
                         $postRelation = $this->garmentService->findPostGarmentById($post->posts_classify_id);
-                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        $this->postRepo->deleteAllPostById($postId, $postRelation);
                         break;
                     case (MOM_BABY):
                         $postRelation = $this->momBabyService->findPostMombabyById($post->posts_classify_id);
-                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        $this->postRepo->deleteAllPostById($postId, $postRelation);
                         break;
                     case (RESTAURANT):
-                        $postRelation =$this->restaurantService->findPostRestaurantById($post->posts_classify_id);
-                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        $postRelation = $this->restaurantService->findPostRestaurantById($post->posts_classify_id);
+                        $this->postRepo->deleteAllPostById($postId, $postRelation);
                         break;
                     case (AD):
-                        $postRelation =$this->classifyAdsService->findPostAdsById($post->posts_classify_id);
-                        $this->postRepo->deleteAllPostById($postId,$postRelation);
+                        $postRelation = $this->classifyAdsService->findPostAdsById($post->posts_classify_id);
+                        $this->postRepo->deleteAllPostById($postId, $postRelation);
                         break;
                 }
 
                 // $this->postRepo->deleteAllPostById($postId);
                 DB::commit();
                 $response['error'] = 0;
-            }catch(Exception $e){
+            } catch (Exception $e) {
                 DB::rollBack();
-                Log::debug('error in delete post : '. $e);
+                Log::debug('error in delete post : ' . $e);
                 $response['error'] = 1;
             }
         }
         return $response;
     }
 
-    public function takePostById($postId){
+    public function takePostById($postId)
+    {
         $post = $this->postRepo->findById($postId);
         $post->update([
-            'access_times' => isset($post->access_times)?$post->access_times+1:1,
+            'access_times' => isset($post->access_times) ? $post->access_times + 1 : 1,
         ]);
-        return $post;
 
+        switch ($post->classify_id) {
+            case (REAL_ESTATE):
+                $response['postDetail'] = '<div class="row d-flex justify-content-center mainPost-content-section">
+                                                <div class="mainPost-content-title">
+                                                    Chi Tiết
+                                                </div>
+                                                <br>
+                                                <div class="row d-flex justify-content-center" style="width:100%; padding:0px;">
+                                                    <div class="d-flex justify-content-center detail-sec">
+                                                        <div style="width:50%;" class="d-flex justify-content-start ">
+                                                            <p style="font-weight:bold;" >Giá (&#8381) :</p>
+
+                                                        </div>
+                                                        <div style="width:50%;" class="d-flex justify-content-start ">
+                                                            <p class="long-detail-wrap">' . (isset($post->posts_classify->price) ? $post->posts_classify->price : 'Thương lượng') . '</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center detail-sec">
+                                                        <div style="width:50%;" class="d-flex justify-content-start">
+                                                            <p style="font-weight:bold;" >Diện tích (&#13217) :</p>
+
+                                                        </div>
+                                                        <div style="width:50%;" class="d-flex justify-content-start">
+                                                            <p class="long-detail-wrap">' . (isset($post->posts_classify->square) ? $post->posts_classify->square : 'Liên hệ') . '</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center detail-sec">
+                                                        <div style="width:50%;" class="d-flex justify-content-start">
+                                                            <p style="font-weight:bold;" > Địa chỉ nhà đất :</p>
+
+                                                        </div>
+                                                        <div style="width:50%;" class="d-flex justify-content-start">
+                                                            <p class="long-detail-wrap">' . (isset($post->posts_classify->address) ? $post->posts_classify->address : 'Liên hệ') . '</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center detail-sec">
+                                                        <div style="width:50%;" class="d-flex justify-content-start">
+                                                            <p style="font-weight:bold;" > Số phòng :</p>
+                                                        </div>
+                                                        <div style="width:50%;" class="d-flex justify-content-start">
+                                                            <p class="long-detail-wrap">' . (isset($post->posts_classify->number_room) ? $post->posts_classify->number_room : 'Liên hệ') . '</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>';
+                break;
+
+            case (SERVICE):
+                // switch ($post->posts_classify->classify_type_id) {
+                //     case (SERVICE_DOCUMENT):
+
+                //         break;
+                //     case (SERVICE_MEDICAL):
+                //         break;
+                //     case (SERVICE_EDU):
+                //         break;
+                //     case (SERVICE_TRAVEL):
+                //         break;
+                // }
+                // dd($post->posts_classify->services_type);
+                $response['postDetail'] = '';
+                break;
+
+            case (JOB):
+                $response['postDetail'] = '<div class="row d-flex justify-content-center mainPost-content-section">
+                                                <div class="mainPost-content-title">
+                                                    Chi Tiết
+                                                </div>
+                                                <br>
+                                                <div class="row d-flex justify-content-center" style="width:100%; padding:0px;">
+                                                    <div class="d-flex justify-content-center detail-sec">
+                                                        <div style="width:50%;" class="d-flex justify-content-start ">
+                                                            <p style="font-weight:bold;" >Nơi làm việc:</p>
+
+                                                        </div>
+                                                        <div style="width:50%;" class="d-flex justify-content-start ">
+                                                            <p class="long-detail-wrap">' . (isset($post->posts_classify->address_working) ? $post->posts_classify->address_working : 'Liên hệ') . '</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center detail-sec">
+                                                        <div style="width:50%;" class="d-flex justify-content-start">
+                                                            <p style="font-weight:bold;" >Lương (&#8381) :</p>
+
+                                                        </div>
+                                                        <div style="width:50%;" class="d-flex justify-content-start">
+                                                            <p class="long-detail-wrap">' . (isset($post->posts_classify->salary) ? $post->posts_classify->salary : 'Thương lượng') . '</p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>';
+                break;
+
+            case (CAR_TRADE):
+                $response['postDetail'] = '<div class="row d-flex justify-content-center mainPost-content-section">
+                                                <div class="mainPost-content-title">
+                                                    Chi Tiết
+                                                </div>
+                                                <br>
+                                                <div class="row d-flex justify-content-center" style="width:100%; padding:0px;">
+                                                    <div class="d-flex justify-content-center detail-sec">
+                                                        <div style="width:50%;" class="d-flex justify-content-start ">
+                                                            <p style="font-weight:bold;" >Địa chỉ bán xe :</p>
+
+                                                        </div>
+                                                        <div style="width:50%;" class="d-flex justify-content-start ">
+                                                            <p class="long-detail-wrap">' . (isset($post->posts_classify->address_trading) ? $post->posts_classify->address_trading : 'Liên hệ') . '</p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                        </div>';
+                break;
+
+            case (RESTAURANT):
+                $response['postDetail'] = '<div class="row d-flex justify-content-center mainPost-content-section">
+                                                    <div class="mainPost-content-title">
+                                                        Chi Tiết
+                                                    </div>
+                                                    <br>
+                                                    <div class="row d-flex justify-content-center" style="width:100%; padding:0px;">
+                                                        <div class="d-flex justify-content-center detail-sec">
+                                                            <div style="width:50%;" class="d-flex justify-content-start ">
+                                                                <p style="font-weight:bold;" >Địa chỉ nhà hàng :</p>
+
+                                                            </div>
+                                                            <div style="width:50%;" class="d-flex justify-content-start ">
+                                                                <p class="long-detail-wrap">' . (isset($post->posts_classify->restaurant_address) ? $post->posts_classify->restaurant_address : 'Liên hệ') . '</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-center detail-sec">
+                                                            <div style="width:50%;" class="d-flex justify-content-start">
+                                                                <p style="font-weight:bold;" >Hóa đơn trung bình (&#8381) :</p>
+
+                                                            </div>
+                                                            <div style="width:50%;" class="d-flex justify-content-start">
+                                                                <p class="long-detail-wrap">' . (isset($post->posts_classify->average_bill) ? $post->posts_classify->average_bill : 'Liên hệ') . '</p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                            </div>';
+                break;
+
+            case (AD):
+                $response['postDetail'] = '<div class="row d-flex justify-content-center mainPost-content-section">
+                                                <div class="mainPost-content-title">
+                                                    Chi Tiết
+                                                </div>
+                                                <br>
+                                                <div class="row d-flex justify-content-center" style="width:100%; padding:0px;">
+                                                    <div class="d-flex justify-content-center detail-sec">
+                                                    <div style="width:50%;" class="d-flex justify-content-start ">
+                                                        <p style="font-weight:bold;" >Thông tin quảng cáo :</p>
+
+                                                    </div>
+                                                    <div style="width:50%;" class="d-flex justify-content-start ">
+                                                        <p class="long-detail-wrap">' . (isset($post->posts_classify->adContent) ? $post->posts_classify->adContent : 'Liên hệ') . '</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>';
+                break;
+        }
+        $response['post'] = $post;
+
+        // dd($post->posts_classify);
+
+        return $response;
     }
 }

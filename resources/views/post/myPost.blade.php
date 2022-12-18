@@ -129,7 +129,7 @@
 
                         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
                             <hr />
-                            <div class="row d-flex justify-content-center" style="margin:auto; padding:auto;">
+                            <div class="row d-flex justify-content-center" style="margin:10px 0px; padding:auto;">
                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center"
                                     id="newFeed-post-{{ $post->id }}" style="width : 33%; margin:auto;">
                                     @if ($post->checkPostLiked(Admin::user()->id, $post->id))
@@ -231,7 +231,7 @@
                             var userId = {{ Admin::user() !== null ? Admin::user()->id : 0 }};
                             if (!e.liked) {
                                 interactBtns = `<hr />
-                                            <div class="row d-flex justify-content-center">
+                                            <div class="row d-flex justify-content-center" style="margin:10px 0px; padding:auto;">
                                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}" style="width : 33%; margin:auto;">
                                                     <i class="fa-regular fa-heart fa-xl interact-icon2" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
                                                 </div>
@@ -251,7 +251,7 @@
                             } else {
                                 interactBtns = `
                                             <hr />
-                                            <div class="row d-flex justify-content-center">
+                                            <div class="row d-flex justify-content-center" style="margin:10px 0px; padding:auto;">
                                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}" style="width : 33%; margin:auto;">
                                                     <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
                                                 </div>

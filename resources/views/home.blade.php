@@ -323,21 +323,23 @@
                         </div>
 
                         @if (Admin::user() !== null && Admin::user()->isRole(ROLE_USER))
-                            <hr />
+                            <hr/>
                             <div class="row newFeed-interact-sec2 d-flex justify-content-center"
                                 id="newFeed-post-{{ $post->id }}">
                                 @if ($post->checkPostLiked(Admin::user()->id, $post->id))
-                                    <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2"
+                                    <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2 "
                                         onclick="unlikePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
                                 @else
                                     <i class="fa-regular fa-heart fa-xl interact-icon2"
                                         onclick="likePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
                                 @endif
                             </div>
+                            <hr/>
                         @endif
 
-                        <hr />
+
                         <div id="commentSec-post-{{$post->id}}" class="row justify-content-center mx-0 my-0" style="display:none;">
+
                             <div class="row d-block justify-content-center mx-0 my-2"
                                 id="postComment-{{ $post->id }}">
                             </div>
@@ -377,8 +379,8 @@
                                         </div>
 
                                         <div style="width:100%; position:relative; height:60px;">
-                                            <textarea id="post-{{ $post->id }}-commnentRating-comment" class="form-control"
-                                                style="min-height : 50px; height: 60px; position: absolute; top:0px; left:0px; resize: none; overflow:auto;" value="">
+                                            <textarea type="text" id="post-{{ $post->id }}-commnentRating-comment" class="form-control data-field"
+                                                style="min-height : 50px; height: 60px; position: absolute; top:0px; left:0px; resize: none; overflow:auto;">
                                             </textarea>
 
                                             <div class="row d-flex justify-content-center" style=" position: absolute; bottom:5px; right:20px;">
@@ -535,13 +537,13 @@
                             var userId = {{ Admin::user() !== null ? Admin::user()->id : 0 }};
                             if (!e.liked) {
                                 likeIcon = `<hr /><div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}">
-                                                <i class="fa-regular fa-heart fa-xl interact-icon2" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
-                                            </div>`;
+                                                <i class="fa-regular fa-heart fa-xl interact-icon2  icon-align" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
+                                            </div><hr />`;
                                 // `<i class="fa-regular fa-heart" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
                             } else {
                                 likeIcon = `<hr /><div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}">
-                                                <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
-                                            </div>`;
+                                                <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2  icon-align" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
+                                            </div><hr />`;
                                 // `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
                             }
                         }
@@ -673,7 +675,6 @@
 
                                                             ${likeIcon}
 
-                                                            <hr />
                                                             <div id="commentSec-post-${e.id}" class="row justify-content-center mx-0 my-0" style="display:none;">
                                                                 <div class="row d-block justify-content-center mx-0 my-2"
                                                                     id="postComment-${e.id}">
