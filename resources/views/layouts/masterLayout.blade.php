@@ -116,6 +116,10 @@
         });
     }
 
+    function editPost(url){
+        window.location.href = url;
+    }
+
     function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);

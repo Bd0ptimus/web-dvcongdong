@@ -144,7 +144,7 @@
                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center"
                                     style="width:33%; margin:auto;">
                                     <i class="fa-solid fa-pen-to-square fa-xl interact-icon2" style="color:#1d8daf"
-                                        onclick="editMyPost({{ $post->id }}, 'myPost-{{ $post->id }}')"></i>
+                                        onclick="editPost('{{route('post.editPost',['postId'=>$post->id])}}')"></i>
                                 </div>
 
                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center"
@@ -171,6 +171,8 @@
         </div>
 
     </div>
+    @include('templates.notification.toast');
+
 </body>
 
 <script>
@@ -238,7 +240,7 @@
                                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center"
                                                     style="width:33%; margin:auto;">
                                                     <i class="fa-solid fa-pen-to-square fa-xl interact-icon2" style="color:#1d8daf"
-                                                        onclick="editMyPost(${e.id}, 'myPost-${e.id}')"></i>
+                                                        onclick="editPost('${e.postEditUrl}')"></i>
                                                 </div>
 
                                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center"
@@ -258,7 +260,7 @@
                                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center"
                                                     style="width:33%; margin:auto;">
                                                     <i class="fa-solid fa-pen-to-square fa-xl interact-icon2" style="color:#1d8daf"
-                                                        onclick="editMyPost(${e.id}, 'myPost-${e.id}')"></i>
+                                                        onclick="editPost('${e.postEditUrl}')"></i>
                                                 </div>
 
                                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center"

@@ -18,34 +18,24 @@
                     </div>
                 </div>
                 <h3 class="newPost-header newPost-text">
-                    {{ $header }}
+                    CHỈNH SỬA BÀI VIẾT
                 </h3>
             </div>
 
             <div class="row d-flex justify-content-center" style="width: 100%; padding:15px 0px;">
-                <div class="row">
-                    @if ($haveTitle)
-                        <h3 class="newPost-title newPost-text">
-                            Chuyên mục bạn đã chọn : {{ $title }}
-                        </h3>
-                    @endif
-                </div>
                 <div class="row" style="margin : 30px 0px;">
                     <form id="newPostForm" class="login100-form validate-form" name="login"
-                        action="{{ route('post.freeUpload', ['classify' => $classify, 'classifyType' => $classifyType]) }}"
+                        action="{{ route('post.editPost', ['postId' => $post->id]) }}"
                         method="post" enctype="multipart/form-data"> @csrf
-                        {{-- <input type="text" class="data-field" name="classify" value="{{ $classify }}"
-                            style="display:none;" />
-                        <input type="text" class="data-field" name="classifyType" value="{{ $classifyType }}"
-                            style="display:none;" /> --}}
                         <div class="row d-flex justify-content-center" style="width:100%; margin:auto;">
                             <div class="row d-flex justify-content-start">
                                 <div class="filter-section">
                                     <h5 class="row">
                                         <span class="form-text">Đăng tin từ ngày đến ngày</span>
                                     </h5>
-                                    <input type="text" class="data-field" name="daterange" />
+                                    <input type="text" class="data-field" name="daterange" id="editPostDateRangePicker"/>
                                 </div>
+                                {{-- {{dd(date('d/m/Y', strtotime($post->exist_from)).' - '.date('d/m/Y', strtotime($post->exist_to)))}}   value="{{date('d/m/Y', strtotime($post->exist_from))}} - {{date('d/m/Y', strtotime($post->exist_to))}}" --}}
                                 <div class="filter-section">
                                     <h5 class="row">
                                         <span class="form-text">Thành phố </span>
@@ -54,7 +44,7 @@
                                         id="createPost-city-select">
                                         <option value="0">Tất cả</option>
                                         @foreach ($cities as $city)
-                                            <option value="{{ $city->id }}">{{ $city->city }}</option>
+                                            <option value="{{ $city->id }}" @if($post->city_id == $city->id) selected @endif>{{ $city->city }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -67,28 +57,28 @@
                                             <span class="form-text">Giá (&#8381)</span>
                                         </h5>
                                         <input type="text" class="data-field" name="realEstatePrice"
-                                            id="createPost-realEstate-price" />
+                                            id="createPost-realEstate-price" value="{{isset($post->posts_classify->price)?$post->posts_classify->price:''}}"/>
                                     </div>
                                     <div class="filter-section">
                                         <h5 class="row">
                                             <span class="form-text">Diện tích (&#13217)</span>
                                         </h5>
                                         <input type="text" class="data-field" name="realEstateSquare"
-                                            id="createPost-realEstate-square" />
+                                            id="createPost-realEstate-square"  value="{{isset($post->posts_classify->square)?$post->posts_classify->square:''}}"/>
                                     </div>
                                     <div class="filter-section">
                                         <h5 class="row">
                                             <span class="form-text">Địa chỉ nhà đất</span>
                                         </h5>
                                         <input type="text" class="data-field" name="realEstateAddress"
-                                            id="createPost-realEstate-address" />
+                                            id="createPost-realEstate-address" value="{{isset($post->posts_classify->address)?$post->posts_classify->address:''}}"/>
                                     </div>
                                     <div class="filter-section">
                                         <h5 class="row">
                                             <span class="form-text">Số phòng</span>
                                         </h5>
                                         <input type="text" class="data-field" name="realEstateNumberRoom"
-                                            id="createPost-realEstate-numberRoom" />
+                                            id="createPost-realEstate-numberRoom" value="{{isset($post->posts_classify->number_room)?$post->posts_classify->number_room:''}}"/>
                                     </div>
                                 </div>
                             @endif
@@ -140,7 +130,7 @@
                                             <span class="form-text">Địa chỉ nhà hàng</span>
                                         </h5>
                                         <input type="text" class="data-field" name="restaurantAddress"
-                                            id="createPost-restaurant-address" />
+                                            id="createPost-restaurant-address" value="{{isset($post->posts_classify->restaurant_address)?$post->posts_classify->restaurant_address:''}}"/>
                                     </div>
 
                                     <div class="filter-section">
@@ -148,7 +138,7 @@
                                             <span class="form-text">Hoá đơn trung bình (&#8381)</span>
                                         </h5>
                                         <input type="number" class="data-field" name="restaurantAverageBill"
-                                            id="createPost-restaurant-bill"/>
+                                            id="createPost-restaurant-bill" value="{{isset($post->posts_classify->average_bill)?$post->posts_classify->average_bill:''}}"/>
 
                                     </div>
                                 </div>
@@ -161,7 +151,7 @@
                                             <span class="form-text">Thông tin quảng cáo</span>
                                         </h5>
                                         <input type="text" class="data-field" name="adContent"
-                                            id="createPost-ad-content" />
+                                            id="createPost-ad-content" value="{{isset($post->posts_classify->adContent)?$post->posts_classify->adContent:''}}"/>
                                     </div>
                                 </div>
                             @endif
@@ -172,7 +162,7 @@
                                         <span class="form-text">Tiêu đề<span class="text-danger">(*)</span></span>
                                     </h5>
 
-                                    <input type="text" class="data-field" name="title" id="createPost-title" />
+                                    <input type="text" class="data-field" name="title" id="createPost-title" value="{{$post->title}}"/>
                                 </div>
 
                                 <div class="important-field">
@@ -180,7 +170,7 @@
                                         <span class="form-text">Mô tả<span class="text-danger">(*)</span></span>
                                     </h5>
                                     <textarea type="text" class="data-field" name="description" style="min-height: 150px;"
-                                        id="createPost-description"></textarea>
+                                        id="createPost-description" >{{($post->description)}}</textarea>
                                 </div>
                             </div>
                             @if ($classify == JOB)
@@ -190,7 +180,7 @@
                                             <span class="form-text">Nơi làm việc</span>
                                         </h5>
                                         <input type="text" class="data-field" name="jobAddress"
-                                            id="createPost-job-city" />
+                                            id="createPost-job-city" value="{{isset($post->posts_classify->address_working)?$post->posts_classify->address_working:''}}"/>
                                     </div>
 
                                     <div class="filter-section">
@@ -198,7 +188,7 @@
                                             <span class="form-text">Lương (&#8381)</span>
                                         </h5>
                                         <input type="number" class="data-field" name="jobSalary"
-                                            id="createPost-job-salary"/>
+                                            id="createPost-job-salary" value="{{isset($post->posts_classify->salary)?$post->posts_classify->salary:''}}"/>
 
                                     </div>
                                 </div>
@@ -212,7 +202,7 @@
                                             <span class="form-text">Địa chỉ bán xe</span>
                                         </h5>
                                         <input type="text" class="data-field" name="carTradeAddress"
-                                            id="createPost-carTrade-city" />
+                                            id="createPost-carTrade-city" value="{{isset($post->posts_classify->address_trading)?$post->posts_classify->address_trading :''}}"/>
                                     </div>
                                 </div>
                             @endif
@@ -267,7 +257,12 @@
                                             </div>
                                             <div class="row d-flex justify-content-center"
                                                 id="desPhotoUpload-preview-sec">
-
+                                                @foreach($images as $key=>$image)
+                                                    <div class="preview-image-sec" >
+                                                        <img class="upload-image" src="{{$image}}" alt="logo upload">
+                                                        <i class="previewImage-delete-icon fa-solid fa-square-xmark fa-xl" onclick="removePreviewImageInMultiple({{$key}}, 'desPhotoUpload-preview-sec', 'desPhotoUpload')"></i>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -279,24 +274,24 @@
                                     <h5 class="row">
                                         <span class="form-text">Tên người liên hệ</span>
                                     </h5>
-                                    <input type="text" class="data-field" value="{{ Admin::user()->name }}"
+                                    <input type="text" class="data-field" value="{{ $post->user->name }}"
                                         disabled />
                                 </div>
                                 <div class="filter-section">
                                     <h5 class="row">
                                         <span class="form-text">Email người liên hệ</span>
                                     </h5>
-                                    <input type="text" class="data-field" value="{{ Admin::user()->email }}"
+                                    <input type="text" class="data-field" value="{{ $post->user->email }}"
                                         disabled />
                                 </div>
 
-                                @if(isset(Admin::user()->phone_number))
+                                @if(isset($post->user->phone_number))
                                     <div class="filter-section">
                                         <h5 class="row">
                                             <span class="form-text">Số điện thoại liên hệ 1</span>
                                         </h5>
                                         <input type="text" class="data-field"
-                                            value="{{ Admin::user()->phone_number }}" disabled />
+                                            value="{{ $post->user->phone_number }}" disabled />
                                     </div>
 
 
@@ -305,7 +300,7 @@
                                             <span class="form-text">Số điện thoại liên hệ 2</span>
                                         </h5>
                                         <input type="text" id="contactPhone" class="data-field" name="contactPhone"
-                                            value="" style="margin:10px 0px; width:100%;" />
+                                            value="{{isset($post->contact_phone_number)?$post->contact_phone_number:''}}" style="margin:10px 0px; width:100%;" />
                                     </div>
                                 @else
                                     <div class="filter-section">
@@ -313,15 +308,14 @@
                                             <span class="form-text">Số điện thoại liên hệ<span class="text-danger">(*)</span></span>
                                         </h5>
                                         <input type="text" id="contactPhone" class="data-field" name="contactPhone"
-                                            value="" style="margin:10px 0px; width:100%;" />
+                                            style="margin:10px 0px; width:100%;" value="{{isset($post->contact_phone_number)?$post->contact_phone_number:''}}"/>
                                     </div>
                                 @endif
-
                                 <div class="filter-section">
                                     <h5 class="row">
                                         <span class="form-text">Địa chỉ người liên hệ</span>
                                     </h5>
-                                    <input type="text" class="data-field" name="contactAddress" value="" />
+                                    <input type="text" class="data-field" name="contactAddress" value="{{isset($post->contact_address)?$post->contact_address:''}}"/>
                                 </div>
                             </div>
                         </div>
@@ -366,8 +360,10 @@
     });
 
     $(function() {
+        console.log('date picker start date : ', '{{date('d/m/Y', strtotime($post->exist_to))}}');
         $('input[name="daterange"]').daterangepicker({
             opens: 'right',
+            // autoUpdateInput: false,
             locale: {
                 format: 'DD/MM/YYYY',
                 separator: '  - ',
@@ -399,11 +395,17 @@
                     'Tháng 11',
                     'Tháng 12',
                 ],
-            }
-        }, function(start, end, label) {
-            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                .format('YYYY-MM-DD'));
-        });
+
+            },
+
+
+        },
+        // function(start, end, label) {
+        //     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
+        //         .format('YYYY-MM-DD'));
+        // }
+
+        );
     });
 
 
@@ -431,6 +433,7 @@
                 desPhotoExist.items.add(file) // here you exclude the file. thus removing it.
             }
         }
+        console.log('desPhotoExist after remove : ', desPhotoExist.files);
         input.files = desPhotoExist.files;
         // desPhotoExist.files = dt.files;
         $(`#${idForRemove}`).empty();
@@ -573,8 +576,50 @@
         }
     }
 
-    $(document).ready(function() {
 
+    var takeFile = function(url){
+        return new Promise(async function(resolve, reject) {
+            var err=0;
+            let response = await fetch(url);
+            let data = await response.blob();
+            let metadata = {
+                type: 'image/jpeg'
+            };
+            var fileName = url.split('/').pop();
+            let file = new File([data], fileName, metadata);
+            desPhotoExist.items.add(file);
+            // console.log('desPhotoExist in takeFile');
+            if(response == null){
+                reject('not ok');
+            }else{
+                resolve('ok');
+            }
+        })
+
+    }
+
+
+    async function addExistedImgFromBackend(){
+        var imagesExisted = @json($images);
+        imagesExisted.forEach(function(e){
+            takeFile(e).then(function(){
+                console.log('desPhoto : ', desPhotoExist.files);
+                document.getElementById('desPhotoUpload').files = desPhotoExist.files;
+                // //Test
+                // console.log("multiple file after load from back end: ");
+                // const filecheckafter = document.getElementById('desPhotoUpload').files;
+                // for (let i = 0; i < filecheckafter.length; i++) {
+                //     console.log('file : ', filecheckafter[i]);
+                // }
+            });
+        })
+
+    }
+
+    $(document).ready(async function() {
+        await addExistedImgFromBackend();
+        $('#editPostDateRangePicker').data('daterangepicker').setStartDate('{{date('d/m/Y', strtotime($post->exist_from))}}');
+        $('#editPostDateRangePicker').data('daterangepicker').setEndDate('{{date('d/m/Y', strtotime($post->exist_to))}}');
 
         $('#createPost-btn').on('click', function() {
             validateCreatePostForm();
