@@ -46,6 +46,7 @@ class RealEstateService
         return $this->realEstateRepo->findById($id);
     }
 
+
     public function loadMoreRealEstate($numPage,$params){
 
         $posts = $this->postRepo->findPostsWithCondition($params,$numPage);

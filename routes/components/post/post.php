@@ -21,6 +21,8 @@ Route::group(['prefix' => 'post', 'as'=>'post.'], function($route){
     $route->post('/free-upload/{classify}/{classifyType}', [ PostsController::class, 'freeUpload'])->name('freeUpload');
     $route->post('/choose-topic', [ PostsController::class, 'checkTypeInsideClassify'])->name('chooseTopic');
     $route->post('delete-post',[ PostsController::class, 'deletePost'] )->name('deletePost');
+    $route->any('edit-post/{postId}',[ PostsController::class, 'editPost'] )->name('editPost');
+
     $route->group(['prefix'=>'post-category', 'as'=>'postCategory.'], function($route){
         $route->group(['prefix'=>'real-estate', 'as'=>'realEstate.'], function($route){
             $route->get('/',[RealEstateController::class, 'index'])->name('index');
@@ -67,10 +69,13 @@ Route::group(['prefix' => 'post', 'as'=>'post.'], function($route){
     });
 
     $route->get('/open/{postId}',[PostsController::class, 'mainPost'])->name('mainPost');
+    $route->get('/edit-confirm/{postId}/{confirm}',[PostsController::class, 'editConfirm'])->name('editConfirm');
+
     $route->group(['prefix' => 'comment', 'as'=>'comment.'], function ($route){
         $route->post('/upload-comment',[PostCommentController::class, 'addNewComment'])->name('uploadComment');
         $route->get('/load-comment',[PostCommentController::class, 'loadComment'])->name('loadComment');
         $route->get('/load-comment-test/{postId}/{step}',[PostCommentController::class, 'loadCommentTest'])->name('loadCommentTest');
 
     });
+
 });

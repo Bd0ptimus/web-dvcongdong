@@ -21,6 +21,18 @@
                 <h3 class="newPost-header newPost-text">
                     {{ $post->title }}
                 </h3>
+                @if(Admin::user()!==null && $post->user->id == Admin::user()->id)
+                    <div style="height:100%; width:30px; position:absolute; top:0px; right:30px;" class="vertical-container">
+                        <div style="height:30px; width:30px; border:0px; border-radius:50%; cursor:pointer; position:relative;" class="vertical-element-middle-align dropdown show" >
+                            <a href="{{route('post.editPost',['postId'=>$post->id])}}"><i   style="color:white; width:100%; height:100%; padding:12px 0px;" class="fa-solid fa-ellipsis fa-2xl"></i></a>
+                            {{-- <div id="mainPostMoreSelection" class="dropdown-menu" style=" position:absolute; top:20px; right:0px; display:none;">
+                                <a class="dropdown-item" >Action</a>
+                                <a class="dropdown-item" >Another action</a>
+                                <a class="dropdown-item" >Something else here</a>
+                            </div> --}}
+                        </div>
+                    </div>
+                @endif
             </div>
 
             @php
@@ -58,14 +70,14 @@
             @endphp
 
             <div class="row d-flex justify-content-center" style="width: 100%; padding:15px 0px;">
-                <div class="row d-flex justify-content-center">
+                <div class="row d-flex justify-content-center" style="z-index:1 !important;">
                     @if (sizeof($post->post_attachments) != 0)
                         <div style="padding:0px; width: 100%;" class="d-flex justify-content-center">
                             <div class="swiper mySwiper">
                                 <div class="swiper-wrapper">
                                     @foreach ($post->post_attachments as $key => $attachment)
                                         <div class="swiper-slide ">
-                                            <img class="newFeed-image2" src={{ $attachment->attachment_path }}>
+                                            <img class="newFeed-image2" src={{ $attachment->attachment_path }} style="z-index:1;">
                                         </div>
                                     @endforeach
                                 </div>
@@ -305,7 +317,33 @@
 
     $(document).ready(function(){
         loadCommentOfPost({{$post->id}},0);
+
+        var sendMailComplete = "{{$complete??-1}}";
+        if(sendMailComplete!='-1'){
+            if(sendMailComplete == "0"){
+                $('#toast-fail-text').text('Có lỗi xảy ra!');
+                $('#notification-fail').toast('show');
+            }else if(sendMailComplete == "1"){
+                $('#toast-success-text').text('Thay đổi bài viết thành công!');
+                $('#notification-success').toast('show');
+            }
+        }
+
     });
+
+    function selectionMoreBtn(){
+        // console.log('check moreSelection',$('#mainPostMoreSelection').css('display'));
+        // if($('#mainPostMoreSelection').css('display') == 'block'){
+        //     console.log('aa');
+        //     $('#mainPostMoreSelection').css('display','none');
+        // }else{
+        //     console.log('bb');
+        //     $('#mainPostMoreSelection').css('display','block');
+
+        // }
+
+        // window.location.href = '{{route("auth.login")}}'
+    }
 </script>
 
 </html>

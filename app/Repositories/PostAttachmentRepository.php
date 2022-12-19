@@ -57,5 +57,12 @@ class PostAttachmentRepository extends BaseRepository
 
     }
 
+    public function checkAttachmentExistedInPost($postId, $name){
+        $images = $this->model->where('post_id', $postId)->where('attachment_path', 'LIKE', '%'.$name.'%')->first();
+        return count($images) > 0 ;
+    }
+
+
+
 
 }
