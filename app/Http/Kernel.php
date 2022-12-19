@@ -66,7 +66,5 @@ class Kernel extends HttpKernel
         'user.auth' =>\App\Http\Middleware\UserAccess::class,
         'admin.permission' => \App\Http\Middleware\AdminAccessPermission::class,
         'mypost.permission' => \App\Http\Middleware\MyPostAccessPermission::class,
-        'editpost.permission' => \App\Http\Middleware\EditPostAccessPermission::class,
-
     ];
 }

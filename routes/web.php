@@ -57,11 +57,6 @@ Route::get('/storage-link', function(){
     symlink($targetFolder, $linkFolder);
 });
 
-Route::any('/viewer/{url}', function(){
-    return view('templates.ViewerJs.index');
-})->name('Viewer');
-
-
 // Route::get('/test-sms',[SMSNotificationController::class, 'sendSmsNotification']);
 
 Auth::routes();

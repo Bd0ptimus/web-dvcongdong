@@ -195,29 +195,6 @@ class PostService
         }
     }
 
-    public function editPost($postId, $request){
-        DB::beginTransaction();
-        try{
-            $this->attachmentService->updatePostAttachments($postId, $request);
-            $post = $this->postRepo->updatePost($postId, $request);
-            DB::commit();
-            $data['error'] = 0;
-            $data['confirmText'] = '<p style="width:auto; font-weight:700;">Tin được đăng từ ngày ' . date('d/m/Y', strtotime($post->exist_from)) . ' đến ngày ' . date('d/m/Y', strtotime($post->exist_to)) . '</p>
-                                    <p style="width:auto; font-weight:700;">Bởi người dùng :</p><p>' . $post->user->name . ' </p>
-                                    <p style="width:auto; font-weight:700;">Số điện thoại liên hệ :</p><p>' . $post->contact_phone_number . ' </p>
-                                    <p style="width:auto; font-weight:700;">Email liên hệ :</p><p>' . $post->user->email . ' </p>
-                                    <p style="width:auto; font-weight:700;">Với tiêu đề : </p><p>' . $post->title . '</p>
-                                    <p style="width:auto; font-weight:700;">Với mô tả: </p><p>' . nl2br($post->description) . '</p>';
-            return $data;
-        }catch(Exception $e){
-            DB::rollBack();
-            Log::debug('processUploadNewPost : ' . $e);
-            $data['error'] = 1;
-            return $data;
-        }
-
-    }
-
     public function loadForNewFeed($numPage, $params = [])
     {
         return $this->postRepo->loadPostsForNewFeed($numPage, $params);
@@ -346,7 +323,7 @@ class PostService
                 }
             }
             $postData['postLink'] = route('post.mainPost', ['postId' => $post->id]);
-            $postData['postEditUrl'] = route('post.editPost',['postId'=>$post->id]);
+
             $postData['ownerName']  = $post->user->name;
             $postData['ownerId'] = $post->user->id;
 
@@ -420,10 +397,16 @@ class PostService
         return $response;
     }
 
-    private function takePostDetailHTML($post,$classify){
-        switch ($classify) {
+    public function takePostById($postId)
+    {
+        $post = $this->postRepo->findById($postId);
+        $post->update([
+            'access_times' => isset($post->access_times) ? $post->access_times + 1 : 1,
+        ]);
+
+        switch ($post->classify_id) {
             case (REAL_ESTATE):
-                return '<div class="row d-flex justify-content-center mainPost-content-section">
+                $response['postDetail'] = '<div class="row d-flex justify-content-center mainPost-content-section">
                                                 <div class="mainPost-content-title">
                                                     Chi Tiết
                                                 </div>
@@ -481,11 +464,11 @@ class PostService
                 //         break;
                 // }
                 // dd($post->posts_classify->services_type);
-                return '';
+                $response['postDetail'] = '';
                 break;
 
             case (JOB):
-                return'<div class="row d-flex justify-content-center mainPost-content-section">
+                $response['postDetail'] = '<div class="row d-flex justify-content-center mainPost-content-section">
                                                 <div class="mainPost-content-title">
                                                     Chi Tiết
                                                 </div>
@@ -515,7 +498,7 @@ class PostService
                 break;
 
             case (CAR_TRADE):
-                return'<div class="row d-flex justify-content-center mainPost-content-section">
+                $response['postDetail'] = '<div class="row d-flex justify-content-center mainPost-content-section">
                                                 <div class="mainPost-content-title">
                                                     Chi Tiết
                                                 </div>
@@ -536,7 +519,7 @@ class PostService
                 break;
 
             case (RESTAURANT):
-                return'<div class="row d-flex justify-content-center mainPost-content-section">
+                $response['postDetail'] = '<div class="row d-flex justify-content-center mainPost-content-section">
                                                     <div class="mainPost-content-title">
                                                         Chi Tiết
                                                     </div>
@@ -566,7 +549,7 @@ class PostService
                 break;
 
             case (AD):
-                return'<div class="row d-flex justify-content-center mainPost-content-section">
+                $response['postDetail'] = '<div class="row d-flex justify-content-center mainPost-content-section">
                                                 <div class="mainPost-content-title">
                                                     Chi Tiết
                                                 </div>
@@ -586,33 +569,10 @@ class PostService
                                         </div>';
                 break;
         }
-    }
-
-    public function takePostById($postId)
-    {
-        $post = $this->postRepo->findById($postId);
-        $post->update([
-            'access_times' => isset($post->access_times) ? $post->access_times + 1 : 1,
-        ]);
-        $response['postDetail'] = $this->takePostDetailHTML($post ,$post->classify_id);
-
         $response['post'] = $post;
 
         // dd($post->posts_classify);
 
         return $response;
-    }
-
-    public function takeDataForEdit($postId){
-        $response['post'] = $this->postRepo->findById($postId);
-        $response['classify'] =  $response['post'] -> classify_id;
-        $response['images']=[];
-        $response['cities'] = $this->cityService->takeAllCity();
-
-        foreach($response['post']->post_attachments as $image){
-            array_push($response['images'], strval(asset($image->attachment_path)));
-        }
-        return $response;
-
     }
 }

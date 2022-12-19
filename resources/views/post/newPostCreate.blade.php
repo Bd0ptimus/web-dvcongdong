@@ -64,14 +64,14 @@
                                 <div class="row d-flex justify-content-start" id="realEstate-form-sec">
                                     <div class="filter-section">
                                         <h5 class="row">
-                                            <span class="form-text">Giá (&#8381)</span>
+                                            <span class="form-text">Giá</span>
                                         </h5>
                                         <input type="text" class="data-field" name="realEstatePrice"
                                             id="createPost-realEstate-price" />
                                     </div>
                                     <div class="filter-section">
                                         <h5 class="row">
-                                            <span class="form-text">Diện tích (&#13217)</span>
+                                            <span class="form-text">Diện tích</span>
                                         </h5>
                                         <input type="text" class="data-field" name="realEstateSquare"
                                             id="createPost-realEstate-square" />

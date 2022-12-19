@@ -20,12 +20,8 @@ class PostsController extends Controller
     PostService $postService){
         // dd($request->route()->parameter('userId'));
         $userId = $request->route()->parameter('userId');
-        $postId = $request->route()->parameter('postId');
-
         $this->middleware('user.auth')->except(['mainPost']);
         $this->middleware("mypost.permission:$userId")->only(['myPostIndex']);
-        $this->middleware("editpost.permission:$postId")->only(['editPost']);
-
         $this->classifyService = $classifyService;
         $this->postService = $postService;
     }
@@ -110,37 +106,9 @@ class PostsController extends Controller
         return response()->json(['error' => 0, 'msg' => 'Xóa my post thành công', 'data' => $data ]);
     }
 
-    public function editPost(Request $request, $postId){
-        if($request->isMethod('POST')){
-            $response = $this->postService->editPost($postId, $request);
-            if($response['error'] == 0){
-                $complete = 1;
-            }else{
-                $complete = 0;
-            }
-            return Redirect()->route('post.editConfirm',['postId'=>$postId, 'confirm'=>$complete]);
-        }
-        $data = $this->postService->takeDataForEdit($postId);
-        return view('post.editPost',
-            [
-                'post'=>$data['post'],
-                'classify'=>$data['classify'],
-                'images'=>$data['images'],
-                'cities'=>$data['cities']
-            ]);
-
-    }
-
-    public function editConfirm(Request $request, $postId, $confirm){
-        $post = $this->postService->takePostById($postId);
-        return view('post.mainPost',['post'=> $post['post'], 'postDetail'=>$post['postDetail'], 'complete'=>$confirm]);
-    }
-
     public function mainPost(Request $request, $postId){
         $post = $this->postService->takePostById($postId);
         return view('post.mainPost',['post'=> $post['post'], 'postDetail'=>$post['postDetail']]);
     }
-
-
 
 }

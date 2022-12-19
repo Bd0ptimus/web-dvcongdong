@@ -40,5 +40,4 @@ class RealEstateRepository extends BaseRepository
 
 
 
-
 }
