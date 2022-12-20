@@ -8,7 +8,7 @@
 <link href="{{ asset('css/post/chooseTopic.css?v=') . time() }}" rel="stylesheet">
 <link href="{{ asset('css/search/index.css?v=') . time() }}" rel="stylesheet">
 
-<body style="position:relative;">
+<body class="bodyside">
     <div class="project-content-section ">
         <div class="row chooseTopic-main d-flex justify-content-center">
             <div class="row chooseTopic-header-sec" style="width: 100%; padding:20px 0px;">
@@ -296,6 +296,7 @@
     let swiper = new Swiper(".mySwiper", {
         pagination: {
             el: ".swiper-pagination",
+            dynamicBullets: true,
         },
         navigation: {
             nextEl: ".swiper-button-next",
@@ -307,6 +308,7 @@
         swiper = new Swiper(`.mySwiper${numberLoadingStep-1}`, {
             pagination: {
                 el: ".swiper-pagination",
+                dynamicBullets: true,
             },
             navigation: {
                 nextEl: ".swiper-button-next",

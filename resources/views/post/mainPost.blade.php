@@ -9,9 +9,9 @@
 <link href="{{ asset('css/post/mainPost.css?v=') . time() }}" rel="stylesheet">
 <link href="{{ asset('css/post/newPostCreate.css?v=') . time() }}" rel="stylesheet">
 
-<body>
-    <div class="project-content-section d-flex justify-content-center">
-        <div class="row mainPost-main d-flex justify-content-center" style=" padding:0px; margin-bottom:50px;">
+<body class="bodyside">
+    <div class="project-content-section d-flex justify-content-center" onclick="pageOnclick()">
+        <div class="row mainPost-main d-flex justify-content-center" style=" padding:0px; margin-bottom:50px; z-index:0;">
             <div class="row newPost-header-sec" style="width: 100%; padding:20px 0px; position:relative;">
                 <div style="height:100%; width:30px; position:absolute; top:0px; left:10px;" class="vertical-container">
                     <div style="height:30px; width:30px; border:0px; border-radius:50%; cursor:pointer;" class="vertical-element-middle-align" onclick="history.back()">
@@ -24,17 +24,16 @@
                 @if(Admin::user()!==null && $post->user->id == Admin::user()->id)
                     <div style="height:100%; width:30px; position:absolute; top:0px; right:30px;" class="vertical-container">
                         <div style="height:30px; width:30px; border:0px; border-radius:50%; cursor:pointer; position:relative;" class="vertical-element-middle-align dropdown show" >
-                            <a href="{{route('post.editPost',['postId'=>$post->id])}}"><i   style="color:white; width:100%; height:100%; padding:12px 0px;" class="fa-solid fa-ellipsis fa-2xl"></i></a>
-                            {{-- <div id="mainPostMoreSelection" class="dropdown-menu" style=" position:absolute; top:20px; right:0px; display:none;">
-                                <a class="dropdown-item" >Action</a>
-                                <a class="dropdown-item" >Another action</a>
-                                <a class="dropdown-item" >Something else here</a>
-                            </div> --}}
+                            <a onclick="selectionMoreBtn()"><i   style="color:white; width:100%; height:100%; padding:12px 0px;" class="fa-solid fa-ellipsis fa-2xl "></i></a>
+                            <div id="mainPostMoreSelection" class="dropdown-menu dropdownSelection">
+                                <a class="dropdown-item" href="{{route('post.editPost',['postId'=>$post->id])}}"><i class="fa-solid fa-pen-to-square"></i> <span>Chỉnh sửa bài viết</span></a>
+                            </div>
+
                         </div>
                     </div>
                 @endif
             </div>
-
+            {{-- href="{{route('post.editPost',['postId'=>$post->id])}}" class="dropdown-menu" --}}
             @php
                 $avatarPath = 'storage/avatar-sample/ava1.jpg';
                 if ($post->user->user_avatar != null) {
@@ -70,14 +69,14 @@
             @endphp
 
             <div class="row d-flex justify-content-center" style="width: 100%; padding:15px 0px;">
-                <div class="row d-flex justify-content-center" style="z-index:1 !important;">
+                <div class="row d-flex justify-content-center mainPostImgSlide">
                     @if (sizeof($post->post_attachments) != 0)
                         <div style="padding:0px; width: 100%;" class="d-flex justify-content-center">
-                            <div class="swiper mySwiper">
+                            <div class="swiper mySwiper" >
                                 <div class="swiper-wrapper">
                                     @foreach ($post->post_attachments as $key => $attachment)
                                         <div class="swiper-slide ">
-                                            <img class="newFeed-image2" src={{ $attachment->attachment_path }} style="z-index:1;">
+                                            <img class="newFeed-image2" src={{ $attachment->attachment_path }} style="z-index:1!important;">
                                         </div>
                                     @endforeach
                                 </div>
@@ -89,6 +88,20 @@
                         </div>
                     @endif
                 </div>
+                {{-- <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">Slide 1</div>
+                      <div class="swiper-slide">Slide 2</div>
+                      <div class="swiper-slide">Slide 3</div>
+                      <div class="swiper-slide">Slide 4</div>
+                      <div class="swiper-slide">Slide 5</div>
+                      <div class="swiper-slide">Slide 6</div>
+                      <div class="swiper-slide">Slide 7</div>
+                      <div class="swiper-slide">Slide 8</div>
+                      <div class="swiper-slide">Slide 9</div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div> --}}
 
                 <div class="row newFeed-content-small-sec2 d-flex justify-content-around w-100">
 
@@ -303,11 +316,52 @@
     @include('templates.notification.toast');
 
 </body>
+<style>
+    #mainPostMoreSelection{
+        z-index: 1000 !important;
+    }
+    .mySwiper{
+        z-index: 1 !important;
+    }
+
+      /* .swiper {
+        width: 100%;
+        height: 100%;
+        z-index:1 !important;
+      }
+
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: gray;
+
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      } */
+</style>
 <script>
     var numberLoadingStep = 1;
     let swiper = new Swiper(".mySwiper", {
         pagination: {
             el: ".swiper-pagination",
+            dynamicBullets: true,
         },
         navigation: {
             nextEl: ".swiper-button-next",
@@ -316,6 +370,7 @@
     });
 
     $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
         loadCommentOfPost({{$post->id}},0);
 
         var sendMailComplete = "{{$complete??-1}}";
@@ -329,20 +384,43 @@
             }
         }
 
+
     });
 
+    var selectionClicked = false;
+    var selectionOpened = false;
     function selectionMoreBtn(){
-        // console.log('check moreSelection',$('#mainPostMoreSelection').css('display'));
-        // if($('#mainPostMoreSelection').css('display') == 'block'){
-        //     console.log('aa');
-        //     $('#mainPostMoreSelection').css('display','none');
-        // }else{
-        //     console.log('bb');
-        //     $('#mainPostMoreSelection').css('display','block');
+        console.log('check moreSelection',$('#mainPostMoreSelection').css('display'));
+        if($('#mainPostMoreSelection').css('display') == 'block'){
+            $('.mainPostImgSlide').css('z-index', 0);
+            $('#mainPostMoreSelection').css('display','none');
+            selectionClicked =false;
+            selectionOpened=false;
+        }else{
+            console.log('avc');
+            $('.mainPostImgSlide').css('z-index', -1);
+            $('#mainPostMoreSelection').css('display','block');
+            selectionClicked =true;
 
-        // }
+        }
+        console.log('z-index : ',  $('.mainPostImgSlide').css('z-index'));
 
         // window.location.href = '{{route("auth.login")}}'
+    }
+
+    function pageOnclick(){
+        if(selectionClicked){
+            if(selectionOpened){
+                console.log('nv');
+                $('.mainPostImgSlide').css('z-index', 0);
+                $('#mainPostMoreSelection').css('display','none');
+                selectionOpened=false;
+
+            }else{
+                selectionOpened=true;
+            }
+        }
+
     }
 </script>
 

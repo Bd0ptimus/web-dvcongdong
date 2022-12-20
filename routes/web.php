@@ -49,7 +49,7 @@ Route::get('/header', function () {
     return view('layouts.header');
 });
 
-Route::get('/test', [TestClawler::class, 'fetchContent']);
+Route::get('/test', function(){return view('user.index');});
 
 Route::get('/storage-link', function(){
     $targetFolder = storage_path('app/public');

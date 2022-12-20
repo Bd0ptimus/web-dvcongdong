@@ -9,7 +9,7 @@
 {{-- <link href="{{ asset('css/mainScreen/index.css?v=') . time() }}" rel="stylesheet"> --}}
 <link href="{{ asset('css/post/postLiked.css?v=') . time() }}" rel="stylesheet">
 
-<body style="position:relative;">
+<body class="bodyside">
     <div class="project-content-section">
         <div class="row d-block justify-content-center" style="width:100%; margin:auto;">
             <div class="row d-flex justify-content-center" style="margin : 30px auto;">
@@ -224,6 +224,7 @@
     let swiper = new Swiper(".mySwiper", {
         pagination: {
             el: ".swiper-pagination",
+            dynamicBullets: true,
         },
         navigation: {
             nextEl: ".swiper-button-next",

@@ -619,8 +619,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 /*New feed v2*/
-#home-newFeed-sec{
-    background-color: #f8fafc;
+.bodyside{
+    position:relative;
+    background-color:#F0F2F5;
 }
 
 .newfeed-container2{

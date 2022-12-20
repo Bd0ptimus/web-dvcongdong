@@ -1,0 +1,157 @@
+
+@media screen and (min-width : 1020px) and (max-width: 10000px){
+    .user-image-sec{
+        width:20%;
+    }
+
+    .user-name-sec{
+        width:30%;
+    }
+
+    .user-action-sec{
+        width:50%;
+    }
+
+    .user-name-text{
+        justify-content: left;
+    }
+
+    .user-main-sec{
+        display:flex;
+
+    }
+}
+
+
+@media screen and (min-width : 820px) and (max-width: 1020px){
+    .user-image-sec{
+        width:20%;
+    }
+
+    .user-name-sec{
+        width:30%;
+    }
+
+    .user-action-sec{
+        width:50%;
+    }
+
+    .user-name-text{
+        justify-content: left;
+
+    }
+
+    .user-main-sec{
+        display:flex;
+
+    }
+
+}
+
+
+@media screen and (min-width : 450px) and (max-width: 820px){
+    .user-image-sec{
+        width:100%;
+    }
+
+    .user-name-sec{
+        width:100%;
+    }
+
+    .user-action-sec{
+        width:100%;
+    }
+
+    .user-name-text{
+        justify-content: center;
+
+    }
+
+    .user-main-sec{
+        display:block;
+
+    }
+}
+
+
+@media screen and (max-width: 450px){
+    .user-image-sec{
+        width:100%;
+    }
+
+    .user-name-sec{
+        width:100%;
+    }
+
+    .user-action-sec{
+        width:100%;
+    }
+
+    .user-name-text{
+        justify-content: center;
+
+    }
+
+    .user-main-sec{
+        display:block;
+    }
+
+}
+
+
+.user-main-sec{
+    margin: 100px 0px 10px;
+    width:80%;
+    max-width:1500px;
+    justify-content: center;
+}
+
+.user-image-showing-sec{
+    width:200px;
+    height:200px;
+    border-radius: 50%;
+}
+
+.user-image-showing{
+    width:200px;
+    height:200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border : solid 5px #F0F2F5;
+
+}
+
+.user-updateAvatar-sec{
+    position:absolute;
+    height:40px;
+    bottom: 20px;
+    right:25px;
+}
+
+
+.user-updateAvatar-showing-sec {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+
+.user-updateAvatar-showing-sec input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.user-updateAvatar{
+    background-color: #F0F2F5;
+    border-radius: 50%;
+    width:40px; height:40px;
+}
+
+.user-name-text{
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 10px;
+}
