@@ -6,10 +6,17 @@
     <div class="modal-dialog modal-dialog-centered " role="document"
         style="max-width: 1000px; width: 100%; margin : auto;">
         <div class="modal-content">
-            <div class="modal-header">
+            {{-- <div class="modal-header">
                 Kiểm tra cấm nhập cảnh
                 <span id="entryBan-modal-close" class="fs-4"><i class="fa-regular fa-circle-xmark"
                         style="float:right; width: 20px; height:20px; margin-right:5px;"></i></span>
+
+            </div> --}}
+
+            <div class="modal-header d-flex justify-content-center" style="position:relative;">
+                <h4 style="font-size:20px; font-weight:bold; text-align:center;">Kiểm tra cấm nhập cảnh</h4>
+                <span id="entryBan-modal-close" style=" position:absolute; right:10px; top:5px;" class="modal-close-btn d-flex justify-content-center">
+                    <i class="fa-solid fa-xmark fa-xl icon-align" ></i></span>
 
             </div>
 

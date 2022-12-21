@@ -29,6 +29,8 @@ require_once 'components/auth/auth.php';
 require_once 'components/admin/admin.php';
 require_once 'components/checking/checking.php';
 require_once 'components/warning/warning.php';
+require_once 'components/user/user.php';
+
 
 
 

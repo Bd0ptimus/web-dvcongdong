@@ -10,6 +10,8 @@
 
     .user-action-sec{
         width:50%;
+        height : 100%;
+
     }
 
     .user-name-text{
@@ -18,6 +20,28 @@
 
     .user-main-sec{
         display:flex;
+        width:60%;
+
+    }
+    .user-name-text{
+        position: -webkit-sticky;
+        position: absolute;
+        bottom: 10px;
+        left: 0px;
+    }
+
+    .user-action-btn-sec{
+        justify-content: right;
+    }
+
+    .user-newfeed-leftside{
+        width:40%;
+        margin-right:2%;
+    }
+
+    .user-newfeed-rightside{
+        width:56%;
+        margin-left:2%;
 
     }
 }
@@ -34,6 +58,8 @@
 
     .user-action-sec{
         width:50%;
+        height : 100%;
+
     }
 
     .user-name-text{
@@ -43,7 +69,30 @@
 
     .user-main-sec{
         display:flex;
+        width:60%;
 
+    }
+
+    .user-name-text{
+        position: -webkit-sticky;
+        position: absolute;
+        bottom: 10px;
+        left: 0px;
+
+    }
+
+    .user-action-btn-sec{
+        justify-content: right;
+    }
+
+    .user-newfeed-leftside{
+        width:40%;
+        margin-right:2%;
+    }
+
+    .user-newfeed-rightside{
+        width:56%;
+        margin-left:2%;
     }
 
 }
@@ -60,6 +109,8 @@
 
     .user-action-sec{
         width:100%;
+        height : 60px;
+
     }
 
     .user-name-text{
@@ -69,7 +120,26 @@
 
     .user-main-sec{
         display:block;
+        width:80%;
 
+    }
+
+    .user-name-text{
+        position: -webkit-sticky;
+        position: sticky;
+        bottom: 10px;
+    }
+
+    .user-action-btn-sec{
+        justify-content: center;
+    }
+
+    .user-newfeed-leftside{
+        width:100%;
+    }
+
+    .user-newfeed-rightside{
+        width:100%;
     }
 }
 
@@ -85,6 +155,7 @@
 
     .user-action-sec{
         width:100%;
+        height : 60px;
     }
 
     .user-name-text{
@@ -94,6 +165,27 @@
 
     .user-main-sec{
         display:block;
+        width:90%;
+
+    }
+
+    .user-name-text{
+        position: -webkit-sticky;
+        position: sticky;
+        bottom: 10px;
+    }
+
+
+    .user-action-btn-sec{
+        justify-content: center;
+    }
+
+    .user-newfeed-leftside{
+        width:100%;
+    }
+
+    .user-newfeed-rightside{
+        width:100%;
     }
 
 }
@@ -101,7 +193,6 @@
 
 .user-main-sec{
     margin: 100px 0px 10px;
-    width:80%;
     max-width:1500px;
     justify-content: center;
 }
@@ -125,7 +216,7 @@
     position:absolute;
     height:40px;
     bottom: 20px;
-    right:25px;
+    right:15px;
 }
 
 
@@ -150,8 +241,78 @@
     width:40px; height:40px;
 }
 
-.user-name-text{
-    position: -webkit-sticky;
-    position: sticky;
-    bottom: 10px;
+.user-edit-profile-btn{
+    background-color: #F0F2F5;
+    padding:10px 15px;
+    border-radius: 10px;
+    cursor:pointer;
 }
+
+.user-edit-profile-btn:hover{
+    background-color: #BCC0C4;
+}
+
+.user-edit-profile-btn-text{
+    font-size:15px;
+    font-weight:600;
+}
+
+.user-action-btn-sec{
+    position: absolute;
+    bottom:10px; left:0px;
+}
+
+.user-function-btn{
+    width:auto;
+    background-color:white;
+    font-size: 16px;
+    font-weight: 700;
+    padding:10px 15px;
+    cursor: pointer;
+}
+
+.user-function-btn:hover{
+    background-color: #BCC0C4;
+    border-radius: 10px;
+}
+
+.user-function-btn-active{
+    color:#1d8daf;
+    border-bottom: solid 3px #1d8daf;
+}
+
+.user-function-btn-active:hover{
+    background-color: white;
+    border-radius: 0px;
+    color:#1d8daf;
+    border-bottom: solid 3px #1d8daf;
+}
+
+.user-function-btn-inactive{
+    color:black;
+    border-bottom: solid 3px white;
+}
+
+.user-newfeed-info-sec{
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom : 15px;
+}
+
+
+.user-newfeed-info-title{
+    color:black;
+    font-size:20px;
+    font-weight: 800;
+}
+
+.user-newfeed-info-common{
+    width:100%;
+    padding : 10px 20px;
+}
+
+.userInfoLeft-scroll{
+    position: sticky;
+    margin-top: 80px;
+}
+

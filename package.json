@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "cropperjs": "^1.5.13",
         "jquery": "^3.6.1",
         "puppeteer": "^19.3.0"
     }

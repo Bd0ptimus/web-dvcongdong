@@ -628,7 +628,7 @@ body::-webkit-scrollbar-thumb {
     border-radius:6px;
     width:100%;
     max-width: 800px;
-    margin:15px auto;
+    margin:0px auto 15px;
     padding:0px;
     padding-bottom:10px;
 
@@ -638,9 +638,9 @@ body::-webkit-scrollbar-thumb {
 
 .newFeed-content-small-sec2{
     cursor:pointer;
-    margin: 10px 20px;
+    margin: 0px 20px 10px;
     height:auto;
-    padding:0px;
+    padding:10px 0px;
     width: auto;
 }
 
@@ -1011,4 +1011,29 @@ div.swiper-button-prev {
 .newfeed-container2 hr{
     margin:0px 12px;
     width: auto;
+}
+
+
+.icon-align{
+    padding-top:14px;
+}
+
+
+.modal-close-btn{
+    width: 30px;
+    height:30px;
+    background-color:#F0F2F5 ;
+    border-radius: 50%;
+    cursor:pointer;
+}
+
+.modal-close-btn:hover{
+    background-color:#BCC0C4;
+
+}
+
+
+
+.modal-body::-webkit-scrollbar{
+    width: 0px;
 }

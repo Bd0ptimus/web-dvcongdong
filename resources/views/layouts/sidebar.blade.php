@@ -23,7 +23,7 @@
     <ul class="nav nav-pills flex-column mb-1">
         @if (Admin::user() == !null)
             <li class="nav-item nav-item-container">
-                <a href="" class="nav-link" aria-current="page">
+                <a href="{{route('user.index',['userId'=>Admin::user()->id])}}" class="nav-link" aria-current="page">
                     <i class="fa-solid fa-user"></i>
                     <span>
                         {{Admin::user()->name}}

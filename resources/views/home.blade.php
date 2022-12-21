@@ -511,9 +511,6 @@
             $('#ad-post-header').removeClass('mostAccess-post-header-scroll');
             $('#ad-posts-sec').addClass('mostAccess-post-sec-scroll');
             $('#ad-posts-sec').removeClass('mostAccess-post-sec-unscroll');
-
-
-
         }
     };
 

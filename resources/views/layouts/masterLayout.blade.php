@@ -6,6 +6,13 @@
 @endphp
 <!-- Scripts -->
 <script type="text/javascript" src="{{ asset('js/jquery-3.6.1.min.js') }}"></script>
+{{-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> --}}
+<script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+      integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" defer
+></script>
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 <script src="https://kit.fontawesome.com/04e9a3dbb4.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{ asset('js/select2/select2.min.js') }}"></script>
@@ -14,6 +21,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer></script>
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/cropper.js') }}"></script>
 
 <script type="text/javascript">
     function checkUserExist() {
@@ -397,3 +405,8 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {{-- <link href="{{ asset('css/popover/main.min.css?v=') . time() }}" rel="stylesheet"> --}}
+<link href="{{ asset('css/cropper.css?v=') . time() }}" rel="stylesheet">
+<link
+    href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"
+    rel="stylesheet"
+/>
