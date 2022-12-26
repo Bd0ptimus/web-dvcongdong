@@ -14,16 +14,21 @@ use DateTime;
 
 //repo
 use App\Repositories\PostAttachmentRepository;
+use App\Repositories\UserRepository;
 
 use Exception;
+use Illuminate\Contracts\Auth\UserProvider;
 
 class AttachmentService
 {
     protected $postAttachmentRepo;
+    protected $userRepository;
 
-    public function __construct(PostAttachmentRepository $postAttachmentRepo)
+    public function __construct(PostAttachmentRepository $postAttachmentRepo,
+    UserRepository $userRepository)
     {
         $this->postAttachmentRepo = $postAttachmentRepo;
+        $this->userRepository = $userRepository;
     }
 
     public function generateName()
@@ -87,5 +92,15 @@ class AttachmentService
         $data['name'] = $timePoint;
         $data['avatar'] = 'storage/post_attachments/' . $name;
         return $data;
+    }
+
+    public function changeAvatar($imgBase64, $userId){
+        @list($type, $file_data) = explode(';', $imgBase64);
+        @list(, $file_data) = explode(',', $file_data);
+        $imageName = $this->generateName().'.'.'png';
+        Storage::disk('local')->put('public/avatar/'.$imageName, base64_decode($file_data));
+        $avatarPath = 'storage/avatar/'.$imageName;
+        $this->userRepository->updateUserAvatar($userId,$avatarPath);
+        return asset($avatarPath);
     }
 }

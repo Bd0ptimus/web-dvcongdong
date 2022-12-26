@@ -18,15 +18,32 @@
             <div class="modal-body">
                 <main class="page">
                     <!-- input file -->
-                    <div class="imgContainer">
-                        <input type="file" id="file-input" onchange="cropImgFunc(event)">
-                        <div class="result" id="inputImg" style="width : 200px;"></div>
-                        <img class="imgPreview" id="imgPreview" style="width : 200px;">
+                    <div class="imgContainer d-block justify-content-center">
+                        <div class="d-block justify-content-center" style="width:100%;">
+                            <div class="d-flex justify-content-center" style="width:100%;">
+                                <img class="imgPreview" id="imgPreview" style="width : 200px;">
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="d-flex justify-content-center" style="width:100%;">
+                            <div class="result" id="inputImg" style="width : 100%; max-width:500px; max-height:300px;"></div>
+                        </div>
+
+                        <div id="slider" class="ep-slider-bar"></div>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <div class="upload-btn-wrapper">
+                                <button class="normal-button" disabled><i
+                                    class="fa-solid fa-camera-retro"></i>
+                                Chọn ảnh đại diện</button>
+                                <input type="file" id="file-input" class="normal-button" onchange="cropImgFunc(event)">
+                            </div>
+                        </div>
                     </div>
-                    <div id="slider" class="ep-slider-bar"></div>
                 </main>
 
-                <button onclick="changeAvatarSubmit()">Confirm</button>
+                <button style="display:none;" id="changeAvatarSubmitBtn" class="normal-button" onclick="changeAvatarSubmit()">Thay đổi ảnh đại diện</button>
             </div>
         </div>
     </div>
@@ -138,6 +155,10 @@
             $('#user-uploadAvatar').modal('hide');
         })
 
+        // $('#slider').on('mousemove vmousemove touchmove', function(){
+        //     resetSlideBar();
+        // });
+
     });
 
     let cropper = '';
@@ -145,7 +166,7 @@
     function cropImgFunc(event) {
         let result = document.querySelector('#inputImg'),
             imgPreview = document.querySelector('#imgPreview');
-
+        $('#changeAvatarSubmitBtn').css('display', 'block');
         if (event.target.files.length) {
             // start file reader
             const reader = new FileReader();
@@ -155,8 +176,8 @@
                     let img = document.createElement('img');
                     img.id = 'image';
                     img.src = event.target.result;
-                    img.width = 544;
-                    img.height = 370;
+                    img.width = 200;
+                    img.height = 200;
                     // clean result before
                     result.innerHTML = '';
                     // append new image
@@ -166,14 +187,14 @@
                         viewMode: 1,
                         dragMode: 'move',
                         aspectRatio: 1,
-                        autoCropArea: 0.68,
-                        minContainerWidth: 544,
-                        minContainerHeight: 370,
+                        autoCropArea: 0.8,
+                        minContainerWidth: 200,
+                        minContainerHeight: 200,
                         center: false,
                         zoomOnWheel: false,
                         zoomOnTouch: false,
                         cropBoxMovable: false,
-                        cropBoxResizable: false,
+                        cropBoxResizable: true,
                         guides: false,
                         ready: function(event) {
                             this.cropper = cropper;
@@ -191,8 +212,8 @@
                 }
             };
             reader.readAsDataURL(event.target.files[0]);
-            initSlideBar();
-            resetSlideBar();
+            // initSlideBar();
+            // resetSlideBar();
         }
     }
 
@@ -207,10 +228,10 @@
             range: "min",
             min: 0,
             max: 1,
-            step: 0.1,
+            step: 0.01,
             slide: function(event, ui) {
                 let slideVal = ui.value;
-                let zoomRatio = Math.round((slideVal - slideValGlobal) * 10) / 10;
+                let zoomRatio = Math.round((slideVal - slideValGlobal) * 100) / 100;
                 slideValGlobal = slideVal;
                 cropper.zoom(zoomRatio);
             }
@@ -220,6 +241,8 @@
     function changeAvatarSubmit(){
         let formData = new FormData();
         formData.append('changeAvatar', newAvatar);
+        formData.append('userId', '{{$userId}}');
+
         console.log('form data : ', formData);
 
         $.ajax({
@@ -233,16 +256,14 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    console.log('respose success');
-                    $('#accept-avatar-modal').modal('hide');
-                    $('#profile-avatar').attr('src', response.new_avt);
-                    $('#settingInfoAvatar').attr('src', response.new_avt);
-                    $('#uploading').hide();
+                    console.log('respose success', response);
+                    if(response.error == 0){
+                        $('#accountUserAvatar').attr('src', response.data);
+                        $('#user-uploadAvatar').modal('hide');
+                    }
                 },
                 error: function(response) {
-                    $('#accept-avatar-modal').modal('hide');
-                    $('#avatar-upload-warning').text("Bị lỗi rùi, thử lại nha");
-                    $('#uploading').hide();
+
                 }
             });
     }

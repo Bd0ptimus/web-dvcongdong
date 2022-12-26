@@ -9,37 +9,41 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Services\PostService;
 use App\Services\AttachmentService;
+use App\Repositories\UserRepository;
+
 class UserAccountDetailController extends Controller
 {
 
     protected $postService;
     protected $attachmentService;
-    public function __construct(Request $request,PostService $postService, AttachmentService $attachmentService){
+    protected $userRepo;
+    public function __construct(Request $request,PostService $postService, AttachmentService $attachmentService, UserRepository $userRepo){
         $userId = $request->route()->parameter('userId');
         $this->middleware("mypost.permission:$userId")->only(['myPostIndex']);
         $this->postService = $postService;
         $this->attachmentService = $attachmentService;
-    }
+        $this->userRepo = $userRepo;
 
+    }
     public function index(Request $request, $userId){
         $params['userId']=$userId;
         $posts = $this->postService->loadMyPost(0, $params);
+        $user = $this->userRepo->findById($userId);
         return view('user.index',['posts'=>$posts,
-            'userId' => $userId
+            'userId' => $userId,
+            'user'=>$user,
         ]);
     }
 
     public function changeAvatar(Request $request){
         LOG::debug('image uploaded : ' . print_r($request->changeAvatar,true) );
-        // $desPhotoName = $this->attachmentService->generateName() . '.jpg';
-        // $request->changeAvatar->move(storage_path('app/public/post_attachments'), $desPhotoName);
-        $base64_image = $request->changeAvatar; // your base64 encoded
-        @list($type, $file_data) = explode(';', $base64_image);
-        @list(, $file_data) = explode(',', $file_data);
-        $imageName = $this->attachmentService->generateName().'.'.'png';
-        Storage::disk('local')->put($imageName, base64_decode($file_data));
 
-        LOG::debug('name : ' . $imageName );
-
+        try{
+            $avatarPath = $this->attachmentService->changeAvatar($request->changeAvatar,$request->userId );
+        }catch(\Exception $e){
+            LOG::debug('update avatar : ' . $e );
+            return response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+        }
+        return response()->json(['error' => 0, 'msg' => 'Thay doi avatar thanh cong', 'data'=>$avatarPath]);
     }
 }

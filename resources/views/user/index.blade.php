@@ -16,7 +16,7 @@
                 <div class = "user-main-sec">
                     <div class="user-image-sec d-flex justify-content-center" >
                         <div class="user-image-showing-sec " style="position:relative;">
-                            <img class="user-image-showing" src="{{asset('storage/test/test1.jpg')}}">
+                            <img id="accountUserAvatar" class="user-image-showing" src="{{asset($user->user_avatar)}}">
                             <div class="row d-flex justify-content-center user-updateAvatar-sec" >
                                 <div class="user-updateAvatar-showing-sec">
                                     <button class="user-updateAvatar" style="border:0px;" onclick="openAvatarModal()">

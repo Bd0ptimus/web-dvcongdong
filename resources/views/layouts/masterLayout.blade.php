@@ -14,6 +14,8 @@
       referrerpolicy="no-referrer" defer
 ></script>
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js" defer></script>
+
 <script src="https://kit.fontawesome.com/04e9a3dbb4.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="{{ asset('js/select2/select2.min.js') }}"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

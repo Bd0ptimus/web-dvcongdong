@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
+
 //use Your Model
 use App\Admin;
 
@@ -53,6 +55,16 @@ class UserRepository extends BaseRepository
             return $user->user_role == ROLE_USER;
         }
         return false;
+    }
+
+    public function updateUserAvatar($userId, $avatarPath){
+        $user =  $this->model->where('id', $userId)->first();
+        if(File::exists(public_path($user->user_avatar))){
+            File::delete(public_path($user->user_avatar));
+        }
+        $this->model->where('id', $userId)->update([
+            'user_avatar'=>$avatarPath,
+        ]);
     }
 
 }
