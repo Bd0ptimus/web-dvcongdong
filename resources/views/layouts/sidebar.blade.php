@@ -24,7 +24,8 @@
         @if (Admin::user() == !null)
             <li class="nav-item nav-item-container">
                 <a href="{{route('user.index',['userId'=>Admin::user()->id])}}" class="nav-link" aria-current="page">
-                    <i class="fa-solid fa-user"></i>
+                    {{-- <i class="fa-solid fa-user"></i> --}}
+                    <img style="width:30px; height:30px; border-radius:50%;border:solid 3px #1d8daf;" src="{{Admin::user() == !null?asset(Admin::user()->user_avatar):''}}">
                     <span>
                         {{Admin::user()->name}}
                     </span>
@@ -76,14 +77,14 @@
                     </span>
                 </a>
             </li>
-            <li class="nav-item nav-item-container">
+            {{-- <li class="nav-item nav-item-container">
                 <a href="{{route('post.myPost.index',['userId'=>Admin::user()->id])}}" class="nav-link" aria-current="page">
                     <i class="fa-solid fa-floppy-disk"></i>
                     <span>
                         Bài viết của tôi
                     </span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item nav-item-container">
                 <a href="{{ route('post.index') }}" class="nav-link" aria-current="page">
                     <i class="fa-solid fa-paper-plane"></i>
@@ -304,7 +305,9 @@
         @if (Admin::user() !== null)
             <li class="nav-item d-flex justify-content-center">
                 <a href="#" class="nav-link nav-icon-item" aria-current="page">
-                    <i class="fa-solid fa-user"></i>
+                    {{-- <i class="fa-solid fa-user"></i> --}}
+                    <img style="width:30px; height:30px; border-radius:50%; border:solid 3px #1d8daf;" src="{{Admin::user() == !null?asset(Admin::user()->user_avatar):''}}">
+
                 </a>
             </li>
         @endif
@@ -338,11 +341,11 @@
                 </a>
             </li>
 
-            <li class="nav-item d-flex justify-content-center">
+            {{-- <li class="nav-item d-flex justify-content-center">
                 <a href="{{route('post.myPost.index',['userId'=>Admin::user()->id])}}" class="nav-link nav-icon-item" aria-current="page">
                     <i class="fa-solid fa-floppy-disk"></i>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item d-flex justify-content-center">
                 <a href="{{ route('post.index') }}" class="nav-link nav-icon-item" aria-current="page">

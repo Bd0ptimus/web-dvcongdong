@@ -48,6 +48,9 @@
         </div>
     </div>
     <style>
+        #user-uploadAvatar{
+            z-index:2001;
+        }
         .page {
             margin: 1em auto;
             max-width: 768px;
@@ -258,8 +261,9 @@
                 success: function(response) {
                     console.log('respose success', response);
                     if(response.error == 0){
-                        $('#accountUserAvatar').attr('src', response.data);
-                        $('#user-uploadAvatar').modal('hide');
+                        // $('#accountUserAvatar').attr('src', response.data);
+                        // $('#user-uploadAvatar').modal('hide');
+                        window.location.reload();
                     }
                 },
                 error: function(response) {

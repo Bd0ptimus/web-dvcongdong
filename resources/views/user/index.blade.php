@@ -32,12 +32,12 @@
                     </div>
                     <div class="user-name-sec" style="position:relative;">
                         <div class="row user-name-text d-flex" style="width:calc(100%-20px); margin:0px;">
-                            <h1 style="width:auto; font-weight: 800; color:black;">Bùi Dũng</h1>
+                            <h1 style="width:auto; font-weight: 800; color:black; font-size:25px;">{{$user->name}}</h1>
                         </div>
                     </div>
                     <div class="user-action-sec" style="position:relative;">
                         <div class="row d-flex user-action-btn-sec" style="width:100%; margin:0px; padding:0px;">
-                            <div style="width:auto;" class="user-edit-profile-btn">
+                            <div style="width:auto;" class="user-edit-profile-btn" onclick="changeUserInfoBtn()">
                                 <i class="fa-solid fa-pencil fa-xl"></i> <span class="user-edit-profile-btn-text">Chỉnh sửa thông tin cá nhân<span>
                             </div>
                         </div>
@@ -63,49 +63,59 @@
 
         <div class="row d-flex justify-content-center" style="width:100%; margin:20px 0px;" id="userInfoPoint">
             <div class="user-main-sec " style="margin:0px; padding:0px;">
+
                 <div class="user-newfeed-leftside" id="userInfoLeft">
+                    @if(isset($user->user_description) && $user->user_description!=null)
                     <div class="user-newfeed-info-sec">
                         <div class = "user-newfeed-info-common">
                             <h1 class="user-newfeed-info-title">Giới thiệu</h1>
                         </div>
                         <div class = "user-newfeed-info-common">
-                            <div style="width:100%;" class="user-edit-profile-btn d-flex justify-content-center">
+                            <div style="width:100%;" class="user-edit-profile-btn d-flex justify-content-center" onclick="changeDescriptionBtn()">
                                 <i class="fa-solid fa-pencil fa-xl icon-align"></i> <span class="user-edit-profile-btn-text">     Chỉnh sửa giới thiệu<span>
                             </div>
                         </div>
 
                         <div class="user-newfeed-info-common">
                             <h5>
-                                removed 'dir1/resume.txt'
-                                removed 'dir1/bar.txt'
-                                removed 'dir1/foo.txt'
-                                removed directory 'dir1'
-                                removed directory 'dir2/pictures'
-                                removed directory 'dir2'
+                                {!!nl2br($user->user_description)!!}
                             </h5>
                         </div>
                     </div>
+                    @endif
 
                     <div class="user-newfeed-info-sec">
                         <div class = "user-newfeed-info-common">
                             <h1 class="user-newfeed-info-title">Thông tin</h1>
                         </div>
+                        <div class = "user-newfeed-info-common">
+                            <div style="width:100%;" class="user-edit-profile-btn d-flex justify-content-center" onclick="changeMainInfoBtn()">
+                                <i class="fa-solid fa-pencil fa-xl icon-align"></i> <span class="user-edit-profile-btn-text">     Chỉnh sửa thông tin<span>
+                            </div>
+                        </div>
 
                         <div class="user-newfeed-info-common">
+                            @if(isset($user->phone_number) && $user->phone_number!=null)
                             <div style="width:100%;" class="d-flex justify-content-center">
                                 <h5 style="font-weight:700;">Số điện thoại:</h5>
-                                <h5>89689240329</h5>
+                                <h5>{{$user->phone_number}}</h5>
                             </div>
+                            @endif
                             <div style="width:100%;" class="d-flex justify-content-center">
                                 <h5 style="font-weight:700;">Email:</h5>
-                                <h5>thedung.1292@gmail.com</h5>
+                                <h5>{{$user->email}}</h5>
                             </div>
 
                         </div>
                     </div>
                 </div>
                 <div class="user-newfeed-rightside">
-                    <div id="myPost-load" class="row newfeed-sec" style="padding:0px;">
+                    <div class = "user-newfeed-info-common" style="padding:0px;">
+                        <div style="width:100%;" class="user-add-post-btn d-flex justify-content-center" onclick="gotoCreatePostPage()">
+                            <i class="fa-solid fa-circle-plus  fa-xl" style="margin-top:10px;"></i> <span class="user-edit-profile-btn-text">&emsp;Đăng bài viết mới<span>
+                        </div>
+                    </div>
+                    <div id="myPost-load" class="row newfeed-sec" style="padding:0px; margin : 10px 0px;">
                         @if (sizeof($posts) == 0)
                             <div class="row d-flex justify-content-center" style="margin : 30px auto;">
                                 <h6 class="d-flex justify-content-center">
@@ -263,6 +273,9 @@
 
     @include('templates.notification.toast');
     @include('user.templates.uploadAvatarModal');
+    @include('user.templates.changeDescriptionModal');
+    @include('user.templates.changeUserInfoModal');
+    @include('user.templates.changeMainInfoModal');
 
 
 </body>
@@ -331,6 +344,31 @@
     function openAvatarModal(){
         console.log('avatar modal');
         $('#user-uploadAvatar').modal('show');
+    }
+
+    function changeDescriptionBtn(){
+        $('#userDescriptionTextField').val(`{!!($user->user_description)!!}`);
+        $('#user-uploadDescription').modal('show');
+    }
+
+    function changeUserInfoBtn(){
+        console.log('changeUserInfoBtn');
+        $('#userInfoDescription').val(`{!!($user->user_description)!!}`);
+
+        // $('#userInfoAvatar').attr('src', '{{asset($user->user_avatar)}}');
+        $('#user-uploadUserInfo').modal('show');
+
+    }
+
+    function changeMainInfoBtn(){
+        console.log('changeMainInfoBtn');
+        $('#userInfo-name').val('{{$user->name}}');
+        $('#userInfo-phone').val('{{$user->phone_number}}');
+        $('#user-uploadUserMainInfo').modal('show');
+    }
+
+    function gotoCreatePostPage(){
+        window.location.href = '{{route("post.index")}}'
     }
 
 

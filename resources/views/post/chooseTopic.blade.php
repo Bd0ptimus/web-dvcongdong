@@ -7,10 +7,18 @@
 <body>
     <div class="project-content-section d-flex justify-content-center">
         <div class="row chooseTopic-main d-flex justify-content-center">
-            <div class="row chooseTopic-header-sec" style="width: 100%; padding:20px 0px;">
+            <div class="row chooseTopic-header-sec" style="width: 100%; padding:20px 0px; position:relative;">
+                <div style="height:100%; width:30px; position:absolute; top:0px; left:10px;" class="vertical-container">
+                    <div style="height:30px; width:30px; border:0px; border-radius:50%; cursor:pointer;" class="vertical-element-middle-align" onclick="history.back()">
+                        <i style="color:white; width:100%; height:100%; padding:12px 0px;" class="fa-solid fa-chevron-left fa-2xl"></i>
+                    </div>
+                </div>
                 <h3 class="chooseTopic-header chooseTopic-text">
                     {{ $header }}
                 </h3>
+                {{-- <h3 class="chooseTopic-header chooseTopic-text">
+                    {{ $header }}
+                </h3> --}}
             </div>
 
             <div class="row d-flex justify-content-center" style="width: 100%; padding:15px 0px;">

@@ -67,4 +67,17 @@ class UserRepository extends BaseRepository
         ]);
     }
 
+    public function updateDescription($userId, $des){
+        $this->model->where('id', $userId)->update([
+            'user_description' => $des,
+        ]);
+    }
+
+    public function updateMainInfo($userId, $request){
+        $this->model->where('id', $userId)->update([
+            'name' => $request->userInfoName,
+            'phone_number' => $request -> userInfoPhone,
+        ]);
+    }
+
 }

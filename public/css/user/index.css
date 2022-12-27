@@ -241,6 +241,17 @@
     width:40px; height:40px;
 }
 
+.user-add-post-btn{
+    background-color: white;
+    padding:10px 15px;
+    border-radius: 10px;
+    cursor:pointer;
+}
+
+.user-add-post-btn:hover{
+    background-color: #BCC0C4;
+}
+
 .user-edit-profile-btn{
     background-color: #F0F2F5;
     padding:10px 15px;

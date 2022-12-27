@@ -19,7 +19,7 @@ class UserAccountDetailController extends Controller
     protected $userRepo;
     public function __construct(Request $request,PostService $postService, AttachmentService $attachmentService, UserRepository $userRepo){
         $userId = $request->route()->parameter('userId');
-        $this->middleware("mypost.permission:$userId")->only(['myPostIndex']);
+        $this->middleware("mypost.permission:$userId")->only(['changeDescription']);
         $this->postService = $postService;
         $this->attachmentService = $attachmentService;
         $this->userRepo = $userRepo;
@@ -45,5 +45,15 @@ class UserAccountDetailController extends Controller
             return response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
         }
         return response()->json(['error' => 0, 'msg' => 'Thay doi avatar thanh cong', 'data'=>$avatarPath]);
+    }
+
+    public function changeDescription(Request $request, $userId){
+        $this->userRepo->updateDescription($userId, $request->description);
+        return redirect()->back();
+    }
+
+    public function changeMainInfo(Request $request, $userId){
+        $this->userRepo->updateMainInfo($userId, $request);
+        return redirect()->back();
     }
 }
