@@ -5,7 +5,7 @@
 @endphp
 <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm"
     style="position:fixed; z-index:1000; right:0px; width:100%; top:0px; background-color:rgb(248,249,250); height:56px;">
-    <div class="d-flex justify-content-between" style="width:100%; height:100%; padding : 0px; margin:0px 5px;">
+    <div class="d-flex justify-content-between" style="width:96vw; height:100%; padding : 0px; margin:0px 2vw;">
         <div class="d-flex justify-content-start" >
             <button onclick="sidebarOpen()" id="toggler-btn" class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"

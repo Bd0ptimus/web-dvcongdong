@@ -19,9 +19,9 @@
                 <main class="page">
                     <!-- input file -->
                     <div class="imgContainer d-block justify-content-center">
-                        <div class="d-block justify-content-center" style="width:100%;">
+                        <div class="d-block justify-content-center" style="width:100%; ">
                             <div class="d-flex justify-content-center" style="width:100%;">
-                                <img class="imgPreview" id="imgPreview" style="width : 200px;">
+                                <img class="imgPreview" id="imgPreview" style="width : 200px; display:none;">
                             </div>
                         </div>
 
@@ -194,7 +194,7 @@
                         zoomOnWheel: false,
                         zoomOnTouch: false,
                         cropBoxMovable: false,
-                        cropBoxResizable: true,
+                        cropBoxResizable: false,
                         guides: false,
                         ready: function(event) {
                             this.cropper = cropper;
@@ -212,8 +212,8 @@
                 }
             };
             reader.readAsDataURL(event.target.files[0]);
-            // initSlideBar();
-            // resetSlideBar();
+            initSlideBar();
+            resetSlideBar();
         }
     }
 
