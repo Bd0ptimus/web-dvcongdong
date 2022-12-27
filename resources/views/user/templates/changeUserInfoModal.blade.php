@@ -37,7 +37,7 @@
                     </div>
                     <div class="d-flex justify-content-center">
                         <textarea type="text" name="description"  class="form-control data-field" id="userInfoDescription"
-                            style="min-height : 50px; height: 70px; resize: none; overflow:auto;">
+                            style="min-height : 50px; height: 70px; resize: none; overflow:auto;" disabled>
                         </textarea>
                     </div>
                 </div>
