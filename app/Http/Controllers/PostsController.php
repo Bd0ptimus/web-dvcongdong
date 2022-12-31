@@ -22,7 +22,7 @@ class PostsController extends Controller
         $userId = $request->route()->parameter('userId');
         $postId = $request->route()->parameter('postId');
 
-        $this->middleware('user.auth')->except(['mainPost']);
+        $this->middleware('user.auth')->except(['mainPost','myPostLoadMore']);
         $this->middleware("mypost.permission:$userId")->only(['myPostIndex']);
         $this->middleware("editpost.permission:$postId")->only(['editPost']);
 
@@ -84,11 +84,13 @@ class PostsController extends Controller
     public function myPostLoadMore(Request $request){
         $params['userId'] = request('userId');
         $data = [];
+
         try{
             $data = $this->postService->loadMoreMyPost(request('numberStep'), $params);
 
         }catch(\Exception $e){
-            response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+            Log::debug('my post load error: '. $e );
+            return response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
         }
         return response()->json(['error' => 0, 'msg' => 'load more my post thành công', 'data' => $data ]);
     }

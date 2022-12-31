@@ -284,6 +284,7 @@ class PostService
 
     public function loadMoreMyPost($numPage, $params)
     {
+
         $posts = $this->postRepo->loadAllForMyPost($numPage, $params);
 
         $response = [];
@@ -327,12 +328,38 @@ class PostService
             }
             $postData['id'] = $post->id;
 
-            if ($params['userId'] != 0 && $this->userRepo->isUser($params['userId'])) {
+            if(Admin::user() !== null){
                 $postData['isUser'] = true;
-                $postData['liked'] = $post->checkPostLiked($params['userId'], $post->id);
-            } else {
+                Log::debug('in user');
+                $postData['liked'] = $post->checkPostLiked(Admin::user()->id, $post->id);
+                if(Admin::user() !== null && Admin::user()->id == $params['userId']){
+                    $postData['isOwner'] = true;
+                }else{
+                    $postData['isOwner'] = false;
+                }
+
+            }else{
+                Log::debug('in not user');
+
                 $postData['isUser'] = false;
+                $postData['isOwner'] = false;
             }
+
+            // if ($params['userId'] != 0 && $this->userRepo->isUser($params['userId'])) {
+            //     $postData['isUser'] = true;
+            //     $postData['liked'] = $post->checkPostLiked($params['userId'], $post->id);
+            //     Log::debug('in user');
+            //     if(Admin::user() !== null && Admin::user()->id == $params['userId']){
+            //         $postData['isOwner'] = true;
+            //     }else{
+            //         $postData['isOwner'] = false;
+            //     }
+            // } else {
+            //     Log::debug('in not user');
+
+            //     $postData['isUser'] = false;
+            //     $postData['isOwner'] = false;
+            // }
 
             $postData['avatar'] = $post->user->user_avatar ? asset($post->user->user_avatar) : asset('storage/avatar-sample/ava1.jpg');
 
@@ -357,7 +384,6 @@ class PostService
 
             array_push($response, $postData);
         }
-
 
         return $response;
     }

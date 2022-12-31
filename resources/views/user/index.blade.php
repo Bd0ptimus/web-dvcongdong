@@ -244,6 +244,7 @@
                                                     onclick="likePost({{ Admin::user()->id }},{{ $post->id }},'newFeed-post-{{ $post->id }}' )"></i>
                                             @endif
                                         </div>
+                                        @if(Admin::user() !== null && Admin::user()->id == $userId)
 
                                         <div class="row newFeed-interact-sec2 d-flex justify-content-center"
                                             style="width:33%; margin:auto;">
@@ -256,6 +257,7 @@
                                             <i class="fa-solid fa-trash fa-xl interact-icon2"
                                                 onclick="deleteMyPost({{ $post->id }},'myPost-{{ $post->id }}')"></i>
                                         </div>
+                                        @endif
                                     </div>
                                 @endif
                                 <hr />
@@ -568,7 +570,7 @@
                 _token: '{{ csrf_token() }}',
             },
             success: function(data) {
-                console.log('data response : ', JSON.stringify(data));
+                console.log('data response in my post : ', data);
                 console.log('step: ', numberLoadingStep);
 
                 if (data['error'] == 0) {
@@ -583,18 +585,8 @@
                                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}" style="width : 33%; margin:auto;">
                                                     <i class="fa-regular fa-heart fa-xl interact-icon2" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
                                                 </div>
-                                                <div class="row newFeed-interact-sec2 d-flex justify-content-center"
-                                                    style="width:33%; margin:auto;">
-                                                    <i class="fa-solid fa-pen-to-square fa-xl interact-icon2" style="color:#1d8daf"
-                                                        onclick="editPost('${e.postEditUrl}')"></i>
-                                                </div>
+                                                `;
 
-                                                <div class="row newFeed-interact-sec2 d-flex justify-content-center"
-                                                    style="width:33%;margin:auto;">
-                                                    <i class="fa-solid fa-trash fa-xl interact-icon2"
-                                                        onclick="deleteMyPost(${e.id},'myPost-${e.id}')"></i>
-                                                </div>
-                                            </div>`;
                                 // `<i class="fa-regular fa-heart" onclick="likePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
                             } else {
                                 interactBtns = `
@@ -603,7 +595,12 @@
                                                 <div class="row newFeed-interact-sec2 d-flex justify-content-center" id="newFeed-post-${e.id}" style="width : 33%; margin:auto;">
                                                     <i style="color:red;" class="fa-solid fa-heart fa-xl interact-icon2" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>
                                                 </div>
-                                                <div class="row newFeed-interact-sec2 d-flex justify-content-center"
+                                                `;
+                                // `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                            }
+
+                            if(e.isOwner){
+                                interactBtns = interactBtns+`<div class="row newFeed-interact-sec2 d-flex justify-content-center"
                                                     style="width:33%; margin:auto;">
                                                     <i class="fa-solid fa-pen-to-square fa-xl interact-icon2" style="color:#1d8daf"
                                                         onclick="editPost('${e.postEditUrl}')"></i>
@@ -615,7 +612,8 @@
                                                         onclick="deleteMyPost(${e.id},'myPost-${e.id}')"></i>
                                                 </div>
                                             </div>`;
-                                // `<i style="color:red;" class="fa-solid fa-heart" onclick="unlikePost(${userId},${e.id},'newFeed-post-${e.id}' )"></i>`;
+                            }else{
+                                interactBtns = interactBtns+`</div>`;
                             }
                         }
                         var images = '';
