@@ -188,10 +188,12 @@
                 data = {
                     userId: '<?= Admin::user() !== null ? Admin::user()->id : '' ?>',
                     checkingType: <?= ADMINISTRATIVE_TYPE ?>,
-                    nameRussian: $('#adminis-nameRussian').val(),
+                    name: $('#adminis-nameRussian').val(),
                     dob: $('#adminis-dob').val(),
                     passportSeries: $('#adminis-passportSeries').val(),
                     passportExpiredDate: $('#adminis-passportExpiredDate').val(),
+                    responseRequire: $('#checkingResponse').val(),
+
                 };
             }
             if (!haveError) {

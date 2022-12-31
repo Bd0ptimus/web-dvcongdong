@@ -25,6 +25,7 @@ class CheckingService extends Mailable
         $this->service = $service;
         $this->requester = $requester;
         $this->result = $result;
+        // dd($this->service.' - '.$this->requester.' - '.$this->result);
     }
 
     /**
@@ -35,7 +36,7 @@ class CheckingService extends Mailable
     public function build()
     {
         return $this
-        ->subject('Kết qủa cho dịch vụ '.$this->service)
+        ->subject('Kết quả cho dịch vụ '.$this->service)
         ->markdown('emails.resultForCheckingService');
     }
 }

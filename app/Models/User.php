@@ -13,6 +13,9 @@ use App\Models\post;
 use App\Models\post_interaction;
 use App\Models\car_ticket_checking;
 use App\Models\entry_ban_checking;
+use App\Models\tax_debt_checking;
+use App\Models\adminis_checking;
+
 use App\Models\post_comment;
 use App\Admin;
 class User extends Authenticatable
@@ -76,7 +79,14 @@ class User extends Authenticatable
     }
 
     public function entryBans(){
-        return $this->hasMany(entry_bans::class, 'user_id', 'id');
+        return $this->hasMany(entry_ban_checking::class, 'user_id', 'id');
+    }
+
+    public function taxDebt(){
+        return $this->hasMany(tax_debt_checking::class, 'user_id', 'id');
+    }
+    public function adminis(){
+        return $this->hasMany(adminis_checking::class, 'user_id', 'id');
     }
 
     public function postComments(){

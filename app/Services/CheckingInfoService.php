@@ -32,6 +32,13 @@ class CheckingInfoService
             case(ENTRY_BAN_TYPE):
                 $this->checkingInfoServiceRepo->addToEntryBanChecking($params);
                 break;
+            case(TAX_DEBT_TYPE):
+                $this->checkingInfoServiceRepo->addToTaxDebtChecking($params);
+                break;
+            case(ADMINISTRATIVE_TYPE):
+                $this->checkingInfoServiceRepo->addToAdminisChecking($params);
+
+                break;
         }
 
     }
@@ -44,6 +51,13 @@ class CheckingInfoService
             case(ENTRY_BAN_TYPE):
                 $this->checkingInfoServiceRepo->removeEntryBanResult($params['id']);
                 break;
+
+            case(TAX_DEBT_TYPE):
+                $this->checkingInfoServiceRepo->removeTaxDebtResult($params['id']);
+                break;
+            case(ADMINISTRATIVE_TYPE):
+                $this->checkingInfoServiceRepo->removeAdminisResult($params['id']);
+                break;
         }
     }
 
@@ -55,14 +69,28 @@ class CheckingInfoService
             case(ENTRY_BAN_TYPE):
                 $this->checkingInfoServiceRepo->removeEntryBanRequirement($params['id']);
                 break;
+            case(TAX_DEBT_TYPE):
+                $this->checkingInfoServiceRepo->removeTaxDebtRequirement($params['id']);
+                break;
+            case(ADMINISTRATIVE_TYPE):
+                $this->checkingInfoServiceRepo->removeAdminisRequirement($params['id']);
+                break;
         }
     }
 
     public function loadAllCheckingRequest(){
-        $response['carTickets']['created']=$this->checkingInfoServiceRepo->loadAllCarTicket()['created'];
-        $response['carTickets']['completed']=$this->checkingInfoServiceRepo->loadAllCarTicket()['completed'];
-        $response['entryBans']['created']=$this->checkingInfoServiceRepo->loadAllEntryBan()['created'];
-        $response['entryBans']['completed']=$this->checkingInfoServiceRepo->loadAllEntryBan()['completed'];
+        $carTicket = $this->checkingInfoServiceRepo->loadAllCarTicket();
+        $entryBan =$this->checkingInfoServiceRepo->loadAllEntryBan();
+        $taxDebt = $this->checkingInfoServiceRepo->loadAllTaxDebt();
+        $adminis = $this->checkingInfoServiceRepo->loadAllAdminis();
+        $response['carTickets']['created']=$carTicket['created'];
+        $response['carTickets']['completed']=$carTicket['completed'];
+        $response['entryBans']['created']=$entryBan['created'];
+        $response['entryBans']['completed']=$entryBan['completed'];
+        $response['taxDebt']['created'] = $taxDebt['created'];
+        $response['taxDebt']['completed'] = $taxDebt['completed'];
+        $response['adminis']['created'] =$adminis['created'];
+        $response['adminis']['completed'] =$adminis['completed'];
         return $response;
     }
 
@@ -72,6 +100,16 @@ class CheckingInfoService
 
     public function entryBanResultUpdate($request){
         $this->checkingInfoServiceRepo->entryBanResultUpdate($request);
+    }
+
+    public function taxDebtResultUpdate($request){
+        $this->checkingInfoServiceRepo->taxDebtResultUpdate($request);
+
+    }
+
+    public function adminisResultUpdate($request){
+        $this->checkingInfoServiceRepo->adminisResultUpdate($request);
+
     }
 
 }

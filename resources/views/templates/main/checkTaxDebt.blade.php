@@ -210,11 +210,13 @@
                 data = {
                     userId: '<?= Admin::user() !== null ? Admin::user()->id : '' ?>',
                     checkingType: <?= TAX_DEBT_TYPE ?>,
-                    nameRussian: $('#taxDebt-nameRussian').val(),
+                    name: $('#taxDebt-nameRussian').val(),
                     dob: $('#taxDebt-dob').val(),
                     passportSeries: $('#taxDebt-passportSeries').val(),
                     passportExpiredDate: $('#taxDebt-passportExpiredDate').val(),
                     inn: $('#taxDebt-inn').val(),
+                    responseRequire: $('#checkingResponse').val(),
+
                 };
             }
             if (!haveError) {
