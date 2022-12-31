@@ -81,4 +81,19 @@ class AuthService
         $this->userRepo->addNewUser($data,  $accountType);
     }
 
+    public function changePassword($userId, $oldPassword, $newPassword){
+        if($this->userRepo->checkUserPassword($userId, $oldPassword)){
+            $this->userRepo->updateUserPassword($userId, $newPassword);
+            $response['error'] = 0;
+            $response['wrongOldPass'] = 0;
+
+        }else{
+            $response['error'] = 1;
+            $response['wrongOldPass'] = 1;
+
+        }
+
+        return $response;
+    }
+
 }

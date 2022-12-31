@@ -17,16 +17,15 @@
                     <div class="user-image-sec d-flex justify-content-center" >
                         <div class="user-image-showing-sec " style="position:relative;">
                             <img id="accountUserAvatar" class="user-image-showing" src="{{asset($user->user_avatar)}}">
+                            @if(Admin::user() !== null && Admin::user()->id == $userId)
                             <div class="row d-flex justify-content-center user-updateAvatar-sec" >
                                 <div class="user-updateAvatar-showing-sec">
                                     <button class="user-updateAvatar" style="border:0px;" onclick="openAvatarModal()">
                                         <i class="fa-solid fa-camera-retro" style="color:black; "></i>
                                     </button>
-                                    {{-- <input type="file" name="logoUpload"
-                                        placeholder="Choose image" id="logoUpload"
-                                        class="user-updateAvatar" style=" margin:0px 12px;"> --}}
                                 </div>
                             </div>
+                            @endif
                         </div>
 
                     </div>
@@ -36,11 +35,13 @@
                         </div>
                     </div>
                     <div class="user-action-sec" style="position:relative;">
+                        @if(Admin::user() !== null && Admin::user()->id == $userId)
                         <div class="row d-flex user-action-btn-sec" style="width:100%; margin:0px; padding:0px;">
                             <div style="width:auto;" class="user-edit-profile-btn" onclick="changeUserInfoBtn()">
                                 <i class="fa-solid fa-pencil fa-xl"></i> <span class="user-edit-profile-btn-text">Chỉnh sửa thông tin cá nhân<span>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -49,20 +50,21 @@
                 <div class = "user-main-sec d-block" style="margin:0px;">
                     <hr style="color:black; width:100%;"/>
                     <div class="row d-flex justify-content-start" style="width:100%;">
-                        <div class="user-function-btn user-function-btn-active">
+                        <div class="user-function-btn user-function-btn-active" id="postSelection">
                             Bài viết
                         </div>
-
-                        <div class="user-function-btn user-function-btn-inactive">
+                        @if(Admin::user() !== null && Admin::user()->id == $userId)
+                        <div class="user-function-btn user-function-btn-inactive" id="settingSelection">
                             Cài đặt
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="row d-flex justify-content-center" style="width:100%; margin:20px 0px;" id="userInfoPoint">
-            <div class="user-main-sec " style="margin:0px; padding:0px;">
+            <div class="user-main-sec " style="margin:0px; padding:0px;" id="userPosts">
 
                 <div class="user-newfeed-leftside" id="userInfoLeft">
                     @if(isset($user->user_description) && $user->user_description!=null)
@@ -70,11 +72,13 @@
                         <div class = "user-newfeed-info-common">
                             <h1 class="user-newfeed-info-title">Giới thiệu</h1>
                         </div>
+                        @if(Admin::user() !== null && Admin::user()->id == $userId)
                         <div class = "user-newfeed-info-common">
                             <div style="width:100%;" class="user-edit-profile-btn d-flex justify-content-center" onclick="changeDescriptionBtn()">
                                 <i class="fa-solid fa-pencil fa-xl icon-align"></i> <span class="user-edit-profile-btn-text">     Chỉnh sửa giới thiệu<span>
                             </div>
                         </div>
+                        @endif
 
                         <div class="user-newfeed-info-common">
                             <h5>
@@ -88,11 +92,13 @@
                         <div class = "user-newfeed-info-common">
                             <h1 class="user-newfeed-info-title">Thông tin</h1>
                         </div>
+                        @if(Admin::user() !== null && Admin::user()->id == $userId)
                         <div class = "user-newfeed-info-common">
                             <div style="width:100%;" class="user-edit-profile-btn d-flex justify-content-center" onclick="changeMainInfoBtn()">
                                 <i class="fa-solid fa-pencil fa-xl icon-align"></i> <span class="user-edit-profile-btn-text">     Chỉnh sửa thông tin<span>
                             </div>
                         </div>
+                        @endif
 
                         <div class="user-newfeed-info-common">
                             @if(isset($user->phone_number) && $user->phone_number!=null)
@@ -110,11 +116,13 @@
                     </div>
                 </div>
                 <div class="user-newfeed-rightside">
+                    @if(Admin::user() !== null && Admin::user()->id == $userId)
                     <div class = "user-newfeed-info-common" style="padding:0px;">
                         <div style="width:100%;" class="user-add-post-btn d-flex justify-content-center" onclick="gotoCreatePostPage()">
                             <i class="fa-solid fa-circle-plus  fa-xl" style="margin-top:10px;"></i> <span class="user-edit-profile-btn-text">&emsp;Đăng bài viết mới<span>
                         </div>
                     </div>
+                    @endif
                     <div id="myPost-load" class="row newfeed-sec" style="padding:0px; margin : 10px 0px;">
                         @if (sizeof($posts) == 0)
                             <div class="row d-flex justify-content-center" style="margin : 30px auto;">
@@ -267,6 +275,72 @@
                 </div>
             </div>
 
+            <div class="user-main-sec" style="margin:0px; padding:0px; display:none;" id="userSettings">
+                <div class="user-setting-section" id="userInfoLeft">
+                    <div >
+                        <div class = "user-newfeed-info-common">
+                            <h1 class="user-newfeed-info-title">Mật khẩu</h1>
+                        </div>
+                        <div class = "user-newfeed-info-common">
+                            <h6 class="user-setting-header">Đổi mật khẩu</h6>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="oldPassword" class="col-md-4 col-form-label text-md-end">Mật khẩu cũ</label>
+
+                            <div class="col-md-6">
+                                <input id="oldPassword" type="text" class="form-control @error('oldPassword') is-invalid @enderror" name="oldPassword" value="{{ old('oldPassword') }}" required autocomplete="oldPassword" autofocus>
+
+                                {{-- @error('oldPassword')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror --}}
+
+                                <span  class="invalid-feedback" role="alert">
+                                    <strong id="oldPasswordWarning"></strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="newPassword" class="col-md-4 col-form-label text-md-end">Mật khẩu mới</label>
+
+                            <div class="col-md-6">
+                                <input id="newPassword" type="text" class="form-control @error('newPassword') is-invalid @enderror" name="newPassword" required autocomplete="current-password">
+
+                                {{-- @error('newPassword')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror --}}
+
+                                <span class="invalid-feedback" role="alert">
+                                    <strong id="newPasswordWarning"></strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="newPasswordConfirm" class="col-md-4 col-form-label text-md-end">Nhập lại mật khẩu mới</label>
+
+                            <div class="col-md-6">
+                                <input id="newPasswordConfirm" type="password" class="form-control @error('newPasswordConfirm') is-invalid @enderror" name="newPasswordConfirm" required autocomplete="current-password">
+
+                                <span class="invalid-feedback" role="alert">
+                                    <strong id="newPasswordConfirmWarning"></strong>
+                                </span>
+                            </div>
+                        </div>
+                        <div class = "d-flex justify-content-end" >
+                            <button class="btn btn-primary normal-button" onclick="changePasswordBtn()">
+                                Đổi mật khẩu
+                            </button>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -280,6 +354,28 @@
 
 </body>
 <script>
+
+    $(document).ready(function(){
+        $('.user-function-btn').click(function(){
+            let id = this.id;
+            if(id =='postSelection' ){
+                $('#postSelection').addClass('user-function-btn-active');
+                $('#postSelection').removeClass('user-function-btn-inactive');
+                $('#settingSelection').addClass('user-function-btn-inactive');
+                $('#settingSelection').removeClass('user-function-btn-active');
+                $('#userPosts').css('display', 'flex');
+                $('#userSettings').css('display', 'none');
+
+            }else if(id =='settingSelection' ){
+                $('#settingSelection').addClass('user-function-btn-active');
+                $('#settingSelection').removeClass('user-function-btn-inactive');
+                $('#postSelection').addClass('user-function-btn-inactive');
+                $('#postSelection').removeClass('user-function-btn-active');
+                $('#userPosts').css('display', 'none');
+                $('#userSettings').css('display', 'block');
+            }
+        });
+    });
     var numberLoadingStep = 1;
     var allowLoad = true;
     let swiper = new Swiper(".mySwiper", {
@@ -371,6 +467,95 @@
         window.location.href = '{{route("post.index")}}'
     }
 
+
+    function changePasswordBtn(){
+        var haveError =false;
+        if($('#oldPassword').val() == ''){
+            $('#oldPassword').addClass('is-invalid');
+            $('#oldPasswordWarning').text('Mật khẩu cũ chưa được nhập');
+            haveError=true;
+        }else{
+            $('#oldPassword').removeClass('is-invalid');
+            $('#oldPasswordWarning').text('');
+            haveError=false;
+        }
+
+        if($('#newPassword').val() == ''){
+            $('#newPassword').addClass('is-invalid');
+            $('#newPasswordWarning').text('Mật khẩu mới chưa được nhập');
+            haveError=true;
+        }else{
+            let regex = new RegExp("^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$");
+            if(regex.test($('#newPassword').val())){
+                $('#newPassword').removeClass('is-invalid');
+                $('#newPasswordWarning').text('');
+                haveError=false;
+            }else{
+                $('#newPassword').addClass('is-invalid');
+                $('#newPasswordWarning').text('Mật khẩu mới phải bao gồm ký tự viết hoa, ký tự viết thường, số');
+                haveError = true;
+            }
+        }
+
+        if($('#newPasswordConfirm').val() == ''){
+            $('#newPasswordConfirm').addClass('is-invalid');
+            $('#newPasswordConfirmWarning').text('Mục này phải được nhập');
+            haveError=true;
+        }else{
+            if($('#newPasswordConfirm').val() == $('#newPassword').val()){
+                $('#newPasswordConfirm').removeClass('is-invalid');
+                $('#newPasswordConfirmWarning').text('');
+                haveError=false;
+            }else{
+                $('#newPasswordConfirm').addClass('is-invalid');
+                $('#newPasswordConfirmWarning').text('Xác nhận mật khẩu không trùng khớp');
+                haveError=true;
+            }
+        }
+
+        if(!haveError){
+            changePasswordRequest();
+        }
+    }
+
+    function resetChangePasswordForm(){
+        $('#oldPassword').val('');
+        $('#oldPassword').removeClass('is-invalid');
+        $('#oldPasswordWarning').text('');
+        $('#newPassword').val('');
+        $('#newPassword').removeClass('is-invalid');
+        $('#newPasswordWarning').text('');
+        $('#newPasswordConfirm').val('');
+        $('#newPasswordConfirm').removeClass('is-invalid');
+        $('#newPasswordConfirmWarning').text('');
+    }
+
+    function changePasswordRequest(){
+        $.ajax({
+            method: 'post',
+            url: '{{ route('user.setting.changePassword') }}',
+            data: {
+                oldPassword: $('#oldPassword').val(),
+                newPassword: $('#newPassword').val(),
+                userId: {{ $userId }},
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(data) {
+                console.log('data response : ', JSON.stringify(data));
+                if(data.data.wrongOldPass == 1){
+                    $('#oldPassword').addClass('is-invalid');
+                    $('#oldPasswordWarning').text('Mật khẩu cũ không đúng');
+                    $('#toast-fail-text').text('Đổi mật khẩu không thành công');
+                    $('#notification-fail').toast('show');
+                }else{
+                    resetChangePasswordForm();
+                    $('#toast-success-text').text(
+                        'Đổi mật khẩu thành công');
+                    $('#notification-success').toast('show');
+                }
+            }
+        });
+    }
 
 
     function myPostLoadMoreData() {

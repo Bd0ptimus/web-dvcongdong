@@ -393,6 +393,11 @@
             });
         }
     });
+
+    function openUserPage(userId){
+        window.location.href = `{{route("user.index",'')}}`+"/"+userId;
+
+    }
 </script>
 @extends('templates.imageShow')
 

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Services\PostService;
 use App\Services\AttachmentService;
+use App\Services\AuthService;
+
 use App\Repositories\UserRepository;
 
 class UserAccountDetailController extends Controller
@@ -17,12 +19,18 @@ class UserAccountDetailController extends Controller
     protected $postService;
     protected $attachmentService;
     protected $userRepo;
-    public function __construct(Request $request,PostService $postService, AttachmentService $attachmentService, UserRepository $userRepo){
+    protected $authService;
+    public function __construct(Request $request,
+    PostService $postService,
+    AttachmentService $attachmentService,
+    UserRepository $userRepo,
+    AuthService $authService){
         $userId = $request->route()->parameter('userId');
         $this->middleware("mypost.permission:$userId")->only(['changeDescription']);
         $this->postService = $postService;
         $this->attachmentService = $attachmentService;
         $this->userRepo = $userRepo;
+        $this->authService = $authService;
 
     }
     public function index(Request $request, $userId){
@@ -55,5 +63,17 @@ class UserAccountDetailController extends Controller
     public function changeMainInfo(Request $request, $userId){
         $this->userRepo->updateMainInfo($userId, $request);
         return redirect()->back();
+    }
+
+    public function changePassword(Request $request){
+        LOG::debug('in changePassword ' );
+
+        try{
+            $response = $this->authService->changePassword($request->userId, $request->oldPassword, $request->newPassword);
+        }catch(\Exception $e){
+            LOG::debug('update avatar : ' . $e );
+            return response()->json(['error' => 1, 'msg' => 'Đã có lỗi']);
+        }
+        return response()->json(['error' => 0, 'msg' => 'Thay doi matkhau thanh cong', 'data'=>$response]);
     }
 }

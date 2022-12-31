@@ -44,7 +44,7 @@ class PostCommentController extends Controller
         $postId = request('postId');
         $step = request('step');
         $data = [];
-        $data = $this->postCommentService->loadPostComment($postId, $step);
+        // $data = $this->postCommentService->loadPostComment($postId, $step);
         try{
             $data = $this->postCommentService->loadPostComment($postId, $step);
         }catch(\Exception $e){

@@ -86,13 +86,13 @@ class PostCommentService
             $commentSec = "<div class='row w-100 mx-0 comment-sec my-1'>
                             <div class='m-1 d-flex justify-content-start comment-post-sec'>
                                 <div class='vertical-container' style='width:40px;'>
-                                    <div class='row comment-avatar-sec vertical-element-middle-align'>
+                                    <div class='row comment-avatar-sec vertical-element-middle-align' onclick='openUserPage(".$comment->user->id.")'>
                                         <img class='comment-avatar' src=".$writerAva.">
                                     </div>
                                 </div>
                                 <div class='row mx-2 comment-writer-name-sec vertical-container'>
                                     <p class='vertical-element-middle-align'
-                                        style='font-size : 14px; font-weight : 900;'>
+                                        style='font-size : 14px; font-weight : 900; cursor:pointer;' onclick='openUserPage(".$comment->user->id.")'>
                                         ".$writerName."
                                         <br>
                                         <span style='font-size:12px;'><i class='fa-solid fa-clock'></i>".$commentDay."</span>

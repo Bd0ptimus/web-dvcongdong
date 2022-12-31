@@ -327,3 +327,16 @@
     margin-top: 80px;
 }
 
+
+.user-setting-section{
+    width:100%;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom : 15px;
+}
+
+.user-setting-header{
+    color:black;
+    font-size:15px;
+    font-weight: 600;
+}

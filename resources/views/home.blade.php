@@ -259,13 +259,13 @@
                     <div class="row d-block justify-content-center newfeed-container2">
                         <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
                             <div class="newFeed-avatar-sec d-flex justify-content-start">
-                                <div class="newFeed-avatar-container d-flex justify-content-center">
+                                <div class="newFeed-avatar-container d-flex justify-content-center" onclick="openUserPage({{$post->user->id}})">
                                     <img class="newFeed-avatar" src={{ asset($avatarPath) }}>
                                 </div>
                             </div>
 
                             <div class="newFeed-posterinfo-sec d-block justify-content-center">
-                                <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">
+                                <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;" onclick="openUserPage({{$post->user->id}})">
                                     {{ $post->user->name }}
                                 </p>
                                 <p class="newFeed-posterinfo-text">
@@ -621,13 +621,13 @@
                         $('#home-newFeed-sec').append(`<div class="row d-block justify-content-center newfeed-container2">
                                                                         <div class="row newFeed-content-small-sec2 d-flex justify-content-start">
                                                                 <div class="newFeed-avatar-sec d-flex justify-content-start">
-                                                                    <div class="newFeed-avatar-container d-flex justify-content-center">
+                                                                    <div class="newFeed-avatar-container d-flex justify-content-center"  onclick="openUserPage(${e.ownerId})">
                                                                         <img class="newFeed-avatar" src='${e.avatar}'>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="newFeed-posterinfo-sec d-block justify-content-center">
-                                                                    <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;">
+                                                                    <p class="newFeed-posterinfo-text" style="font-size : 17px; font-weight : 900;" onclick="openUserPage(${e.ownerId})">
                                                                         ${e.ownerName}
                                                                     </p>
                                                                     <p class="newFeed-posterinfo-text">

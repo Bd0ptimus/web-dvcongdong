@@ -80,4 +80,19 @@ class UserRepository extends BaseRepository
         ]);
     }
 
+    public function checkUserPassword($userId, $oldPassword){
+        $user =  $this->model->where('id', $userId)->first();
+        if(Hash::check($oldPassword, $user->password)){
+            return true;
+        }
+        return false;
+
+    }
+
+    public function updateUserPassword($userId,$newPassword){
+        $this->model->where('id', $userId)->update([
+            'password' => Hash::make($newPassword),
+        ]);
+    }
+
 }
