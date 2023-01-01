@@ -7,7 +7,7 @@
         style="max-width: 1000px; width: 100%; margin : auto;">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-center" style="position:relative;">
-                <h4 style="font-size:20px; font-weight:bold; text-align:center;">Thay đổi ảnh đại diện</h4>
+                <h4 style="font-size:20px; font-weight:bold; text-align:center; padding:0px 50px;">Thay đổi ảnh đại diện</h4>
                 <span id="user-uploadAvatar-close" style=" position:absolute; right:10px; top:5px;"
                     class="modal-close-btn d-flex justify-content-center">
                     <i class="fa-solid fa-xmark fa-xl icon-align"></i></span>

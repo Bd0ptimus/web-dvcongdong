@@ -7,7 +7,7 @@
         style="max-width: 1000px; width: 100%; margin : auto;">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-center" style="position:relative;">
-                <h4 style="font-size:20px; font-weight:bold; text-align:center;">Chỉnh sửa thông tin cá nhân</h4>
+                <h4 style="font-size:20px; font-weight:bold; text-align:center; padding:0px 50px;">Chỉnh sửa thông tin cá nhân</h4>
                 <span id="user-uploadUserInfo-close" style=" position:absolute; right:10px; top:5px;"
                     class="modal-close-btn d-flex justify-content-center">
                     <i class="fa-solid fa-xmark fa-xl icon-align"></i></span>
@@ -64,7 +64,7 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h5 style="margin-bottom:16px;">
-                                    Số điện thoại
+                                    Số điện thoại :
                                 </h5>
                                 <p >
                                     {{$user->phone_number}}
@@ -73,7 +73,7 @@
 
                             <div class="d-flex justify-content-between">
                                 <h5 style="margin-bottom:16px;">
-                                    Email
+                                    Email :
                                 </h5>
                                 <p>
                                     {{$user->email}}
