@@ -102,6 +102,8 @@ const SYSTEM = 0;
 const GOOGLE = 1;
 const FACEBOOK = 2;
 const VK = 3;
+const ZALO = 3;
+
 
 //POST COMMENT
 const COMMENT_ACCEPTED = 1;

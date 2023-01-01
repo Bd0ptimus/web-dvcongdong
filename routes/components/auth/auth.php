@@ -28,5 +28,11 @@ Route::group(['prefix' => 'auth', 'as'=>'auth.'], function($route){
 
     });
 
+    $route->group(['prefix'=>'zalo', 'as' => 'zalo.'], function($route){
+        $route->get('/login', [LoginController::class, 'zaloLogin'])->name('zaloLogin');
+        $route->get('/login-callback', [LoginController::class, 'zaloLoginedCallback'])->name('zaloLoginCallback');
+
+    });
+
 
 });
