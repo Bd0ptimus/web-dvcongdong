@@ -75,6 +75,7 @@ class UserRepository extends BaseRepository
 
     public function updateMainInfo($userId, $request){
         $user = $this->model->where('id', $userId)->first();
+        dd($user);
         if($user->email == null){
             dd('have email');
             $user->update([
