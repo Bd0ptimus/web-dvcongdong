@@ -1045,4 +1045,8 @@ div.swiper-button-prev {
     font-weight: 600;
 }
 
-
+.text-link{
+    cursor: pointer;
+    text-decoration: underline;
+    color:blue;
+}

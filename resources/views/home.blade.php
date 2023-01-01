@@ -451,6 +451,7 @@
 
 
 
+
 </body>
 
 <script>
@@ -513,6 +514,11 @@
             $('#ad-posts-sec').removeClass('mostAccess-post-sec-unscroll');
         }
     };
+
+    function updateInfo(){
+        $('#user-uploadUserMainInfo').modal('show');
+
+    }
 
     function newFeedLoadMoreData() {
         $.ajax({

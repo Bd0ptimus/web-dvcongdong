@@ -45,6 +45,9 @@
 
                 <div class="row col-ms-6" style="margin-top: 20px;">
                     <h6>Nhận thông báo thông qua:</h6>
+                    @if ((!isset(Admin::user()->email)||Admin::user()->email=='') && (!isset(Admin::user()->phone_number)||Admin::user()->phone_number==''))
+                        <br><h6 style="color:red;">Bạn chưa đăng ký email hoặc số điện thoại : </h6><span><a class="text-link" @if(Admin::user()!==null) href="{{route('user.index',['userId'=> Admin::user()->id])}} @endif">cập nhật</a></span>
+                    @else
                     <select class="select-btn" id="checkingResponse" name="checkingResponse" style="width:auto;">
                         @if (isset(Admin::user()->email))
                             <option value="{{ RESPONSE_VIA_EMAIL }}">{{ Admin::user()->email }}</option>
@@ -54,6 +57,7 @@
                         @endif
 
                     </select>
+                    @endif
                 </div>
             </div>
 
@@ -164,6 +168,12 @@
                 $('#checkCar-certCarOwnerShip').css('border-color', 'red');
                 haveError = true;
 
+            }
+
+            if($('#checkingResponse').length == 0){
+                $('#toast-fail-text').text('Bạn chưa cập nhật Email hoặc Số điện thoại');
+                $('#notification-fail').toast('show');
+                haveError = true;
             }
 
             if (!haveError) {
