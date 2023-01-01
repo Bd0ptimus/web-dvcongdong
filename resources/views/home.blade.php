@@ -513,7 +513,7 @@
             $('#ad-posts-sec').addClass('mostAccess-post-sec-scroll');
             $('#ad-posts-sec').removeClass('mostAccess-post-sec-unscroll');
         }
-    };
+    }
 
     function updateInfo(){
         $('#user-uploadUserMainInfo').modal('show');
@@ -736,7 +736,7 @@
 
         function formatTextClassify(icon) {
             return $('<span><i class="fa-solid fa-bars"></i>     ' + icon.text + '</span>');
-        };
+        }
         $('.main-filter-classify').select2({
             width: "100%",
             placeholder: 'Phân loại',
@@ -747,7 +747,7 @@
 
         function formatTextPosition(icon) {
             return $('<span><i class="fas fa-map-marker-alt"></i>     ' + icon.text + '</span>');
-        };
+        }
         $('.main-filter-position').select2({
             width: "100%",
             placeholder: 'Vị trí',
