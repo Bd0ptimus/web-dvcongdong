@@ -93,17 +93,19 @@ class LoginController extends Controller
         $userOverLap = User::where('email', $user->email)->first();
 
         if($userOverLap){
-            if($userOverLap->third_party_type == GOOGLE){
+            if($userOverLap->third_party_type == GOOGLE && $userOverLap['3_party_db_id'] == $user->id){
                 Auth::login($userOverLap);
-            }else{
-                return view('warnings.accountExistedInDifferentType',['user'=>$userOverLap]);
             }
+            // else{
+            //     return view('warnings.accountExistedInDifferentType',['user'=>$userOverLap]);
+            // }
         }else{
             $data = $this->attachmentService->takeDownloadPicByUrl($user->avatar);
             // dd($data);
             $newUser= User::create([
                 'name' => $user->name,
                 'email' => $user->email,
+                '3_party_db_id' => $user->id,
                 'user_avatar' => $data['avatar'],
                 'user_role' => ROLE_USER,
                 'username' =>  $data['name'],

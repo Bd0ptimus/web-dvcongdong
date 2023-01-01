@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-xs-7 h-100 m-0">
                             <input maxlength="25"
-                                type="text" class="form-control h-100" value="{{$user->email}}" disabled/>
+                                type="text" class="form-control h-100" name="userInfoEmail" value="{{$user->email}}" @if(Admin::user()!==null && Admin::user()->email!=null) disabled @endif/>
                         </div>
                     </div>
 

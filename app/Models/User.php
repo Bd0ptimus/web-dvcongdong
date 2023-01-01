@@ -35,6 +35,7 @@ class User extends Authenticatable
         'phone_number',
         'third_party_type',
         'user_avatar',
+        '3_party_db_id',
     ];
     protected $guard = 'web';
 

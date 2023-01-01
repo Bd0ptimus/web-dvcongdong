@@ -74,10 +74,20 @@ class UserRepository extends BaseRepository
     }
 
     public function updateMainInfo($userId, $request){
-        $this->model->where('id', $userId)->update([
-            'name' => $request->userInfoName,
-            'phone_number' => $request -> userInfoPhone,
-        ]);
+        $user = $this->model->where('id', $userId)->first();
+        if($user->email == null){
+            $user->update([
+                'name' => $request->userInfoName,
+                'phone_number' => $request -> userInfoPhone,
+                'email'=>$request->userInfoEmail,
+            ]);
+        }else{
+            $user->update([
+                'name' => $request->userInfoName,
+                'phone_number' => $request -> userInfoPhone,
+            ]);
+        }
+
     }
 
     public function checkUserPassword($userId, $oldPassword){
