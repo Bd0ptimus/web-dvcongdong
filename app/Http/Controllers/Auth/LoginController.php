@@ -237,21 +237,22 @@ class LoginController extends Controller
         } catch (\Exception $e) {
             return redirect('auth/login');
         }
-        // dd($user);
+        dd($user);
 
-        $userOverLap = User::where('3_party_db_id', $user->id)->first();
+        $userOverLap = User::where('email', $user->email)->first();
 
         if($userOverLap){
             if($userOverLap->third_party_type == ZALO){
                 Auth::login($userOverLap);
+            }else{
+                return view('warnings.accountExistedInDifferentType',['user'=>$userOverLap]);
             }
         }else{
             $data = $this->attachmentService->takeDownloadPicByUrl($user->avatar);
             // dd($data);
             $newUser= User::create([
                 'name' => $user->name,
-                // 'email' => $user->email,
-                '3_party_db_id'=>$user->id,
+                'email' => $user->email,
                 'user_avatar' => $data['avatar'],
                 'user_role' => ROLE_USER,
                 'username' =>  $data['name'],
