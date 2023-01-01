@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <div class="d-block justify-content-center" style="width:80%;">
+                        <div class="d-block justify-content-center" style="width:95%;">
                             <div class="d-flex justify-content-between">
                                 <h5 style="margin-bottom:16px;">
                                     Tên
@@ -64,7 +64,7 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h5 style="margin-bottom:16px;">
-                                    Số điện thoại :
+                                    Số điện thoại
                                 </h5>
                                 <p >
                                     {{$user->phone_number}}
@@ -73,7 +73,7 @@
 
                             <div class="d-flex justify-content-between">
                                 <h5 style="margin-bottom:16px;">
-                                    Email :
+                                    Email
                                 </h5>
                                 <p>
                                     {{$user->email}}
