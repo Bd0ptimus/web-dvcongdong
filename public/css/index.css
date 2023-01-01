@@ -229,7 +229,7 @@
     }
 
     .comment-writer-name-sec{
-        width:calc(100% - 60px);
+        width:calc(100% - 100px);
     }
 
 }
@@ -749,6 +749,7 @@ body::-webkit-scrollbar-thumb {
 
     flex-wrap: wrap;
     height : 70px;
+    padding:0px;
 }
 
 .icon-global{
