@@ -14,7 +14,7 @@
             </div> --}}
 
             <div class="modal-header d-flex justify-content-center" style="position:relative;">
-                <h4 style="font-size:20px; font-weight:bold; text-align:center;">Kiểm tra cấm nhập cảnh</h4>
+                <h4 style="font-size:20px; font-weight:bold; text-align:center;  padding:0px 50px;">Kiểm tra cấm nhập cảnh</h4>
                 <span id="entryBan-modal-close" style=" position:absolute; right:10px; top:5px;" class="modal-close-btn d-flex justify-content-center">
                     <i class="fa-solid fa-xmark fa-xl icon-align" ></i></span>
 
