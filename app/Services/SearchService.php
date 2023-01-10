@@ -17,6 +17,7 @@ use App\Services\ClassifyService;
 
 //repo
 use App\Repositories\JobRepository;
+use App\Repositories\UserRepository;
 
 
 use Exception;
@@ -24,8 +25,11 @@ class SearchService
 {
 
     protected $postService;
-    public function __construct(PostService $postService){
+    protected $userRepo;
+    public function __construct(PostService $postService,
+    UserRepository $userRepo){
         $this->postService = $postService;
+        $this->userRepo = $userRepo;
     }
 
 
@@ -106,5 +110,33 @@ class SearchService
         }
 
         return $response;
+    }
+
+    public function searchUser($request){
+        $users =$this->userRepo->searchUser($request->searchVal);
+        $data = '';
+        // LOG::debug('user : ' . print_r($users, true));
+        foreach ($users as $user){
+            $userAvatar = asset($user->user_avatar);
+            $onclick = "chooseUser({$user->id},'{$userAvatar}', '{$user->name}', '{$user->email}','{$user->phone_number}')";
+            $data = $data.'<div class ="searchUserResultLine d-flex justify-content-start"  onclick="'.$onclick.'">
+                            <div style="height:100%; width:15%;" class="vertical-container">
+                                <img src = "'.asset($user->user_avatar).'">
+                            </div>
+                            <div style="height:100%; width:25%; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                <span  class="form-text vertical-element-middle-align">'.$user->name.'</span>
+
+                            </div>
+                            <div style="height:100%; width:40%; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                <span style="" class="form-text vertical-element-middle-align">'.$user->email.'</span>
+
+                            </div>
+                            <div style="height:100%; width:20%; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                <span class="form-text vertical-element-middle-align">'.$user->phone_number.'</span>
+
+                            </div>
+                        </div>';
+        }
+        return $data;
     }
 }

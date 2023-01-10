@@ -53,8 +53,59 @@
     margin:0px;
 }
 
+.searchUserResultSec{
+    width:100%;
+    height:auto;
+    background-color: white;
+    border-radius:5px;
+    cursor: pointer;
+    position: absolute;
+    width: 100%;
+    left:0px;
+    top: 75px;
+    z-index:1000;
+}
+
+.searchUserResultLine{
+    padding:5px 10px;
+    height:50px;
+
+}
+
+.searchUserResultLine:hover{
+    background-color: #e0e0e0;
+}
+
+.userResultImg{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+}
+
+.userChosenSec{
+    border-radius: 5px;
+}
+
+.userChosenSec{
+    background-color: white;
+    border-radius : 5px;
+    height:100%;
+}
+
+#searchUserSec{
+    position: relative;
+}
+
+
 @media screen and (min-width : 1020px) and (max-width: 10000px){
     .filter-section{
+        width:20%;
+    }
+
+    #searchUserSec{
+        width:40%;
+    }
+    #searchUserChosen{
         width:20%;
     }
 }
@@ -64,6 +115,13 @@
     .filter-section{
         width:20%;
     }
+    #searchUserSec{
+        width:40%;
+    }
+
+    #searchUserChosen{
+        width:20%;
+    }
 }
 
 
@@ -71,11 +129,24 @@
     .filter-section{
         width:30%;
     }
+    #searchUserSec{
+        width:50%;
+    }
+    #searchUserChosen{
+        width:20%;
+    }
 }
 
 
 @media screen and (max-width: 450px){
     .filter-section{
+        width:100%;
+    }
+    #searchUserSec{
+        width:100%;
+    }
+    #searchUserChosen{
+        margin : 10px 0px;
         width:100%;
     }
 }

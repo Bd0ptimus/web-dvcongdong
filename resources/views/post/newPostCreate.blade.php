@@ -39,6 +39,102 @@
                         <input type="text" class="data-field" name="classifyType" value="{{ $classifyType }}"
                             style="display:none;" /> --}}
                         <div class="row d-flex justify-content-center" style="width:100%; margin:auto;">
+                            @if(Admin::user()!==null && Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN]))
+                                <div class="row d-flex justify-content-start my-2">
+                                    <div style="width:auto;">
+                                        <label class="toggle" for="postForUserSelection">
+                                            <input type="checkbox" class="toggle__input" id="postForUserSelection" name="postForUser"/>
+                                            <span class="toggle-track">
+                                                <span class="toggle-indicator">
+                                                    <!-- 	This check mark is optional	 -->
+                                                    <span class="checkMark">
+                                                        <svg viewBox="0 0 24 24" id="ghq-svg-check" role="presentation" aria-hidden="true">
+                                                            <path d="M9.86 18a1 1 0 01-.73-.32l-4.86-5.17a1.001 1.001 0 011.46-1.37l4.12 4.39 8.41-9.2a1 1 0 111.48 1.34l-9.14 10a1 1 0 01-.73.33h-.01z"></path>
+                                                        </svg>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span class="form-text">
+                                                Tạo tài bài viết cho người dùng
+                                            </span>
+
+                                        </label>
+                                    </div>
+
+                                    <div style="display:none;"  id="searchUserSec">
+                                        <h5 class="row">
+                                            <span class="form-text">Tìm kiếm người dùng</span>
+                                        </h5>
+                                        <input type="text" class="data-field" name="searchUser" id="searchUser" />
+                                        <div class="searchUserResultSec" id="searchUserResultList">
+                                            {{-- <div class ="searchUserResultLine d-flex justify-content-start" onclick="chooseUser(0,'img', 'name', 'email', 'phone')">
+                                                <div style="height:100%; width:15%;" class="vertical-container">
+                                                    <img src = "http://local.dvcongdong.com/storage/avatar-sample/ava2.jpg" class="userResultImg vertical-element-middle-align">
+                                                </div>
+                                                <div style="height:100%; width:25%; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                                    <span  class="form-text vertical-element-middle-align">Bùi Dũng</span>
+
+                                                </div>
+                                                <div style="height:100%; width:40%; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                                    <span style="" class="form-text vertical-element-middle-align">thedung.1292@gmail.com</span>
+
+                                                </div>
+                                                <div style="height:100%; width:20%; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                                    <span class="form-text vertical-element-middle-align">+79689240329</span>
+
+                                                </div>
+                                            </div>
+
+                                            <div class ="searchUserResultLine d-flex justify-content-start">
+                                                <div style="height:100%; width:15%;" class="vertical-container">
+                                                    <img src = "http://local.dvcongdong.com/storage/avatar-sample/ava2.jpg" class="userResultImg vertical-element-middle-align">
+                                                </div>
+                                                <div style="height:100%; width:25%; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                                    <span  class="form-text vertical-element-middle-align">Bùi Dũng</span>
+
+                                                </div>
+                                                <div style="height:100%; width:40%; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                                    <span style="" class="form-text vertical-element-middle-align">thedung.1292@gmail.com</span>
+
+                                                </div>
+                                                <div style="height:100%; width:20%; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                                    <span class="form-text vertical-element-middle-align">+79689240329</span>
+
+                                                </div>
+                                            </div> --}}
+                                        </div>
+                                    </div>
+
+                                    <div style="display:none;"  id="searchUserChosen">
+                                        <div class="userChosenSec d-block justify-content-center" style="position: relative;">
+                                            <div class="d-flex justify-content-end" style="position: absolute; width:100%;">
+                                                <i style="font-size:20px; cursor:pointer; margin-right:5px; z-index:1000;" class="fa-solid fa-xmark" onclick="removeUserChosen()"></i>
+                                            </div>
+
+                                            <div style="width:100%; height:60px;" class="vertical-container">
+                                                <img id="userChosenImg" src = "http://local.dvcongdong.com/storage/avatar-sample/ava2.jpg" class="userResultImg vertical-element-middle-align">
+                                            </div>
+
+                                            <div style="width:100%; height:30px; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                                <span id="userChosenName" class="form-text vertical-element-middle-align">Bùi Dũng</span>
+
+                                            </div>
+                                            <div style="width:100%; height:30px; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                                <span id="userChosenEmail" style="" class="form-text vertical-element-middle-align">thedung.1292@gmail.com</span>
+
+                                            </div>
+                                            <div style="width:100%; height:30px; overflow:hidden; padding:0px 3px;" class="vertical-container">
+                                                <span id="userChosenPhone" class="form-text vertical-element-middle-align">+79689240329</span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="text" class="data-field" name="userChosenId"
+                                            id="userChosenId" style="display:none;" />
+                                </div>
+                            @endif
+
                             <div class="row d-flex justify-content-start">
                                 <div class="filter-section">
                                     <h5 class="row">
@@ -274,48 +370,58 @@
 
                                 </div>
                             </div>
-                            <div class="row d-flex justify-content-start">
+                            <div class="row d-flex justify-content-start" id="userContactInfoSec">
                                 <div class="filter-section">
                                     <h5 class="row">
                                         <span class="form-text">Tên người liên hệ</span>
                                     </h5>
-                                    <input type="text" class="data-field" value="{{ Admin::user()->name }}"
+                                    <input type="text" id="userContactName" class="data-field" value="{{ Admin::user()->name }}"
                                         disabled />
                                 </div>
                                 <div class="filter-section">
                                     <h5 class="row">
                                         <span class="form-text">Email người liên hệ</span>
                                     </h5>
-                                    <input type="text" class="data-field" value="{{ Admin::user()->email }}"
-                                        disabled />
+                                    <input type="text" id="userContactEmail" class="data-field" value="{{ Admin::user()->email }}"
+                                       @if(isset(Admin::user()->email)) disabled @endif/>
                                 </div>
 
-                                @if(isset(Admin::user()->phone_number))
-                                    <div class="filter-section">
-                                        <h5 class="row">
-                                            <span class="form-text">Số điện thoại liên hệ 1</span>
-                                        </h5>
-                                        <input type="text" class="data-field"
-                                            value="{{ Admin::user()->phone_number }}" disabled />
-                                    </div>
+                                <div id="userContactInfoPhoneSec" class="filter-section" style="width:auto;">
+                                    @if(isset(Admin::user()->phone_number))
+                                        <div id="userContactInfoPhoneField" style="width:auto;">
+                                            <div>
+                                                <h5 class="row">
+                                                    <span class="form-text">Số điện thoại liên hệ 1</span>
+                                                </h5>
+                                                <input type="text" class="data-field"
+                                                    value="{{ Admin::user()->phone_number }}" disabled />
+                                            </div>
 
 
-                                    <div class="filter-section">
-                                        <h5 class="row">
-                                            <span class="form-text">Số điện thoại liên hệ 2</span>
-                                        </h5>
-                                        <input type="text" id="contactPhone" class="data-field" name="contactPhone"
-                                            value="" style="margin:10px 0px; width:100%;" />
-                                    </div>
-                                @else
-                                    <div class="filter-section">
-                                        <h5 class="row">
-                                            <span class="form-text">Số điện thoại liên hệ<span class="text-danger">(*)</span></span>
-                                        </h5>
-                                        <input type="text" id="contactPhone" class="data-field" name="contactPhone"
-                                            value="" style="margin:10px 0px; width:100%;" />
-                                    </div>
-                                @endif
+                                            <div >
+                                                <h5 class="row">
+                                                    <span class="form-text">Số điện thoại liên hệ 2</span>
+                                                </h5>
+                                                <input type="text" id="contactPhone" class="data-field" name="contactPhone"
+                                                    value="" style="margin:10px 0px; width:100%;" />
+                                            </div>
+                                        </div>
+
+                                    @else
+                                        <div id="userContactInfoPhoneField" style="width:auto;">
+                                            <div>
+                                                <h5 class="row">
+                                                    <span class="form-text">Số điện thoại liên hệ<span class="text-danger">(*)</span></span>
+                                                </h5>
+                                                <input type="text" id="contactPhone" class="data-field" name="contactPhone"
+                                                    value="" style="margin:10px 0px; width:100%;" />
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+
+
+
 
                                 <div class="filter-section">
                                     <h5 class="row">
@@ -567,11 +673,15 @@
 
         if (!haveError) {
             $('#contactPhone').val(phoneInput.getNumber());
+
             $('#newPostForm').submit();
         } else {
             $('#createPost-warning-sec').show();
         }
     }
+
+    var userSelectedGlobal = false;
+
 
     $(document).ready(function() {
 
@@ -669,10 +779,127 @@
             // }
 
         });
+        let userSelected = false;
+        let userContactName = '{{Admin::user()->name}}';
+        let userContactEmail = '{{Admin::user()->email}}';
+        $('#postForUserSelection').on('change', function(){
+            if(userSelected){
+                userSelected=false;
+
+                $('#searchUserSec').css('display', 'none');
+                $('#searchUserChosen').hide();
+                $('#searchUser').val('');
+                $('#searchUserResultList').empty();
+                $('#userContactInfoPhoneField').show();
+
+
+            }else{
+                userSelected=true;
+                $('#searchUserSec').css('display', 'block');
+                $('#userContactInfoPhoneField').hide();
+
+
+            }
+            userSelectedGlobal=userSelected;
+
+            // console.log('result : ', $('#postForUserSelection').val());
+        });
+
+
+
+        $('#searchUser').on('change', function(){
+            console.log('check search ', $('#searchUser').val());
+            $.ajax({
+                    method: 'post',
+                    url: "{{ route('util.searchUser') }}",
+                    data: {
+                        searchVal :$('#searchUser').val(),
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(data) {
+                        console.log('data response : ', JSON.stringify(data));
+                        $('#searchUserResultList').empty();
+
+                        if(data.error == 0){
+                            $('#searchUserResultList').append(data.data);
+                        }
+
+
+                    }
+
+                });
+        });
     });
 
-    const phoneInputField = document.querySelector("#contactPhone");
-    const phoneInput = window.intlTelInput(phoneInputField, {
+    function chooseUser(userId,
+                        userImg,
+                        userName,
+                        userEmail,
+                        userPhone){
+                            $('#userChosenImg').attr('src', userImg);
+                            $('#userChosenName').text(userName);
+                            $('#userChosenEmail').text(userEmail);
+                            $('#userChosenPhone').text(userPhone);
+                            $('#searchUserChosen').show();
+                            $('#userChosenId').val(userId);
+                            $('#userContactInfoPhoneFieldAdd').remove();
+
+                            if(userPhone != ''){
+                                $('#userContactInfoPhoneSec').append(`<div id="userContactInfoPhoneFieldAdd" style="width:auto;">
+                                                                        <div>
+                                                                            <h5 class="row">
+                                                                                <span class="form-text">Số điện thoại liên hệ 1</span>
+                                                                            </h5>
+                                                                            <input type="text" class="data-field"
+                                                                                value="${userPhone}" disabled />
+                                                                        </div>
+
+
+                                                                        <div >
+                                                                            <h5 class="row">
+                                                                                <span class="form-text">Số điện thoại liên hệ 2</span>
+                                                                            </h5>
+                                                                            <input type="text" id="contactPhoneAdd" class="data-field" name="contactPhone"
+                                                                                value="" style="margin:10px 0px; width:100%;" />
+                                                                        </div>
+                                                                    </div>`);
+                            }else{
+                                $('#userContactInfoPhoneSec').append(` <div id="userContactInfoPhoneFieldAdd" style="width:auto;">
+                                                                            <div>
+                                                                                <h5 class="row">
+                                                                                    <span class="form-text">Số điện thoại liên hệ<span class="text-danger"></span></span>
+                                                                                </h5>
+                                                                                <input type="text" id="contactPhoneAdd" class="data-field" name="contactPhone"
+                                                                                    value="" style="margin:10px 0px; width:100%;" />
+                                                                            </div>
+                                                                        </div>`);
+                            }
+                            reloadTellIn();
+
+                        }
+
+    function removeUserChosen(){
+        console.log('removeUserChosen');
+        $('#userChosenId').val('');
+        $('#searchUserChosen').hide();
+        $('#userContactInfoPhoneFieldAdd').remove();
+        reloadTellIn();
+
+
+    }
+
+    function reloadTellIn(){
+        phoneInputField = document.querySelector("#contactPhoneAdd");
+        phoneInput = window.intlTelInput(phoneInputField, {
+            preferredCountries: ["ru", "vn"],
+            initialCountry: "ru",
+            // geoIpLookup: getIp,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    }
+
+    var phoneInputField = document.querySelector("#contactPhone");
+    var phoneInput = window.intlTelInput(phoneInputField, {
         preferredCountries: ["ru", "vn"],
         initialCountry: "ru",
         // geoIpLookup: getIp,

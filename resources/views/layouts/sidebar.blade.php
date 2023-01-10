@@ -85,14 +85,7 @@
                     </span>
                 </a>
             </li> --}}
-            <li class="nav-item nav-item-container">
-                <a href="{{ route('post.index') }}" class="nav-link" aria-current="page">
-                    <i class="fa-solid fa-paper-plane"></i>
-                    <span>
-                        Đăng tin miễn phí
-                    </span>
-                </a>
-            </li>
+
         @endif
 
 
@@ -118,6 +111,14 @@
 
 
         @if (Admin::user() !== null)
+            <li class="nav-item nav-item-container">
+                <a href="{{ route('post.index') }}" class="nav-link" aria-current="page">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>
+                        Đăng tin miễn phí
+                    </span>
+                </a>
+            </li>
             <li class="nav-item nav-item-container">
                 <a href="{{ route('logout') }}" class="nav-link" aria-current="page"
                     onclick="event.preventDefault();
@@ -347,11 +348,7 @@
                 </a>
             </li> --}}
 
-            <li class="nav-item d-flex justify-content-center">
-                <a href="{{ route('post.index') }}" class="nav-link nav-icon-item" aria-current="page">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </a>
-            </li>
+
         @endif
 
 
@@ -370,6 +367,11 @@
         @endif
 
         @if (Admin::user() !== null)
+            <li class="nav-item d-flex justify-content-center">
+                <a href="{{ route('post.index') }}" class="nav-link nav-icon-item" aria-current="page">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+            </li>
             <li class="nav-item d-flex justify-content-center">
                 <a href="{{ route('logout') }}" class="nav-link nav-icon-item" aria-current="page">
                     <i class="fa-solid fa-right-from-bracket"></i>

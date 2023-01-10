@@ -106,4 +106,36 @@ class UserRepository extends BaseRepository
         ]);
     }
 
+    public function searchUser($searchText){
+        if($searchText == '') {
+            return 0;
+        }
+        $query = $this->model;
+        $findWithName = $query->where('name','LIKE','%'. $searchText.'%')->get();
+        if(count($findWithName)!=0){
+            return $findWithName;
+        }
+
+        $findWithUsername = $query->where('username','LIKE','%'. $searchText.'%')->get();
+        if(count($findWithUsername)!=0){
+            return $findWithUsername;
+        }
+
+        $findWithEmail = $query->where('email','LIKE', '%'.$searchText.'%')->get();
+        if(count($findWithEmail)!=0){
+            return $findWithEmail;
+        }
+
+        if(is_numeric($searchText)){
+            $searchText = substr($searchText, 1);
+        }
+        $findWithPhone = $query->where('phone_number','LIKE','%'. $searchText.'%')->get();
+        if(count($findWithPhone)!=0){
+            return $findWithPhone;
+        }
+
+        return 0;
+    }
+
+
 }

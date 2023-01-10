@@ -45,8 +45,8 @@ class PostRepository extends BaseRepository
 
     public function createNewPostBaseOnClassify($classifyRelation, $request, $classifyId)
     {
-        if (isset($request->createdByAdmin)) {
-            $user_id = 0;
+        if ($request->userChosenId != '' && Admin::user()->inRoles([ROLE_ADMIN, ROLE_SUPER_ADMIN])) {
+            $user_id = $request->userChosenId ;
         } else {
             $user_id = Admin::user()->id;
         }
